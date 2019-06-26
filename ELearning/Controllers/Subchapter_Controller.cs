@@ -305,12 +305,14 @@ namespace ELearning.Controllers
                 return HttpNotFound();
             }
 
+            var lclass_ = (from c in db.Class_
+                           select c).ToList();
 
             ViewBag.urlvideo = subchapter_.url_video;
             uv = subchapter_.url_video;
             uf = subchapter_.url_file;
             datesub = (DateTime)subchapter_.date_creation;
-
+            subchapter_.ListClass = lclass_;
             ViewBag.chapter_id = new SelectList(db.Chapter_, "id", "name", subchapter_.chapter_id);
             return View(subchapter_);
         }
@@ -361,6 +363,9 @@ namespace ELearning.Controllers
 
 
             }
+            var lclass_ = (from c in db.Class_
+                           select c).ToList();
+            subchapter_.ListClass = lclass_;
             ViewBag.chapter_id = new SelectList(db.Chapter_, "id", "name", subchapter_.chapter_id);
             return View(subchapter_);
         }
