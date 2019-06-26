@@ -1,0 +1,143 @@
+﻿@model ELearning.Models.ContactViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutContact.cshtml";
+}
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Card</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/Contact2Style.css">
+
+
+
+    @*@if (Model.msg != null)
+    {
+        var m = new MvcHtmlString(Model.msg);
+        <script>
+            window.onload = function () {
+                alert("@m");
+            };
+        </script>
+    }*@
+</head>
+
+<div class="wrapper">
+    @using (Html.BeginForm("EnvoieMail", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="content">
+            <h2 class="text-info text-muted">Contactez-nous !</h2>
+            <form>
+                <input placeholder="Objet" id="title" name="title">
+                <textarea placeholder="Ecrivez votre message..." id="message" name="message"></textarea>
+                <div id="thanks"> <h2>Merci, votre message a bien été envoyé !</h2></div>
+
+
+                <div class="btn-wrapper ">
+                    <button class="btn" type="submit" id="send">
+                        Envoyer <span class="svg-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 806.83 405">
+                                <title>Asset 1</title>
+                                <g id="Layer_2" data-name="Layer 2">
+                                    <g id="Layer_2-2" data-name="Layer 2">
+                                        <polygon class="leftwing" points="806.83 0.36 803.72 0.95 802.24 1.98 806.83 0.36" />
+                                        <polygon class="leftwing" points="800.84 1.5 0 154.14 179.15 221.26 179.09 221 800.84 1.5" />
+                                        <polygon class="center" points="257.27 271.2 251.59 267.5 799.34 3.99 802.24 1.98 803.72 0.95 805.09 0 800.84 1.5 179.09 221 179.15 221.26 221.09 405 226.42 401.31 252.09 268 257.27 271.2" />
+                                        <polygon class="bottom" points="256.77 270.7 251.59 267.5 221.09 405 349.1 330.94 256.77 270.7" />
+                                        <polygon class="rightwing" points="251.59 267.5 257.27 271.2 349.6 331.44 450.09 397 806.59 0.5 799.34 3.99 251.59 267.5" s />
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    }
+</div>
+
+    <div style="height:600px;"></div>
+
+
+
+
+
+
+
+
+    <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <script>
+        function fly() {
+            const form = document.querySelector('form'),
+                msgBox = form.querySelector('textArea')
+            const inputs = form.querySelectorAll('input')
+            const btn = document.querySelector('#send');
+            const thanks = document.querySelector('#thanks');
+            const plane = document.querySelector('.svg-container')
+            btn.addEventListener('mouseup', (e) => e.preventDefault())
+            btn.addEventListener('mouseup', animatePlane)
+            btn.addEventListener('mouseup', thankYouMessage)
+            function thankYouMessage() {
+
+                var tl = new TimelineMax({ onComplete: clearMessage });
+                tl.to('#thanks', .3, { scaleY: 1, ease: Power2.easeIn })
+
+            }
+            function clearMessage() {
+                //clears inputs
+                const clearedInputs = inputs.forEach(input => {
+                    input.value = ""
+                })
+                //clears textarea
+                msgBox.value = ''
+                //removes thankyou msg
+                setTimeout(() => {
+                    var tl = new TimelineMax()
+                    tl.to('#thanks', .3, { scaleY: 0, ease: Power2.easeIn })
+                }, 2000)
+            }
+            function animatePlane() {
+                var tl = new TimelineMax({ onComplete: remove });
+                tl.fromTo('.svg-container', .2,
+                    {
+                        xPercent: 0,
+                        rotation: 0,
+                    },
+                    {
+                        xPercent: 100,
+                        ease: Power0.easeNone
+
+                    }
+                )
+                    .to('.svg-container', .5, {
+                        xPercent: 200,
+                        rotation: -360,
+                        scale: .8,
+                        ease: Power0.easeNone,
+                        transformOrigin: "center -100%",
+                    })
+                    .to('.svg-container', .4, {
+                        x: 800,
+                        y: -300,
+                        scale: 2.5,
+                        ease: Power0.easeNone,
+                    })
+
+            }
+            function remove() {
+                var tl = new TimelineMax()
+                //	plane.style.transform= `translate3d(-100vw, 0,0)`
+                tl.fromTo('.svg-container', 1,
+                    { x: -700, rotation: 60 },
+                    { transform: `translate3d(0, 0,0)`, ease: Power4.easeOut })
+
+            }
+        }
+        window.onload = fly()
+
+    </script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js'></script>

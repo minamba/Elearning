@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{ 
+    string user_name = @ViewBag.uname;
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ullog class="navbar-nav ml-auto">
+        <li>
+          
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-user"/>
+            </a>
+            <div class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdownLG">
+                <a class="dropdown-item disabled text-white" href="#"><b>Bonjour @user_name</b></a>
+                @*<div class="dropdown-divider text-dark"></div>*@
+                <a class="dropdown-item bg-light text-dark" href="@Url.Action("Index", "Manage", new { title = "Gerer mon compte" })">Mon compte</a>
+                <a class="dropdown-item bg-light text-dark" href="javascript:document.getElementById('logoutForm').submit()">Se déconnecter</a>
+            </div>
+        </li>
+    </ullog>
+    }
+}

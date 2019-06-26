@@ -1,0 +1,71 @@
+﻿@model ELearning.Models.User_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+
+    <div class="container-fluid pt-5 pb-5">
+        <section class="bg-light col-md-12 col-lg-12 col-12 pb-5 pt-5 bg-danger shadow">
+            @*<h3>êtes vous sure de vouloir supprimer cet utilisateur?</h3>*@
+                    <h3 class="text-muted">Êtes vous sure de vouloir supprimer cet utilisateur ?</h3>
+                    <hr class="hrColor" />
+                    <dl class="dl-horizontal col-lg-12">
+                        <dt class="text-muted">
+                            @Html.DisplayNameFor(model => model.last_name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.last_name)
+                        </dd>
+
+                        <dt class="text-muted">
+                            @Html.DisplayNameFor(model => model.first_name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.first_name)
+                        </dd>
+
+                        <dt class="text-muted">
+                            @Html.DisplayNameFor(model => model.mail)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.mail)
+                        </dd>
+
+                        <dt class="text-muted">
+                            @Html.DisplayNameFor(model => model.type)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.type)
+                        </dd>
+
+                        <dt class="text-muted">
+                            @Html.DisplayNameFor(model => model.Group_.name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Group_.name)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+            {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+                            @Html.ActionLink("Retour à la liste des utilisateurs", "AdminUser")
+                        </div>
+                    }
+  
+        </section>
+    </div>
+    <div style="height:1000px;"></div>
+    </div>

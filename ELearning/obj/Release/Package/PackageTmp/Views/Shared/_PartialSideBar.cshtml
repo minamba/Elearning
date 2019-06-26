@@ -1,0 +1,79 @@
+﻿
+<link rel="stylesheet" type="text/css" href="~/Content/SideBarStyle.css">
+
+@{ 
+    @*@ViewBag.uactivity;
+    @ViewBag.tactivity;
+    @ViewBag.cactivity;
+    @ViewBag.chactivity;
+    @ViewBag.sactivity;
+    @ViewBag.gactivity;*@
+}
+
+@*<div class="wrapper">*@ 
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3 class="text-white dashBoardTextSize">Tableau de bord</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Administration</p>
+            <li class="@ViewBag.uactivity">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Utilisateurs</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li><a href="#"></a></li>
+                    <li><a href="~/User_/AdminUser">Liste (Editer/supprimer)</a></li>
+                    <li><a href="~/User_/Create">Créer</a></li>
+                    <li><a href="~/User_/GeneralActivation">Activation (Général)</a></li>
+                </ul>
+            </li>
+            <li class="@ViewBag.tactivity">
+                <a href="#themeSubmenu" data-toggle="collapse" aria-expanded="false">Thèmes</a>
+                <ul class="collapse list-unstyled" id="themeSubmenu">
+                    <li><a href="~/Theme_/AdminTheme">Liste (Editer/supprimer)</a></li>
+                    <li><a href="~/Theme_/Create">Créer</a></li>
+                </ul>
+            </li>
+            <li class=" @ViewBag.cactivity">
+                <a href="#coursSubmenu" data-toggle="collapse" aria-expanded="false">Cours</a>
+                <ul class="collapse list-unstyled" id="coursSubmenu">
+                    <li><a href="~/Class_/AdminClass">Liste (Editer/supprimer)</a></li>
+                    <li><a href="~/Class_/Create">Créer</a></li>
+                </ul>
+            </li>
+            <li class=" @ViewBag.chactivity">
+                <a href="#chapSubmenu" data-toggle="collapse" aria-expanded="false">Chapitres</a>
+                <ul class="collapse list-unstyled" id="chapSubmenu">
+                    <li><a href="~/Chapter_/AdminChapter">Liste (Editer/supprimer)</a></li>
+                    <li><a href="~/Chapter_/Create">Créer</a></li>
+                </ul>
+            </li>
+            <li class=" @ViewBag.sactivity">
+                <a href="#schapSubmenu" data-toggle="collapse" aria-expanded="false">Sous-chapitres</a>
+                <ul class="collapse list-unstyled" id="schapSubmenu">
+                    <li><a href="~/Subchapter_/AdminSubchapter">Liste (Editer/supprimer)</a></li>
+                    <li><a href="~/Subchapter_/Create">Créer</a></li>
+                </ul>
+            </li>
+            <li class=" @ViewBag.gactivity">
+                <a href="#schapGroupmenu" data-toggle="collapse" aria-expanded="false">Classe</a>
+                <ul class="collapse list-unstyled" id="schapGroupmenu">
+                    <li><a href="~/Group_/AdminGroup">Liste (Editer/supprimer)</a></li>
+                    <li><a href="~/Group_/Create">Créer</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    @*</div>*@
+
+<script>
+    $(document).ready(function () {
+        $("#sidebarCollapse").on("click", function () {
+            $("#sidebar").toggleClass("active");
+            $(this).toggleClass("active");
+        });
+    });
+
+</script>

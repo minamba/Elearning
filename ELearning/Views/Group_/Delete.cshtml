@@ -1,0 +1,41 @@
+﻿@model ELearning.Models.Group_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid pt-5">
+        <section class="col-md-12 col-lg-10 col-12 pt-5 pb-5 shadow">
+            <h3 class="text-muted">
+                Suppression groupe
+            </h3>
+            <hr class="hrColor" />
+            <p>Êtes vous sure de vouloir supprimer ce groupe ?</p>
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+
+                    <div class="form-group">
+                        <b>@Html.DisplayNameFor(model => model.name) :  </b>
+                        @Html.DisplayFor(model => model.name)
+                    </div>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <input type="submit" value="Supprimer" class="btn btn-danger center" /> |
+                        @Html.ActionLink("Retour à la liste des groupes", "AdminGroup")
+                    </div>
+                }
+            </div>
+        </section>
+
+    </div>
+    <div style="height:1000px;"></div>
+</div>

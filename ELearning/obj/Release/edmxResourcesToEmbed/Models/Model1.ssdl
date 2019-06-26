@@ -1,0 +1,428 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="elearningModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Chapter_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="class_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Class_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="description" Type="text" />
+    <Property Name="theme_id" Type="int" />
+    <Property Name="group_id" Type="int" />
+    <Property Name="create_date" Type="date" />
+    <Property Name="url_img" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Comment_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="message" Type="nvarchar(max)" />
+    <Property Name="date_message" Type="datetime" />
+    <Property Name="classe_id" Type="int" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="sub_chapter_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Group_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Reply_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="comment_id" Type="int" />
+    <Property Name="date_reply" Type="datetime" />
+    <Property Name="message" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Seen_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_asp_net_id" Type="nvarchar" MaxLength="128" />
+    <Property Name="subchapter_id" Type="int" />
+    <Property Name="seen" Type="bit" />
+    <Property Name="chapter_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Subchapter_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="content" Type="varbinary(max)" />
+    <Property Name="description" Type="text" />
+    <Property Name="chapter_id" Type="int" />
+    <Property Name="url_video" Type="nvarchar(max)" />
+    <Property Name="date_creation" Type="datetime" />
+    <Property Name="url_file" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Theme_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="url_img" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="User_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="last_name" Type="nvarchar(max)" />
+    <Property Name="first_name" Type="nvarchar(max)" />
+    <Property Name="mail" Type="nvarchar(max)" />
+    <Property Name="type" Type="int" />
+    <Property Name="group_id" Type="int" />
+    <Property Name="user_asp_net_id" Type="nvarchar(max)" />
+    <Property Name="sexe" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_validate" Type="bit" />
+  </EntityType>
+  <EntityType Name="Video_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="file_size" Type="int" />
+    <Property Name="file_path" Type="nvarchar(max)" />
+    <Property Name="subchapter_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Chapter__Class_">
+    <End Role="Class_" Type="Self.Class_" Multiplicity="0..1" />
+    <End Role="Chapter_" Type="Self.Chapter_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chapter_">
+        <PropertyRef Name="class_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class__Group_">
+    <End Role="Group_" Type="Self.Group_" Multiplicity="0..1" />
+    <End Role="Class_" Type="Self.Class_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Class_">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class__Theme_">
+    <End Role="Theme_" Type="Self.Theme_" Multiplicity="0..1" />
+    <End Role="Class_" Type="Self.Class_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Theme_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Class_">
+        <PropertyRef Name="theme_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment__Class_1">
+    <End Role="Class_" Type="Self.Class_" Multiplicity="0..1" />
+    <End Role="Comment_" Type="Self.Comment_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment_">
+        <PropertyRef Name="classe_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment__Subchapter_">
+    <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="0..1" />
+    <End Role="Comment_" Type="Self.Comment_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subchapter_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment_">
+        <PropertyRef Name="sub_chapter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment__User_">
+    <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+    <End Role="Comment_" Type="Self.Comment_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment_">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reply__Comment_">
+    <End Role="Comment_" Type="Self.Comment_" Multiplicity="0..1" />
+    <End Role="Reply_" Type="Self.Reply_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comment_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Reply_">
+        <PropertyRef Name="comment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subchapter__Chapter_">
+    <End Role="Chapter_" Type="Self.Chapter_" Multiplicity="0..1" />
+    <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chapter_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Subchapter_">
+        <PropertyRef Name="chapter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User__Group_">
+    <End Role="Group_" Type="Self.Group_" Multiplicity="0..1" />
+    <End Role="User_" Type="Self.User_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User_">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Video__Subchapter_">
+    <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="1" />
+    <End Role="Video_" Type="Self.Video_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subchapter_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Video_">
+        <PropertyRef Name="subchapter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="elearningModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Chapter_" EntityType="Self.Chapter_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Class_" EntityType="Self.Class_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comment_" EntityType="Self.Comment_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group_" EntityType="Self.Group_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reply_" EntityType="Self.Reply_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Seen_" EntityType="Self.Seen_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subchapter_" EntityType="Self.Subchapter_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Theme_" EntityType="Self.Theme_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_" EntityType="Self.User_" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Video_" EntityType="Self.Video_" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Chapter__Class_" Association="Self.FK_Chapter__Class_">
+      <End Role="Class_" EntitySet="Class_" />
+      <End Role="Chapter_" EntitySet="Chapter_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class__Group_" Association="Self.FK_Class__Group_">
+      <End Role="Group_" EntitySet="Group_" />
+      <End Role="Class_" EntitySet="Class_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class__Theme_" Association="Self.FK_Class__Theme_">
+      <End Role="Theme_" EntitySet="Theme_" />
+      <End Role="Class_" EntitySet="Class_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment__Class_1" Association="Self.FK_Comment__Class_1">
+      <End Role="Class_" EntitySet="Class_" />
+      <End Role="Comment_" EntitySet="Comment_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment__Subchapter_" Association="Self.FK_Comment__Subchapter_">
+      <End Role="Subchapter_" EntitySet="Subchapter_" />
+      <End Role="Comment_" EntitySet="Comment_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment__User_" Association="Self.FK_Comment__User_">
+      <End Role="User_" EntitySet="User_" />
+      <End Role="Comment_" EntitySet="Comment_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reply__Comment_" Association="Self.FK_Reply__Comment_">
+      <End Role="Comment_" EntitySet="Comment_" />
+      <End Role="Reply_" EntitySet="Reply_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subchapter__Chapter_" Association="Self.FK_Subchapter__Chapter_">
+      <End Role="Chapter_" EntitySet="Chapter_" />
+      <End Role="Subchapter_" EntitySet="Subchapter_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User__Group_" Association="Self.FK_User__Group_">
+      <End Role="Group_" EntitySet="Group_" />
+      <End Role="User_" EntitySet="User_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Video__Subchapter_" Association="Self.FK_Video__Subchapter_">
+      <End Role="Subchapter_" EntitySet="Subchapter_" />
+      <End Role="Video_" EntitySet="Video_" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

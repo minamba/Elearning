@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("head", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap1.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+</head>
+<body>
+    <!-----------------------------------------BARRE DE NAVIGATION------------------------------------------------>
+    <div class="sticky-top shadow-lg">
+        <nav class="navbar navbar-expand-md navbar-dark navbarBgColor">
+
+            @if (ViewBag.currentPage != null)
+            {
+                <input class="btn text-dark btnsize shadow" type="button" value="Admin" id="sidebarCollapse" style="background-color:floralwhite;" />
+            }
+            <button class="navbar-toggler align-self-start float-right mt-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContentLG" aria-controls="navbarSupportedContentLG" aria-expanded="false" aria-label="Toggle navigation" style="width:40px;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse mobileMenu" id="navbarSupportedContentLG">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">Acceuil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cours
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownLG">
+                            <a class="dropdown-item bg-light" href="@Url.Action("Index", "Theme_")">Thème</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a>
+                    </li>
+
+                    <li class="nav-item float-right">
+                        @if (ViewBag.Role == 1)
+                        {
+                            <a class="nav-link" href="@Url.Action("AdminUser", "User_")">Administration</a>
+                        }
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </nav>
+    </div>
+    <!-----------------------------------------ENTETE------------------------------------------------------------>
+    @RenderBody()
+    @Html.Partial("_FooterPartial");
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
+
+
+
+<script>
+    $(window).scroll(function () {
+        if ($(document).scrollTop() > 100) {
+            $('.navbar').addClass('color-change');
+        } else {
+            $('.navbar').removeClass('color-change');
+        }
+    });
+</script>

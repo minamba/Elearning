@@ -1,0 +1,583 @@
+html{
+    font-size:10px;
+}
+
+body{
+
+    margin: 0;
+    font-family: "Lato", "sans-serif";
+    background-color: #f7f7f7;
+}
+
+
+/* Navigation */
+
+#navigation {
+    position:fixed;
+    z-index: 40;
+    width: 100%;
+    background-color: #f0Ead6;
+    text-align : center;
+    height: 10rem;
+    clip-path: polygon(0% 0%,100% 0%, 100% 70%,55% 70%,50% 90%, 45% 70%, 0% 70%); /* permet de creer la petite encoche de la barre de navigation**/
+    transition: all 0.4s ease-in-out; /* toutes les transition faite sur la barre de navigation va durer 0.4s*/
+
+    /*anime gs*/
+    opacity:0;
+}
+
+
+#navigation a {
+    text-decoration: none;
+    font-size: 3rem;
+    padding: 1rem 5rem; /****(1 rem = 10px ref a la balise html tout en haut de la feuille !!! 1rem en haut et en bas et 5rem soit 50 pixel a gauche et a droite de chaque lien)**/
+    line-height: 6.5rem; /*Hauteur de ligne des liens*/
+    font-family: 'Kaushan Script';
+    margin: auto;
+    color:black;
+}
+
+
+#navigation  a:active{
+    font-size: 4rem;
+}
+
+.icon{
+    display:none;
+}
+
+
+/* Header acceuil */
+
+header{
+    background-color: aqua;
+    height: 100vh; /*vh = view port height ! 100vh = 100% de la hauteur de l'ecran*/
+    width: 100%;
+    background: url(/ressources/imgBackground.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+
+h1{
+    text-align: center;
+    margin: 0;
+    color:white;
+    position:relative;
+    top:30rem;
+    font-family: 'Kaushan Script';
+    font-size: 11rem;
+
+    /*anime gs */
+    opacity: 0;
+}
+
+
+header h2{
+    text-align: center;
+    margin: 0;
+    color:#f7f7f7;
+    position: relative;
+    top : 32rem;
+    font-family: 'Abril FatFace';
+    font-size: 5rem;
+    letter-spacing: 0.2rem; /* letter spacing permet de mettre un espace entre les lettres*/
+       
+    /*anime gs */
+       opacity: 0;
+}
+
+
+header #arrow{
+  color:black;
+  height: 8rem;
+  width: 8rem;
+  position: absolute;
+  top:90%;
+  left:50%;
+  transform : translate(-50%, -50%); /*permet de vraiment centrer l'element*/
+  font-size: 4rem;
+  line-height: 8rem;
+  text-align: center;
+  text-decoration : none;
+  border-radius:50%;
+  background: white;
+  box-shadow: 0 0 0 0 #fff;
+  animation: pulse 1.3s infinite;
+
+  /*Anime greensock*/
+  opacity: 0;
+}
+
+
+@keyframes pulse {
+    to{
+        box-shadow: 0 0 0 1rem rgba(255,255,255,0.01);
+    }
+}
+
+
+/***premiere section about 3 photos****/
+.section-about {
+    background-color: #f7f7f7;
+    padding-bottom: 10rem;
+
+}
+
+.centerH{
+    text-align: center;
+    margin-bottom:8rem;
+}
+
+.titreAbout{
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block;
+    background-image: linear-gradient(to right, #373737,#c0b283);
+    -webkit-background-clip: text; /*quand une propriété ne marche pas avec tous les navigateurs */ /**WEBKIT CEST POUR CHROME ET SAFARI*/
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.2rem;
+    padding-top: 5rem;
+}
+
+
+.row{
+    max-width:114rem;
+    margin:0 auto;
+}
+
+
+.sousTitreAbout{
+    font-size: 1.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.paragraphe{
+
+    font-size: 1.9rem;
+}
+
+.paragraphe:not(:last-child){    /*not(:last-child) le dernier paragraphe ne sera pas affecté du margin bottom*/
+    margin-bottom: 3rem;
+}
+
+
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row [class^="col-"]{ /* sert a selectionner les 2 element qui commence par 'col-'*/
+    float: left;
+}
+
+.row [class^="col-"]:not(:last-child){
+
+    margin-right:6rem;
+}
+
+.row .col-1-of-2 {
+    width: calc((100% - 6rem)/2); /*CALC permet de faire des calculs en css**/
+}
+
+
+
+.composition{
+    position: relative;
+}
+
+.composition_photo{
+    width:55%;
+    box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.4);
+    border-radius: 2px;
+    position: absolute;
+    z-index : 10;
+    transition: all .2s;
+    outline-offset: 2rem; /*border qui apparaitront quand on survolera les images*/
+}
+
+.composition_photo--1{
+
+    left: 0;
+    top:-2rem;
+}
+
+.composition_photo--2{
+
+    right: 0;
+    top:2rem;
+}
+
+.composition_photo--3{
+
+    left: 20%;
+    top:10rem;
+}
+
+.composition_photo:hover{
+    outline: 1.5rem solid #c0b283;
+    transform: scale(1.05) translateY(-0.5rem); /*le scale permet de faire grgossir de 1.05% la photo lorsquon passe la souris dessus*/ /* translatey va permettre de faire monter les images de 0.5% lorsqu'on passe la souris dessus*/
+    box-shadow: 0 2.5rem 4rem rgba(0,0,0,0.5);
+    z-index:30;
+}
+
+.composition:hover .composition_photo:not(:hover){ /*les photo qui ne seront pas hover (donc le curseur de la souris ne sera pas sur eux, on reduit la taille des images de 5%)*/
+    transform: scale(0.95);
+}
+
+
+/*Section Tarifs*/
+
+#tarif{
+    border-top: 1px dashed rgb(209,174,59);
+}
+
+
+#tarifs h2{
+    text-align: center;
+    font-size: 5.5rem;
+    background: #f7f7f7;
+    background-image: linear-gradient(to right,#000000, rgb(255,239,185));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    padding-top: 4rem;
+}
+
+
+#containerFlex{
+    background: #f7f7f7;
+    width: 100%;
+    height: 60rem;
+    display: flex;
+    align-items: center; /* dispo et sutilise qu'apres avoir utiliser le display flex*/
+    justify-content: center; /*dispo sutilise qu'apres avoir utiliser le display flex*/
+    padding-bottom: 8rem;
+}
+
+
+.flexCards{
+    width:30rem;
+    height: 45rem;
+    margin:2rem;
+    transition: all .2 ease-in;
+}
+
+
+.flexCards:nth-child(1){   /*nth-child(1) cible la premiere carte*/
+ border:1px dashed #373737;
+}
+
+.flexCards:nth-child(2){   /*nth-child(1) cible la deuxieme carte*/
+    border:none;
+   }
+
+   .flexCards:nth-child(3){   /*nth-child(1) cible la troisieme carte*/
+    border:1px dashed #373737;
+   }
+
+
+
+   .head{
+       width: 100%;
+       height: 10rem;
+       text-align:center;
+       columns: #373737;
+       background:#f0Ead6;
+   }
+
+
+   .head p{
+       margin:0;
+       font-size : 3rem;
+       line-height: 10rem;
+       font-family: 'Abril Fatface';
+   }
+
+   .contenu{
+       margin:auto;
+       text-align: center;
+       font-size: 1.6rem;
+       background: #f0Ead6;
+       height: 6rem;
+       line-height: 6rem; /*premet d'aligner parfaitement dans le conteneur*/
+   }
+
+
+   .prix{
+       margin:0;
+       height: 11rem;
+       background: #f0Ead6;
+   }
+
+
+   .prix p{
+       margin:0 auto;
+       font-size: 5rem;
+       text-align: center;
+       line-height: 11rem;
+       font-family: 'Abril Fatface';
+   }
+
+
+
+   .flexCards:nth-child(2) .head{   /*nth-child(1) cible la deuxieme carte*/
+    background: #373737;
+    color:#ffd700;
+   }
+
+   
+   .flexCards:nth-child(2) .contenu{   /*nth-child(1) cible la deuxieme carte*/
+    background: #373737;
+    color:#ffd700;
+   }
+   
+   .flexCards:nth-child(2) .prix{   /*nth-child(1) cible la deuxieme carte*/
+    background: #373737;
+    color:#ffd700;
+   }
+
+
+   .flexCards:hover{
+
+    transform: scale(1.05);
+   }
+
+
+
+/*Section carousel*/
+
+   #phraseSlide {
+    
+    height: 60rem;
+    width: 100% ;
+    border-top: 1px dashed rgb(209,174,59);
+    background: url(/ressources/sectionBg.jpg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+   }
+
+
+
+   .cadre {
+       position: absolute;
+       top:50%;
+       left:50%;
+       width:110rem;
+       height:40rem;
+       transform:translate(-50%,-50%);
+       border-radius:  2px;
+       background: rgba(55,55,55,0.3);
+       color:white;
+   }
+
+
+   .centre{
+       position: absolute;
+       top:50%;
+       left:0;
+       right:0;
+       margin-top:  -2.25rem;       
+   }
+
+   .carousel {
+    position: relative;
+    width: 100%;
+    /* height: 4.5rem; */
+    text-align : center;
+    line-height: 45px;
+   }
+
+   /*partie ou le reste de la liste des mots va etre caché*/
+   .carousel .changeHidden {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    height: 13rem;
+    line-height: 13rem;
+    width: 100rem;
+    overflow: hidden; /*tout ce qui sort du carousel sera caché*/ 
+   }
+
+   .carousel .changeHidden .contenant {
+
+    position: relative;
+    animation : carousel 8s ease-in-out infinite;
+
+   }
+
+
+   .carousel .changeHidden .element {
+
+    font-weight: 700;
+    font-size: 8rem;
+   }
+
+
+   @keyframes carousel{
+       0%, 20% {
+           transform: translateY(0);
+       }
+
+       25%, 45% {
+        transform: translateY(-13rem);
+    }
+    50%, 70%  {
+        transform: translateY(-26rem);
+    }
+    75%, 95% {
+        transform: translateY(-39rem);
+    }
+    100%{
+        transform: translate(-52rem);
+    }
+   }
+
+
+
+   /*Section Equipe*/
+
+   #equipe{
+       height: 72rem;
+       width: 100%;
+       background: #f7f7f7;
+       border-top: 1px dashed rgb(209,174,59);
+       padding-bottom:10rem; 
+   }
+
+
+   #equipe h3{
+       text-align: center;
+       font-size: 5.5rem;
+       background-image: linear-gradient(to right, #373737, #c0b283);
+       -webkit-background-clip: text;
+       color : transparent;
+       margin-bottom: 0;
+
+   }
+
+
+   #equipe p {
+       text-align: center;
+       font-size: 1.8rem;
+       margin-bottom: 2rem;
+   }
+
+
+   .containerFlexTeam {
+       width: 100%;
+       height: 60rem;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+   }
+
+
+   .team{
+       height: 50rem;
+       width: 40rem;
+       background: #f7f7f7;
+       margin: 5rem;
+       overflow: hidden; /*lorsqu'on va zoomer sur les photo ce qui debordera des photos (sortira de la box) sera caché*/
+   }
+
+   .sousTxt {
+       width: 100%;
+       height: 20%;
+       text-align: center;
+       position: relative;
+       z-index :-2;
+       background: rgb(211,203,178);
+
+   }
+
+
+.sousTxt h4{
+font-size: 2rem;
+margin :0;
+padding-top: 2rem; 
+
+}
+
+.teamPic{
+    width: 100%;
+    height: 80%;
+    position: relative;
+    z-index:1;
+    transition: all 0.4s ease-in-out;
+}
+
+
+.pic1{
+    background: url(/ressources/barber1.jpg);
+    background-position: 30% -25% 
+}
+
+.pic1:hover{
+    transform: scale(1.2);
+}
+
+.pic2{
+    background: url(/ressources/barber2.jpg);
+    background-position: 50% 25% 
+}
+
+.pic2:hover{
+    transform: scale(1.2);
+}
+
+.pic3{
+    background: url(/ressources/barber3.jpg);
+    background-position: 50% 25% 
+}
+
+.pic3:hover{
+    transform: scale(1.2);
+}
+
+#contact{
+    height: 20rem;
+    width: 100%;
+    border-top : 1px dashed rgb(209,174,59);
+}
+
+#contact h2{
+    font-size: 10rem;
+    text-align: center;
+}
+
+
+#contact h3{
+    text-align: center;
+    font-size: 5.5rem;
+    background-image: linear-gradient(to right, #373737, #c0b283);
+    -webkit-background-clip: text;
+    color : transparent;
+}
+
+
+.flexMedias {
+    display: flex;
+    justify-content: center;
+}
+
+
+.medias{
+    font-size: 10rem;
+    margin: 2rem;
+}
+
+.medias a{
+    text-decoration: none;
+    color: black;
+}

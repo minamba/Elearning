@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Chaîne de connexion utilisée dans web.config par l’application pour accéder à la base de données." defaultValue="data source=192.168.0.41,1433;initial catalog=elearning;persist security info=True;user id=minamba;password=minamba1988;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\daryu\\source\\repos\\ELearning\\ELearning\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="elearningEntities-Web.config Connection String" description="elearningEntities Chaîne de connexion utilisée dans web.config par l’application pour accéder à la base de données." defaultValue="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=192.168.0.41,1433;initial catalog=elearning;persist security info=True;user id=minamba;password=minamba1988;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\daryu\\source\\repos\\ELearning\\ELearning\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='elearningEntities']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,49 @@
+﻿@model  ELearning.Models.ThemeViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="wrapper pb-5">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid pb-5">
+        <section class="bg-light col-md-12 col-lg-12 col-12 pt-5 pb-5">
+            <h3 class="text-muted dashBoardTextSize">
+                Liste des thèmes
+            </h3>
+            <hr class="hrColor" />
+            <table class="table table-responsive-md table-striped table-info text-muted border shadow">
+                <!--Table head-->
+                <thead>
+                    <tr class="colorHeader">
+                        <th class="w-50 ">Nom</th>
+                        <th class="w-75 ">Image</th>
+                    </tr>
+                </thead>
+
+                <!--Table head-->
+
+                @foreach (var i in Model.ListTheme)
+                {
+        <!--------------------------------------------->
+
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => i.name)</td>
+              
+                    <td><img class="d-block  w-25" src="../content/img/@i.url_img"/></td>
+                  
+                    <td class="text-success">
+                        @Html.ActionLink("Editer", "Edit", new { id = i.id, url_img = i.url_img })</td>
+                    <td class="text-danger">
+                        @Html.ActionLink("Supprimer", "Delete", new { id = i.id })
+                    </td>
+                </tr>
+
+
+                    <!---------------------------------------->
+                }
+            </table>
+
+        </section>
+    </div>
+    <div style="height:1000px;"></div>
+</div>

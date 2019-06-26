@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="elearningModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Chapter_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="class_id" Type="Int32" />
+    <NavigationProperty Name="Class_" Relationship="elearningModel.FK_Chapter__Class_" FromRole="Chapter_" ToRole="Class_" />
+    <NavigationProperty Name="Subchapter_" Relationship="elearningModel.FK_Subchapter__Chapter_" FromRole="Chapter_" ToRole="Subchapter_" />
+  </EntityType>
+  <EntityType Name="Group_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User_" Relationship="Self.FK_User__Group_" FromRole="Group_" ToRole="User_" />
+    <NavigationProperty Name="Class_" Relationship="elearningModel.FK_Class__Group_" FromRole="Group_" ToRole="Class_" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="last_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="first_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="group_id" Type="Int32" />
+    <Property Name="user_asp_net_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Group_" Relationship="Self.FK_User__Group_" FromRole="User_" ToRole="Group_" />
+    <NavigationProperty Name="Comment_" Relationship="elearningModel.FK_Comment__User_" FromRole="User_" ToRole="Comment_" />
+    <Property Name="sexe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user_validate" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User__Group_">
+    <End Role="Group_" Type="Self.Group_" Multiplicity="0..1" />
+    <End Role="User_" Type="Self.User_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User_">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="elearningEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+    <EntitySet Name="Chapter_" EntityType="Self.Chapter_" />
+    <EntitySet Name="Group_" EntityType="Self.Group_" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User_" EntityType="Self.User_" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User__Group_" Association="Self.FK_User__Group_">
+      <End Role="Group_" EntitySet="Group_" />
+      <End Role="User_" EntitySet="User_" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="Comment_" EntityType="elearningModel.Comment_" />
+    <AssociationSet Name="FK_Comment__User_" Association="elearningModel.FK_Comment__User_">
+      <End Role="User_" EntitySet="User_" />
+      <End Role="Comment_" EntitySet="Comment_" />
+    </AssociationSet>
+    <EntitySet Name="Reply_" EntityType="elearningModel.Reply_" />
+    <AssociationSet Name="FK_Reply__Comment_" Association="elearningModel.FK_Reply__Comment_">
+      <End Role="Comment_" EntitySet="Comment_" />
+      <End Role="Reply_" EntitySet="Reply_" />
+    </AssociationSet>
+    <EntitySet Name="Class_" EntityType="elearningModel.Class_" />
+    <EntitySet Name="Theme_" EntityType="elearningModel.Theme_" />
+    <AssociationSet Name="FK_Chapter__Class_" Association="elearningModel.FK_Chapter__Class_">
+      <End Role="Class_" EntitySet="Class_" />
+      <End Role="Chapter_" EntitySet="Chapter_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class__Group_" Association="elearningModel.FK_Class__Group_">
+      <End Role="Group_" EntitySet="Group_" />
+      <End Role="Class_" EntitySet="Class_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class__Theme_" Association="elearningModel.FK_Class__Theme_">
+      <End Role="Theme_" EntitySet="Theme_" />
+      <End Role="Class_" EntitySet="Class_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment__Class_1" Association="elearningModel.FK_Comment__Class_1">
+      <End Role="Class_" EntitySet="Class_" />
+      <End Role="Comment_" EntitySet="Comment_" />
+    </AssociationSet>
+    <EntitySet Name="Seen_" EntityType="elearningModel.Seen_" />
+    <EntitySet Name="Video_" EntityType="elearningModel.Video_" />
+    <EntitySet Name="Subchapter_" EntityType="elearningModel.Subchapter_" />
+    <AssociationSet Name="FK_Subchapter__Chapter_" Association="elearningModel.FK_Subchapter__Chapter_">
+      <End Role="Chapter_" EntitySet="Chapter_" />
+      <End Role="Subchapter_" EntitySet="Subchapter_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment__Subchapter_" Association="elearningModel.FK_Comment__Subchapter_">
+      <End Role="Subchapter_" EntitySet="Subchapter_" />
+      <End Role="Comment_" EntitySet="Comment_" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Video__Subchapter_" Association="elearningModel.FK_Video__Subchapter_">
+      <End Role="Subchapter_" EntitySet="Subchapter_" />
+      <End Role="Video_" EntitySet="Video_" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Comment_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="date_message" Type="DateTime" Precision="3" />
+    <Property Name="classe_id" Type="Int32" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="sub_chapter_id" Type="Int32" />
+    <NavigationProperty Name="User_" Relationship="elearningModel.FK_Comment__User_" FromRole="Comment_" ToRole="User_" />
+    <NavigationProperty Name="Reply_" Relationship="elearningModel.FK_Reply__Comment_" FromRole="Comment_" ToRole="Reply_" />
+    <NavigationProperty Name="Class_" Relationship="elearningModel.FK_Comment__Class_1" FromRole="Comment_" ToRole="Class_" />
+    <NavigationProperty Name="Subchapter_" Relationship="elearningModel.FK_Comment__Subchapter_" FromRole="Comment_" ToRole="Subchapter_" />
+  </EntityType>
+  <Association Name="FK_Comment__User_">
+    <End Type="elearningModel.User_" Role="User_" Multiplicity="0..1" />
+    <End Type="elearningModel.Comment_" Role="Comment_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment_">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Reply_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="comment_id" Type="Int32" />
+    <Property Name="date_reply" Type="DateTime" Precision="3" />
+    <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Comment_" Relationship="elearningModel.FK_Reply__Comment_" FromRole="Reply_" ToRole="Comment_" />
+  </EntityType>
+  <Association Name="FK_Reply__Comment_">
+    <End Type="elearningModel.Comment_" Role="Comment_" Multiplicity="0..1" />
+    <End Type="elearningModel.Reply_" Role="Reply_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comment_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Reply_">
+        <PropertyRef Name="comment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Class_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="theme_id" Type="Int32" />
+    <Property Name="group_id" Type="Int32" />
+    <Property Name="create_date" Type="DateTime" Precision="0" />
+    <Property Name="url_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Chapter_" Relationship="elearningModel.FK_Chapter__Class_" FromRole="Class_" ToRole="Chapter_" />
+    <NavigationProperty Name="Group_" Relationship="elearningModel.FK_Class__Group_" FromRole="Class_" ToRole="Group_" />
+    <NavigationProperty Name="Theme_" Relationship="elearningModel.FK_Class__Theme_" FromRole="Class_" ToRole="Theme_" />
+    <NavigationProperty Name="Comment_" Relationship="elearningModel.FK_Comment__Class_1" FromRole="Class_" ToRole="Comment_" />
+  </EntityType>
+  <EntityType Name="Theme_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="url_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Class_" Relationship="elearningModel.FK_Class__Theme_" FromRole="Theme_" ToRole="Class_" />
+  </EntityType>
+  <Association Name="FK_Chapter__Class_">
+    <End Type="elearningModel.Class_" Role="Class_" Multiplicity="0..1" />
+    <End Type="elearningModel.Chapter_" Role="Chapter_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chapter_">
+        <PropertyRef Name="class_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class__Group_">
+    <End Type="elearningModel.Group_" Role="Group_" Multiplicity="0..1" />
+    <End Type="elearningModel.Class_" Role="Class_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Class_">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class__Theme_">
+    <End Type="elearningModel.Theme_" Role="Theme_" Multiplicity="0..1" />
+    <End Type="elearningModel.Class_" Role="Class_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Theme_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Class_">
+        <PropertyRef Name="theme_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment__Class_1">
+    <End Type="elearningModel.Class_" Role="Class_" Multiplicity="0..1" />
+    <End Type="elearningModel.Comment_" Role="Comment_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment_">
+        <PropertyRef Name="classe_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Seen_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_asp_net_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="subchapter_id" Type="Int32" />
+    <Property Name="seen" Type="Boolean" />
+    <Property Name="chapter_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Video_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="file_size" Type="Int32" />
+    <Property Name="file_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="subchapter_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Subchapter_" Relationship="elearningModel.FK_Video__Subchapter_" FromRole="Video_" ToRole="Subchapter_" />
+  </EntityType>
+  <EntityType Name="Subchapter_">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="chapter_id" Type="Int32" />
+    <Property Name="url_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Chapter_" Relationship="elearningModel.FK_Subchapter__Chapter_" FromRole="Subchapter_" ToRole="Chapter_" />
+    <NavigationProperty Name="Comment_" Relationship="elearningModel.FK_Comment__Subchapter_" FromRole="Subchapter_" ToRole="Comment_" />
+    <NavigationProperty Name="Video_" Relationship="elearningModel.FK_Video__Subchapter_" FromRole="Subchapter_" ToRole="Video_" />
+    <Property Name="date_creation" Type="DateTime" Precision="3" />
+    <Property Name="url_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Subchapter__Chapter_">
+    <End Type="elearningModel.Chapter_" Role="Chapter_" Multiplicity="0..1" />
+    <End Type="elearningModel.Subchapter_" Role="Subchapter_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chapter_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Subchapter_">
+        <PropertyRef Name="chapter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment__Subchapter_">
+    <End Type="elearningModel.Subchapter_" Role="Subchapter_" Multiplicity="0..1" />
+    <End Type="elearningModel.Comment_" Role="Comment_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subchapter_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment_">
+        <PropertyRef Name="sub_chapter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Video__Subchapter_">
+    <End Type="elearningModel.Subchapter_" Role="Subchapter_" Multiplicity="1" />
+    <End Type="elearningModel.Video_" Role="Video_" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subchapter_">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Video_">
+        <PropertyRef Name="subchapter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

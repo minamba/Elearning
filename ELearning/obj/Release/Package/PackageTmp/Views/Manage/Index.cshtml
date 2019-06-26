@@ -1,0 +1,44 @@
+﻿@model ELearning.Models.IndexViewModel
+@{
+    ViewBag.Title = "Gérer";
+}
+
+    <!-------------------------------------------------------------HEADER---------------------------------------------------------------------->
+    <div class="jumbotron-fluid col-12 col-md-12 col-lg-12 mx-auto backgroundHome pb-5">
+        <header>
+            <!-----------------------------------------TEXT DU HEADER------------------------------------------------>
+            <h1 class="animated bounceInDown text-white text-center bigtitlePosition" style="font-size:8vw;"><b class="text-info">G</b>estion de mon compte</h1>
+            <span class="animated bounce centered"></span>
+        </header>
+    </div>
+
+    <!-------------------------------------------------------------FIN HEADER---------------------------------------------------------------------->
+
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <div class="container-fluid pt-5">
+        <section class="col-lg-8 col-md-12 col-12 col-lg-offset-2 shadow ">
+            <h3 class="text-center text-muted">Changer les paramètres de votre compte</h3>
+            <hr class="hrColor" />
+
+            <div class="container col-lg-12 col-lg-offset-4 col-md-offset-2">
+                <div class="col-lg-2">
+                    Mot de passe :
+                </div>
+
+                <div class="col-lg-8">
+                    [
+                    @if (Model.HasPassword)
+            {
+                        @Html.ActionLink("Changer votre mot de passe", "ChangePassword")
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Créer", "SetPassword")
+                    }
+                    ]
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <div style="height:500px;"></div>

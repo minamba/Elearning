@@ -1,0 +1,92 @@
+﻿@model  PagedList.IPagedList<ELearning.Models.User_>
+@using PagedList.Mvc;
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+
+    <div class="container-fluid col-lg-12">
+
+        <h3 class="text-muted dashBoardTextSize pt-5">Liste des utilisateurs</h3>
+        <hr class="hrColor" />
+        <div class="bg-light p-0 col-12 col-md-12 col-lg-12 pb-4 shadow ">
+
+
+            @using (Html.BeginForm("AdminUser", "User_", FormMethod.Get))
+            {
+                <p class=" text-success">
+                    Filtre (nom/prénom): @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <input class="btn btn-info" type="submit" value="Rechercher" />
+                </p>
+            }
+            <table class="table table-responsive-lg table-striped table-info text-muted border">
+                <!--Table head-->
+                <thead>
+                    <tr class="colorHeader">
+                        <th>
+                            @Html.ActionLink("Nom", "AdminUser", new { sortOrder = ViewBag.lastNameSortParam, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Prénom", "AdminUser", new { sortOrder = ViewBag.firstNameSortParam, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="w-25 colorHeader">Email</th>
+                        <th class="w-25 colorHeader">Type</th>
+                        <th class="w-25 colorHeader">Groupe</th>
+                        <th class="w-25 colorHeader">Compte activé</th>
+                        <th class="w-25 colorHeader"></th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+
+                <!--Table head-->
+
+                @foreach (var i in Model)
+                {
+        <!--------------------------------------------->
+
+                    <tr>
+                        <td>@i.last_name</td>
+                        <td>@i.first_name</td>
+                        <td>@i.mail</td>
+
+
+                        @if (@i.type == 1)
+                        {
+                            <td>Administrateur</td>
+                        }
+                        else if(@i.type == 3)
+                        {
+                            <td>Cheikh</td>
+                        }
+                        else
+                        {
+                            <td>Utilisateur</td>
+                        }
+                        <td>@i.Group_.name</td>
+
+                        @if (@i.user_validate == false)
+                        {
+                            <td class="text-danger">Non</td>
+                        }
+                        else
+                        {
+                            <td class="text-success">Oui</td>
+                        }
+
+                        <td class="text-success">@Html.ActionLink("Editer", "Edit", new { id = i.id })</td>
+                        <td class="text-danger">@Html.ActionLink("Supprimer", "Delete", new { id = i.id })</td>
+                    </tr>
+
+                    <!---------------------------------------->
+                }
+            </table>
+            <br />
+            Page <b class="colorHeader">@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)</b> sur @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("AdminUser", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+        </div>
+    </div>
+    <div style="height:1000px;"></div>
+</div>
