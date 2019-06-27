@@ -12,14 +12,24 @@ namespace ELearning.Controllers
     public class HomeController : Controller
     {
         elearningEntities db = new elearningEntities();
-
-
         [Authorize]
         public ActionResult Index()
         {
             /**************************************GET CURRENT PAGE********************************/
             ViewBag.currentPage = null;
             /**************************************GET CURRENT PAGE********************************/
+
+            try
+            {
+                var test = (from d in db.User_
+                            select d).ToList();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
 
             var vm = new HomeWithClassAndSubchapterViewModel();
             var uid="";
@@ -138,7 +148,7 @@ namespace ELearning.Controllers
 
             return View();
         }
-        [Authorize]
+
         public ActionResult Contact(string mess)
         {
             /***************Affichage de l'administration*******************/

@@ -49,7 +49,7 @@
 <div class="jumbotron-fluid col-12 col-md-12 col-lg-12 mx-auto backgroundSubchapter">
     <header class="my-auto">
         <!-----------------------------------------TEXT DU HEADER------------------------------------------------>
-        <h1 class="animated bounceInDown text-white text-center bigtitlePosition" style="font-size:8vw;"><b class="text-info">V</b>idéo</h1>
+        <h1 class="animated bounceInDown text-white text-center bigtitlePosition" style="font-size:8vw;"><b class="text-info">@ViewBag.firstLetterSubChapName</b>@ViewBag.theme_name</h1>
         <span class="animated bounce centered"></span>
     </header>
     <divEffect>
@@ -65,13 +65,9 @@
                 </h2>
             </divh2>
             
-            <div class=" text-white pt-3 pb-3">
-                @foreach (var item in Model.ListSubchapter)
-            {
-                    @*<h2 class=" text-muted">Description</h2>*@
-                    <p class="text-dark text-center" data-aos="zoom-in">@item.description</p>
-                    ViewBag.subchapterTitle = item.name;
-                }
+            <div class=" text-white pt-3 pb-3">      
+                <p class="text-dark text-center" data-aos="zoom-in">@Model.CurrentSubchapter.description</p>
+                ViewBag.subchapterTitle = item.name;
             </div>
         </section>
         <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
@@ -90,50 +86,47 @@
     <!------------------------------------------------------------PARTIE POWER POINT VIDEO--------------------------------------------------------------------->  
         <section class="container-fluid bg-dark">
             <div class="container bg-dark col-md-12 col-md-offset-2  col-12 col-lg-10 col-lg-offset-1">
-                @foreach (var i in Model.ListSubchapter)
-                {
-                    <!---AFFICHAGE DU POWER POINT-->
-                    if (@i.url_file != null || @i.url_file != " ")
+                    <!---Affichage du power point si le chapitre en possède une-->
+                    @if (@Model.CurrentSubchapter.url_file != null || @Model.CurrentSubchapter.url_file != "")
                     {
                         displayppt = "style = display:block;";
                     }
-                    if (@i.url_file == null || @i.url_file == "")
+                    @if (@Model.CurrentSubchapter.url_file == null || @Model.CurrentSubchapter.url_file == "")
                     {
                         displayppt = "style = display:none;";
                     }
 
-                     <!---AFFICHAGE DE LA VIDEO-->
-                    if (@i.url_video != null || @i.url_video != "")
+                     <!---Affichae de la védeo si le chapitre en possède une-->
+                    @if (@Model.CurrentSubchapter.url_video != null || @Model.CurrentSubchapter.url_video != "")
                     {
                         displayvideo = "style = display:block;";
                     }
-                    if (@i.url_video == null || @i.url_video == "")
+                    @if (@Model.CurrentSubchapter.url_video == null || @Model.CurrentSubchapter.url_video == "")
                     {
                         displayvideo = "style=display:none;";
                     }
 
+                    <!--Ajout du power point-->
+                    <div data-aos="fade-left"  data-aos-offset="300" data-aos-easing="ease-in-sine">
+                        @if (@Model.CurrentSubchapter.url_file != null || @Model.CurrentSubchapter.url_file != "")
+                        {
+                            <div class="pb-5" @displayppt>
+                                <iframe src="@Model.CurrentSubchapter.url_file" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                            </div>
+                        }
+                    </div>
+
+                    <!--Ajout de la vidéo-->
                     <div class="embed-responsive embed-responsive-16by9  mx-auto" @displayvideo data-aos="fade-left"  data-aos-offset="300" data-aos-easing="ease-in-sine">
-                        <!-------------------------------REACTIVER LES VIDEO QUAND ON EN AURA BESOIN---------------------------------->
                         <div class="video-frame shadow-lg" oncontextmenu="return false">
                             <video class="shadow-lg  my-auto w-100" style=" height:auto;" controls>
-                                <source class="" src="@Url.Content("~/content/Video/" + @i.url_video)" type="video/mp4" />
+                                <source class="" src="@Url.Content("~/content/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />
                             </video>
-                        </div>
-                        <!-------------------------------FIN REACTIVER LES VIDEO QUAND ON EN AURA BESOIN---------------------------------->        
+                        </div>   
                     </div>
 
 
-
-      
-
-
-                    if (@i.url_file !=null || @i.url_file!="")
-                    {
-                        <div class="pt-5" @displayppt>
-                            <iframe src="@i.url_file" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-                        </div>
-                    }
-                 }
+        
             </div>
         </section>
 
@@ -227,8 +220,7 @@
 
                                                         }
                                                         else
-                                                        {
-                                                                                                                        
+                                                        {                                                                                                                       
                                                                     <div class="panel-body">
                                                                         <header class="text-left">
                                                                             @{

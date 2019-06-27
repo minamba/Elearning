@@ -61,12 +61,14 @@
                                 @Html.LabelFor(model => model.ClassName, "Cours", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.DropDownListFor(model => model.ListClass, new SelectList(Model.ListClass, "id", "name"),"Selectionner un cours", new { id = "ddlc", style = "width:200px;", onchange = "javascript:GetChapter(this.value);" })
-                                    <br />
-                                    <br />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Chapter_.name, "Chapitre", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
                                     <select id="chapter_id" name="chapter_id" style="width: 200px"></select>
                                 </div>
-                                    <br /><br />
-                                </div>
+                            </div>
 
 
                                 <div class="form-group">
