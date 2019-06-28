@@ -180,7 +180,7 @@ namespace ELearning.Controllers
 
             try
             {
-                mail.SenEmail(user.mail, title, message);
+                mail.SenEmail(user.mail,"webmaster@elearning-malik-ibn-anas.fr", title, message);
                 vm.msg = "Merci, votre e-mail a bien été envoyer à notre équipe";
                 return RedirectToAction("Contact", "Home", new { mess = vm.msg });
             }

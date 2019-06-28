@@ -10,13 +10,13 @@ namespace ELearning.Utilities
 {
     public class SendMail
     {
-        public void SenEmail(string email,string title, string message)
+        public void SenEmail(string mailfrom,string mailto,string title, string message)
         {
             try
             {
                 MailMessage msg = new MailMessage();
-                msg.From = new MailAddress(email);
-                msg.To.Add(new MailAddress("minamba.c@gmail.com"));
+                msg.From = new MailAddress(mailfrom);
+                msg.To.Add(new MailAddress(mailto));
                 msg.Subject = "Malik Ibn Anas - PlateForm E-learning";
 
                 msg.Body = message;

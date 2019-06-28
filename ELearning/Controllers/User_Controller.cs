@@ -19,7 +19,7 @@ namespace ELearning.Controllers
     {
         private ApplicationUserManager _userManager;
         private elearningEntities db = new elearningEntities();
-
+        private static bool status;
         // GET: User_
         [Authorize]
         public ActionResult Index()
@@ -144,9 +144,9 @@ namespace ELearning.Controllers
 
                     var sm = new SendMail();
                     if((bool)model.user_validate == true)
-                        sm.SenEmail("minamba.c@gmail.com", "Bienvenue", "As salamou 3alaykoum wa rahmatulLah " + model.FirstName + ", votre compte à bien été crée et activé, vous pouvez des à present vous connecter sur la plateforme.");
+                        sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr", "minamba.c@gmail.com", "Bienvenue", "As salamou 3alaykoum wa rahmatulLah " + model.FirstName + ", votre compte à bien été crée et activé, vous pouvez des à present vous connecter sur la plateforme.");
                     else
-                        sm.SenEmail("minamba.c@gmail.com", "Bienvenue", "As salamou 3alaykoum wa rahmatulLah " + model.FirstName + ", votre compte à bien été crée, vous recevrez un mail lors de l'activation de votre compte.");
+                        sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr", "minamba.c@gmail.com", "Bienvenue", "As salamou 3alaykoum wa rahmatulLah " + model.FirstName + ", votre compte à bien été crée, vous recevrez un mail lors de l'activation de votre compte.");
 
 
                     return RedirectToAction("AdminUser", "User_");
@@ -256,6 +256,10 @@ namespace ELearning.Controllers
             {
                 return HttpNotFound();
             }
+
+            status = (bool)user_.user_validate;
+
+
             ViewBag.group_id = new SelectList(db.Group_, "id", "name", user_.group_id);
             return View(user_ );
         }
@@ -268,10 +272,10 @@ namespace ELearning.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,last_name,first_name,mail,type,group_id,sexe,user_validate")] User_ user_, User_ model)
         {
+   
+
             if (ModelState.IsValid)
             {
-
-
                 if (model.SelectedType == "Administrateur")
                 {
                     user_.type = 1;
@@ -294,16 +298,17 @@ namespace ELearning.Controllers
                            where u.Email == user_.mail
                            select u).First();
 
+                var us = (from usr in db.User_
+                          where usr.user_asp_net_id == user_.user_asp_net_id
+                          select usr).First();
 
-                var usr = (from us in db.User_
-                           where us.mail == user_.mail
-                           select us).First();
-
-                if (usr.user_validate == false && model.user_validate == true)
+                if (status == false && model.user_validate == true)
                 {
                     var sm = new SendMail();
-                    sm.SenEmail("minamba.c@gmail.com", "Activation de votre Compte", "As salamou 3alaykoum wa rahmatulLah " + usr.first_name + ", votre compte à été activé par un administrateur, vous pouvez des à present vous connecter sur la plateforme.");
+                    sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr", "minamba.c@gmail.com", "Activation de votre Compte", "As salamou 3alaykoum wa rahmatulLah " + us.first_name + ", votre compte à été activé par un administrateur, vous pouvez des à present vous connecter sur la plateforme.");
                 }
+
+
 
                 user_.user_asp_net_id = uid.Id;
                 db.SaveChanges();
@@ -513,7 +518,7 @@ namespace ELearning.Controllers
                         u.user_validate = true;
 
                         var sm = new SendMail();
-                        sm.SenEmail("minamba.c@gmail.com", "Activation de votre Compte", "As salamou 3alaykoum wa rahmatulLah " + u.first_name + ", votre compte à été activé par un administrateur, vous pouvez des à present vous connecter sur la plateforme.");
+                        sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr", "minamba.c@gmail.com", "Activation de votre Compte", "As salamou 3alaykoum wa rahmatulLah " + u.first_name + ", votre compte à été activé par un administrateur, vous pouvez des à present vous connecter sur la plateforme.");
                         ViewBag.activate = "Votre action à bien été pris en compte, les comptes utilisateurs à bien été activé !";
                     }
                 }

@@ -193,7 +193,7 @@ namespace ELearning.Controllers
                     userRegister.Insert_LastName_FirstName(user.Id, model.LastName, model.FirstName,user.Email, model.SelectedGroupe, model.SelectedSexe,null,false);
 
                     var sm = new SendMail();
-                    sm.SenEmail("minamba.c@gmail.com", "Création utilisateur", "Un nouveau membre(" + model.LastName +" "+ model.FirstName+") vient de s'inscrire. Pour que l'utilisateur puisse accéder à la plateforme, veuillez activer son compte.");
+                    sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr","minamba.c@gmail.com", "Création utilisateur", "Un nouveau membre(" + model.LastName +" "+ model.FirstName+") vient de s'inscrire. Pour que l'utilisateur puisse accéder à la plateforme, veuillez activer son compte.");
 
                     ViewBag.messageRegisterOk = "Merci " + model.FirstName + ", Votre compte à bien été crée, vous receverez un mail lors de l'activation de ce dernier.";
 
@@ -271,7 +271,7 @@ namespace ELearning.Controllers
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
 
                 var mail = new SendMail();
-                mail.SenEmail(model.Email,"Réinitialiser le mot de passe", "Réinitialisez votre mot de passe en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
+                mail.SenEmail("webmaster@elearning-malik-ibn-anas.fr", model.Email,"Réinitialiser le mot de passe", "Réinitialisez votre mot de passe en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
             }
 
             // Si nous sommes arrivés là, un échec s’est produit. Réafficher le formulaire

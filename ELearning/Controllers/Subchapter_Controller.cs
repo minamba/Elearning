@@ -487,7 +487,7 @@ namespace ELearning.Controllers
             try
             {
                 //mettre l'adresse du destinataire
-                sm.SenEmail("minamba.c@gmail.com","Réponse à votre message", "As salamou 3alaykoum " +usr.first_name+ "a répondu à votre message ("+message+")");
+                sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr","minamba.c@gmail.com","Réponse à votre message", "As salamou 3alaykoum " +usr.first_name+ "a répondu à votre message ("+message+")");
             }
             catch{
 
