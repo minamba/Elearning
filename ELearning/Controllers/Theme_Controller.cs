@@ -45,22 +45,60 @@ namespace ELearning.Controllers
 
             var vm = new ThemeViewModel();
 
-            var ltheme = (from t in db.Theme_
-                          select t).ToList();
+            var ugid = (from u in db.User_
+                        where u.id == user.id
+                        select u.group_id).First();
 
+            //si l'utilisateur est administrateur ou si c'est cheikh, pas de filtre
+            if (user.type == 1 || user.type == 3)
+            {
+                var ltheme = (from t in db.Theme_
+                              select t).ToList();
+
+                vm.ListTheme = ltheme;
+            }
+            //sinon je filtre l'affichage des themes
+            else
+            {
+                var class_ = (from c in db.Class_
+                              where c.group_id == ugid
+                              select c).ToList();
+
+                var ltheme = (from t in db.Theme_
+                              select t).ToList();
+
+                List<Theme_> finalListTheme = new List<Theme_>();
+
+                for (int i = 0; i < class_.Count; i++)
+                {
+                    for (int j = 0; j < ltheme.Count; j++)
+                    {
+                        if (ltheme[j].id == class_[i].theme_id)
+                        {
+                            if (!finalListTheme.Contains(ltheme[j]))
+                                finalListTheme.Add(ltheme[j]);
+                        }
+                    }
+                }
+
+               
+                vm.ListTheme = finalListTheme;
+            }
+
+
+     
 
             List<string> lfade = new List<string>();
 
             //lfade.Add("fade-up");
             lfade.Add("fade-right");
-            lfade.Add("fade-left");         
+            lfade.Add("fade-left");
             //lfade.Add("flip-left");
             //lfade.Add("flip-right");
             //lfade.Add("fade-up");
 
 
             vm.ListFade = lfade;
-            vm.ListTheme = ltheme;
             return View(vm);
         }
 

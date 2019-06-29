@@ -67,7 +67,6 @@
             
             <div class=" text-white pt-3 pb-3">      
                 <p class="text-dark text-center" data-aos="zoom-in">@Model.CurrentSubchapter.description</p>
-                ViewBag.subchapterTitle = item.name;
             </div>
         </section>
         <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
@@ -111,13 +110,14 @@
                         @if (@Model.CurrentSubchapter.url_file != null || @Model.CurrentSubchapter.url_file != "")
                         {
                             <div class="pb-5" @displayppt>
-                                <iframe src="@Model.CurrentSubchapter.url_file" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                @*<iframe src="@Model.CurrentSubchapter.url_file" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>*@
+                                <iframe src="https://onedrive.live.com/embed?cid=8EB203CB7682B594&amp;resid=8EB203CB7682B594%211321&amp;authkey=AD1FVazcCiF98A4&amp;em=2&amp;wdAr=1.7777777777777777" width="100%" height="100%" frameborder="0">Ceci est un document <a target="_blank" href="https://office.com">Microsoft Office</a> incorporé, optimisé par <a target="_blank" href="https://office.com/webapps">Office Online</a>.</iframe>
                             </div>
                         }
                     </div>
 
                     <!--Ajout de la vidéo-->
-                    <div class="embed-responsive embed-responsive-16by9  mx-auto" @displayvideo data-aos="fade-left"  data-aos-offset="300" data-aos-easing="ease-in-sine">
+                    <div class="embed-responsive embed-responsive-16by9  mx-auto " @displayvideo data-aos="fade-left"  data-aos-offset="300" data-aos-easing="ease-in-sine">
                         <div class="video-frame shadow-lg" oncontextmenu="return false">
                             <video class="shadow-lg  my-auto w-100" style=" height:auto;" controls>
                                 <source class="" src="@Url.Content("~/content/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />

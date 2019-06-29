@@ -128,7 +128,7 @@ namespace ELearning.Controllers
             }
             vm.TagReply2 = l3;
 
-            ViewBag.subchapterTitle = "";
+            ViewBag.subchapterTitle = subchapter_.name;
 
             vm.CurrentSubchapter = subchapter_;
             vm.ListComment = comment;
@@ -323,7 +323,7 @@ namespace ELearning.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,content,description,chapter_id,url_video,url_file")] Subchapter_ subchapter_, Subchapter_ model,HttpPostedFileBase VideoUpload)
+        public ActionResult Edit([Bind(Include = "id,name,content,description,chapter_id,url_video,url_file")] Subchapter_ subchapter_, Subchapter_ model,HttpPostedFileBase VideoUpload, int chapter_id)
         {
             if (ModelState.IsValid)
             {
@@ -343,9 +343,9 @@ namespace ELearning.Controllers
                     subchapter_.date_creation = datesub;
                 }
 
-       
-                
 
+
+                subchapter_.chapter_id = chapter_id;
                 db.Entry(subchapter_).State = EntityState.Modified;
                 db.SaveChanges();
 

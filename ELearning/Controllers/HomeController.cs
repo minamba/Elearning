@@ -50,86 +50,132 @@ namespace ELearning.Controllers
                     ViewBag.uname = user.first_name;
                     ViewBag.Role = user.type;
 
+
+
+
                 var groupUser = (from g in db.Group_
                                  where g.id == user.group_id
                                  select g).First();
 
-                var glclass = (from c in db.Class_
-                              where c.group_id == groupUser.id
-                              select c).OrderByDescending(c => c.create_date).Take(3).ToList();
 
-                var glchapter = (from ch in db.Chapter_
-                                 select ch).ToList();
-
-
-            List<Chapter_> lchapter = new List<Chapter_>();
-                for (int i = 0; i < glchapter.Count; i++)
-                {
-                    for (int j = 0; j < glclass.Count; j++)
+                    //si l'utilisateur est un admin ou si c'est cheikh, je filtre pas l'affichage des cours, theme en fonction de l'user
+                    if (user.type == 1 || user.type == 3)
                     {
-                        if (glchapter[i].class_id == glclass[j].id)
+                        var glclass = (from c in db.Class_
+                                       select c).OrderByDescending(c => c.create_date).Take(3).ToList();
+
+                        var generalchapter = (from ch in db.Chapter_
+                                              select ch).ToList();
+
+
+                        List<Chapter_> glchapter = new List<Chapter_>();
+
+                        for (int i = 0; i < glclass.Count; i++)
                         {
-                            lchapter.Add(glchapter[i]);
-                        }
-                    }
-                }
-
-                /*pour les ppt*/
-                var glsubchapter_ = (from sb in db.Subchapter_
-                                     where sb.url_file != null
-                                     && sb.url_file != ""
-                                     select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
-                /*pour les videos*/
-                var glsubchapter2_ = (from sb in db.Subchapter_
-                                     where sb.url_video != null
-                                     && sb.url_video != ""
-                                     select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
-
-                    List<Chapter_> listChapterAfterFilter = new List<Chapter_>();
-
-                List<Subchapter_> lsubchapter_ = new List<Subchapter_>();
-                List<Subchapter_> lsubchapter2_ = new List<Subchapter_>();
-                    for (int i = 0; i < glclass.Count; i++)
-                {
-                    for (int j = 0; j < glchapter.Count; j++)
-                    {
-                        if (glclass[i].id == glchapter[j].class_id)
-                        {
-                            listChapterAfterFilter.Add(glchapter[j]);
-                        }
-                    }
-                }
-
-
-               for(int i=0; i< glchapter.Count; i++)
-            {
-                for (int j = 0; j < glsubchapter_.Count; j++)
-                {
-                    if (glchapter[i].id == glsubchapter_[j].chapter_id)
-                    {
-                        lsubchapter_.Add(glsubchapter_[j]);
-                    }
-                }
-            }
-
-
-                    for (int i = 0; i < glchapter.Count; i++)
-                    {
-                        for (int j = 0; j < glsubchapter2_.Count; j++)
-                        {
-                            if (glchapter[i].id == glsubchapter2_[j].chapter_id)
+                            for (int j = 0; j < generalchapter.Count; j++)
                             {
-                                lsubchapter2_.Add(glsubchapter2_[j]);
+                                if (glclass[i].id == generalchapter[j].class_id)
+                                {
+                                    glchapter.Add(generalchapter[i]);
+                                }
                             }
                         }
+
+
+
+                        /*pour les ppt*/
+                        var glsubchapter_ = (from sb in db.Subchapter_
+                                             where sb.url_file != null
+                                             && sb.url_file != ""
+                                             select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
+                        /*pour les videos*/
+                        var glsubchapter2_ = (from sb in db.Subchapter_
+                                              where sb.url_video != null
+                                              && sb.url_video != ""
+                                              select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
+
+                        List<Chapter_> listChapterAfterFilter = new List<Chapter_>();
+
+                        for (int i = 0; i < glclass.Count; i++)
+                        {
+                            for (int j = 0; j < glchapter.Count; j++)
+                            {
+                                if (glclass[i].id == glchapter[j].class_id)
+                                {
+                                    listChapterAfterFilter.Add(glchapter[j]);
+                                }
+                            }
+                        }
+
+
+
+
+                        vm.ListClass = glclass;
+                        vm.ListSubChapter = glsubchapter_;
+                        vm.ListSubChapter2 = glsubchapter2_;
+                        ViewBag.classidzero = glclass[0].id;
+                        ViewBag.classdescriptionzero = glclass[0].description;
+                    }
+                    //sinon c'est un utilisateur normal et j'affiche les cours et thème en fonction des droits
+                    else
+                    {
+                        var glclass = (from c in db.Class_
+                                       where c.group_id == groupUser.id
+                                       select c).OrderByDescending(c => c.create_date).Take(3).ToList();
+
+                        var generalchapter = (from ch in db.Chapter_
+                                              select ch).ToList();
+
+
+                        List<Chapter_> glchapter = new List<Chapter_>();
+
+                        for (int i = 0; i < glclass.Count; i++)
+                        {
+                            for (int j = 0; j < generalchapter.Count; j++)
+                            {
+                                if (glclass[i].id == generalchapter[j].class_id)
+                                {
+                                    glchapter.Add(generalchapter[i]);
+                                }
+                            }
+                        }
+
+
+
+                        /*pour les ppt*/
+                        var glsubchapter_ = (from sb in db.Subchapter_
+                                             where sb.url_file != null
+                                             && sb.url_file != ""
+                                             && sb.Chapter_.Class_.group_id == groupUser.id
+                                             select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
+                        /*pour les videos*/
+                        var glsubchapter2_ = (from sb in db.Subchapter_
+                                              where sb.url_video != null
+                                              && sb.url_video != ""
+                                              && sb.Chapter_.Class_.group_id == groupUser.id
+                                              select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
+
+                        List<Chapter_> listChapterAfterFilter = new List<Chapter_>();
+
+                        for (int i = 0; i < glclass.Count; i++)
+                        {
+                            for (int j = 0; j < glchapter.Count; j++)
+                            {
+                                if (glclass[i].id == glchapter[j].class_id)
+                                {
+                                    listChapterAfterFilter.Add(glchapter[j]);
+                                }
+                            }
+                        }
+
+                        vm.ListClass = glclass;
+                        vm.ListSubChapter = glsubchapter_;
+                        vm.ListSubChapter2 = glsubchapter2_;
+                        ViewBag.classidzero = glclass[0].id;
+                        ViewBag.classdescriptionzero = glclass[0].description;
                     }
 
 
-                    vm.ListClass = glclass;
-                vm.ListSubChapter = lsubchapter_;
-                vm.ListSubChapter2 = lsubchapter2_;
-                ViewBag.classidzero = glclass[0].id;
-                ViewBag.classdescriptionzero = glclass[0].description;
 
                 return View(vm);
                 }

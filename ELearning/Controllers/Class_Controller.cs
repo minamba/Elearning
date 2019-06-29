@@ -45,8 +45,17 @@ namespace ELearning.Controllers
 
             /***************************************************************************************/
 
+            var lusergroupe = (from g in db.Group_
+                               select g).ToList();
+
+            var ugid = (from u in db.User_
+                         where u.id == user.id
+                         select u.group_id).First();
+
+
             var class_ = (from c in db.Class_
                           where c.theme_id == theme_id
+                          && c.group_id == ugid
                           select c).ToList();
 
             var theme = (from t in db.Theme_

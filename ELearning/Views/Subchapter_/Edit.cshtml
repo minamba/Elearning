@@ -11,7 +11,7 @@
                     {
                         @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
+                        <div class="form-horizontal flex-lg-row">
                             <h6 class="text-muted">Edition sous chapitre</h6>
                             <hr class="hrColor" />
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -32,8 +32,6 @@
                                     @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-
-
 
                             @*<!--remplissage de la liste des chapitres-->
                             <script language="javascript" type="text/javascript">
@@ -69,13 +67,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Chapter_.name, "Chapitre", htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.chapter_id, "Chapitre", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     <select id="chapter_id" name="chapter_id" style="width: 200px"></select>
                                 </div>
                             </div>*@
-
-
 
 
                             <div class="form-group">
