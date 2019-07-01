@@ -25,6 +25,9 @@
                     <th>
                         Chapitre
                     </th>
+                    <th>
+                        Appartient au cours
+                    </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -48,6 +51,9 @@
                         </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.Chapter_.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Chapter_.Class_.name)
                         </td>
                      
                         <td class="text-success">

@@ -105,7 +105,7 @@
         </divparallax>
     </section>
 
-    <!----------------------------------TITRE ANIMATION----------------------------------------------->
+    @*<!----------------------------------TITRE ANIMATION----------------------------------------------->
     <section class="container-fluid grad3 pb-3 pt-5">
         <divh2 class="mx-auto text-center divh2Size" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0">
             <h2 class="animated col-12 col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
@@ -118,7 +118,7 @@
     <section class="container-fluid bg-light col-lg-12">
         <div class="bg-light p-0 col-12 col-md-12 col-lg-12 pb-4">
             @*<h2 class="text-center">Dernieres vidéos ajoutées</h2>*@
-            <div class="container">
+            @*<div class="container">
                 <div class="card-deck">
                     @for (int i = 0; i < @Model.ListSubChapter.Count; i++)
                     {
@@ -156,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>*@
 
     <!----------------------------------TITRE ANIMATION----------------------------------------------->
     <section class="container-fluid grad12 pb-3 pt-5">
@@ -169,8 +169,8 @@
     <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
 
     <!------------------------------------------------------------------------SECTION 4------------------------------------------------------------------------------------->
-    <section class="container-fluid col-lg-12" style="background-color:black;">
-        <div class="p-0 col-12 col-md-12 col-lg-12 pb-4"  style="background-color:black;">
+    <section class="container-fluid col-lg-12  bg-light">
+        <div class="p-0 col-12 col-md-12 col-lg-12 pb-4  bg-light">
             @*<h2 class="text-center">Dernieres vidéos ajoutées</h2>*@
             <div class="container">
                 <div class="card-deck">
@@ -198,7 +198,7 @@
 
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <b>@Model.ListSubChapter2[i].name <b class="text-info">(@Model.ListSubChapter2[i].Chapter_.name)</b></b>
+                                    <b>@Model.ListSubChapter2[i].Chapter_.name : @Model.ListSubChapter2[i].name <b class="text-info">(@Model.ListSubChapter2[i].Chapter_.Class_.name)</b></b>
                                 </h5>
 
                                 @{
