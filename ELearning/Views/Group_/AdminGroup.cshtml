@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ELearning.Models.Group_>
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid">
+        <section class="col-md-12 col-lg-10 col-12 pt-5 pb-5">
+            <h3 class="text-muted dashBoardTextSize">
+                Liste des groupes
+            </h3>
+            <hr class="hrColor" />
+            <table class="table table-responsive table-striped text-muted border table-info shadow">
+                <tr class="col-md-12 colorHeader">
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr class=" col-md-12 col-lg-12">
+                        <td class="col-md-6 col-lg-6">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td class="col-md-6 col-lg-1 col-lg-offset-6 text-success">
+                            @Html.ActionLink("Editer", "Edit", new { id = item.id })</td>
+                        <td class="col-md-6 col-lg-1 col-lg-offset-6 text-danger">
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </section>
+
+    </div>
+    <div style="height:1000px;"></div>
+</div>

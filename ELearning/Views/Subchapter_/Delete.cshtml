@@ -1,0 +1,63 @@
+﻿@model ELearning.Models.Subchapter_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid pt-5 pb-5">
+        <section class="bg-light col-md-12 col-lg-12 col-12 pt-5 pb-5 shadow">
+                    <h6 class="text-muted">Etes vous sure de vouloir supprimer ce sous-chapitre?</h6>
+                    <div>
+                        @*<h4>Subchapter_</h4>*@
+                        <hr class="hrColor" />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.content)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.content)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.description)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.description)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Chapter_.name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Chapter_.name)
+                            </dd>
+
+                        </dl>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+                                @Html.ActionLink("Retour à la liste des sous-chapitres", "AdminSubChapter")
+                            </div>
+                        }
+                    </div>
+        </section>
+    </div>
+    <div style="height:1000px;"></div>
+    </div>

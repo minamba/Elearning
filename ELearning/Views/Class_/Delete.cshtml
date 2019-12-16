@@ -1,0 +1,68 @@
+﻿@model ELearning.Models.Class_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="row pt-2">
+        <section class="bg-light col-md-12 pt-5 pb-5">
+            <div class="row white col-md-10 centered shadow-lg">
+                <div class="col-md-12">
+                    <h6 class="text-muted">Etes vous sure de vouloir supprimer ce cours?</h6>
+                    <div>
+                        @*<h4>Class_</h4>*@
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.description)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.description)
+                            </dd>
+
+                            <dt>
+                                <p>Groupe</p>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Group_.name)
+                            </dd>
+
+                            <dt>
+                                <p>Thème</p>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Theme_.name)
+                            </dd>
+
+                        </dl>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color pb-5">
+                                <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+                                @Html.ActionLink("Retour à la liste des cours", "AdminClass")
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <div style="height:500px;"></div>
+    </div>

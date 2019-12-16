@@ -1,0 +1,373 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using ELearning.Models;
+using System.IO;
+using Microsoft.AspNet.Identity;
+using ELearning.Utilities;
+
+namespace ELearning.Controllers
+{
+    public class Theme_Controller : Controller
+    {
+        private elearningEntities db = new elearningEntities();
+        private static string ti;
+        // GET: Theme_
+        [Authorize]
+        public ActionResult Index()
+        {
+                           /**************************************GET CURRENT PAGE********************************/
+                string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                ViewBag.currentPage = controllerName;
+                /**************************************GET CURRENT PAGE********************************/
+                /**************************************GET CURRENT PAGE********************************/
+                ViewBag.currentPage = null;
+            /**************************************GET CURRENT PAGE********************************/
+            /***************Affichage de l'administration*******************/
+            var uid = User.Identity.GetUserId();
+            var user = (from u in db.User_
+                        where u.user_asp_net_id == uid
+                        select u).First();
+
+                ViewBag.Role = user.type;
+            /****************************************************************/
+            /***************************Sidebar activity********************************************/
+            var sa = new SidebarActivity();
+
+            ViewBag.tactivity = sa.Activesection(controllerName);
+
+            /***************************************************************************************/
+
+            var vm = new ThemeViewModel();
+
+            var ugid = (from u in db.User_
+                        where u.id == user.id
+                        select u.group_id).First();
+
+            //si l'utilisateur est administrateur ou si c'est cheikh, pas de filtre
+            if (user.type == 1 || user.type == 3)
+            {
+                var ltheme = (from t in db.Theme_
+                              select t).ToList();
+
+                vm.ListTheme = ltheme;
+            }
+            //sinon je filtre l'affichage des themes
+            else
+            {
+                var class_ = (from c in db.Class_
+                              where c.group_id == ugid
+                              select c).ToList();
+
+                var ltheme = (from t in db.Theme_
+                              select t).ToList();
+
+                List<Theme_> finalListTheme = new List<Theme_>();
+
+                for (int i = 0; i < class_.Count; i++)
+                {
+                    for (int j = 0; j < ltheme.Count; j++)
+                    {
+                        if (ltheme[j].id == class_[i].theme_id)
+                        {
+                            if (!finalListTheme.Contains(ltheme[j]))
+                                finalListTheme.Add(ltheme[j]);
+                        }
+                    }
+                }
+
+               
+                vm.ListTheme = finalListTheme;
+            }
+
+
+     
+
+            List<string> lfade = new List<string>();
+
+            //lfade.Add("fade-up");
+            lfade.Add("fade-right");
+            lfade.Add("fade-left");
+            //lfade.Add("flip-left");
+            //lfade.Add("flip-right");
+            //lfade.Add("fade-up");
+
+
+            vm.ListFade = lfade;
+            return View(vm);
+        }
+
+        // GET: Theme_/Details/5
+        [Authorize]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Theme_ theme_ = db.Theme_.Find(id);
+            if (theme_ == null)
+            {
+                return HttpNotFound();
+            }
+            return View(theme_);
+        }
+
+        // GET: Theme_/Create
+        [Authorize]
+        public ActionResult Create()
+        {               /**************************************GET CURRENT PAGE********************************/
+            string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+            ViewBag.currentPage = controllerName;
+            /**************************************GET CURRENT PAGE********************************/
+
+            /***************Affichage de l'administration*******************/
+            var uid = User.Identity.GetUserId();
+            var urs = (from uu in db.User_
+                       where uu.user_asp_net_id == uid
+                       select uu).First();
+
+            ViewBag.Role = urs.type;
+            /****************************************************************/
+            /***************************Sidebar activity********************************************/
+            var sa = new SidebarActivity();
+
+            ViewBag.tactivity = sa.Activesection(controllerName);
+
+            /***************************************************************************************/
+
+            return View();
+        }
+
+        // POST: Theme_/Create
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "id,name")] Theme_ theme_, HttpPostedFileBase ImageUpload)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+                    theme_.url_img = fileName;
+                    //ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Img/"), fileName));
+                    //----------------------------FTP VPS UPLOAD-----------------------------------------//
+                    var uploadurl = @"ftp://vps64363.lws-hosting.com//web//Img/";
+                    var uploadfilename = fileName;
+                    var username = "defaultminamba";
+                    var password = "elearning2019@";
+                    Stream streamObj = ImageUpload.InputStream;
+                    byte[] buffer = new byte[ImageUpload.ContentLength];
+                    streamObj.Read(buffer, 0, buffer.Length);
+                    streamObj.Close();
+                    streamObj = null;
+                    string ftpurl = String.Format("{0}/{1}", uploadurl, uploadfilename);
+                    var requestObj = FtpWebRequest.Create(ftpurl) as FtpWebRequest;
+                    requestObj.Method = WebRequestMethods.Ftp.UploadFile;
+                    requestObj.Credentials = new NetworkCredential(username, password);
+                    Stream requestStream = requestObj.GetRequestStream();
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    requestStream.Flush();
+                    requestStream.Close();
+                    requestObj = null;
+                    //------------------------------ftp VPS upload----------------------------------------------//
+                }
+                else
+                {
+                    theme_.url_img = "card1.jpg";
+                }
+                db.Theme_.Add(theme_);
+                db.SaveChanges();
+
+                return RedirectToAction("AdminTheme");
+            }
+
+            return View(theme_);
+        }
+        [Authorize]
+        // GET: Theme_/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            /**************************************GET CURRENT PAGE********************************/
+            string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+            ViewBag.currentPage = controllerName;
+            /**************************************GET CURRENT PAGE********************************/
+            /***************Affichage de l'administration*******************/
+            var uid = User.Identity.GetUserId();
+            var urs = (from uu in db.User_
+                       where uu.user_asp_net_id == uid
+                       select uu).First();
+
+            ViewBag.Role = urs.type;
+            /****************************************************************/
+            /***************************Sidebar activity********************************************/
+            var sa = new SidebarActivity();
+
+            ViewBag.tactivity = sa.Activesection(controllerName);
+
+            /***************************************************************************************/
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Theme_ theme_ = db.Theme_.Find(id);
+            if (theme_ == null)
+            {
+                return HttpNotFound();
+            }
+            ti = theme_.url_img;
+            return View(theme_);
+        }
+
+        // POST: Theme_/Edit/5
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "id,name")] Theme_ theme_, HttpPostedFileBase ImageUpload)
+        {
+            if (ModelState.IsValid)
+            {
+                if(ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+                    theme_.url_img = fileName;
+                    //ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Img/"), fileName));
+                    //----------------------------FTP VPS UPLOAD-----------------------------------------//
+                    var uploadurl = @"ftp://vps64363.lws-hosting.com//web//Img/";
+                    var uploadfilename = fileName;
+                    var username = "defaultminamba";
+                    var password = "elearning2019@";
+                    Stream streamObj = ImageUpload.InputStream;
+                    byte[] buffer = new byte[ImageUpload.ContentLength];
+                    streamObj.Read(buffer, 0, buffer.Length);
+                    streamObj.Close();
+                    streamObj = null;
+                    string ftpurl = String.Format("{0}/{1}", uploadurl, uploadfilename);
+                    var requestObj = FtpWebRequest.Create(ftpurl) as FtpWebRequest;
+                    requestObj.Method = WebRequestMethods.Ftp.UploadFile;
+                    requestObj.Credentials = new NetworkCredential(username, password);
+                    Stream requestStream = requestObj.GetRequestStream();
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    requestStream.Flush();
+                    requestStream.Close();
+                    requestObj = null;
+                    //------------------------------ftp VPS upload----------------------------------------------//
+                }
+                else
+                {
+                    theme_.url_img = ti;
+                }
+
+                db.Entry(theme_).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("AdminTheme");
+            }
+            return View(theme_);
+        }
+
+        // GET: Theme_/Delete/5
+        [Authorize]
+        public ActionResult Delete(int? id)
+        {
+            /**************************************GET CURRENT PAGE********************************/
+            string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+            ViewBag.currentPage = controllerName;
+            /**************************************GET CURRENT PAGE********************************/
+            /***************Affichage de l'administration*******************/
+            var uid = User.Identity.GetUserId();
+            var urs = (from uu in db.User_
+                       where uu.user_asp_net_id == uid
+                       select uu).First();
+
+            ViewBag.Role = urs.type;
+            /****************************************************************/
+            /***************************Sidebar activity********************************************/
+            var sa = new SidebarActivity();
+
+            ViewBag.tactivity = sa.Activesection(controllerName);
+
+            /***************************************************************************************/
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Theme_ theme_ = db.Theme_.Find(id);
+            if (theme_ == null)
+            {
+                return HttpNotFound();
+            }
+            return View(theme_);
+        }
+
+        // POST: Theme_/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Theme_ theme_ = db.Theme_.Find(id);
+            db.Theme_.Remove(theme_);
+            db.SaveChanges();
+            return RedirectToAction("AdminTheme");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+
+
+        public ActionResult AdminTheme()
+        {
+            /**************************************GET CURRENT PAGE********************************/
+            string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+            ViewBag.currentPage = controllerName;
+            /**************************************GET CURRENT PAGE********************************/
+            /***************Affichage de l'administration*******************/
+            var uid = User.Identity.GetUserId();
+            var urs = (from uu in db.User_
+                       where uu.user_asp_net_id == uid
+                       select uu).First();
+
+            ViewBag.Role = urs.type;
+            /****************************************************************/
+            /***************************Sidebar activity********************************************/
+            var sa = new SidebarActivity();
+
+            ViewBag.tactivity = sa.Activesection(controllerName);
+
+            /***************************************************************************************/
+
+
+            var theme_ = (from t in db.Theme_
+                         select t).ToList();
+
+            var vm = new ThemeViewModel();
+            vm.ListTheme = theme_.ToList();
+
+            return View(vm);
+        }
+
+
+    }
+}

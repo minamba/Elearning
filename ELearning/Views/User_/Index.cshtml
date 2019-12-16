@@ -1,0 +1,23 @@
+﻿@model  ELearning.Models.UserViewModel
+
+
+@*@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}*@
+
+@Html.Partial("_PartialSideBar");
+
+
+<div class="row">
+    <section class="bg-white col-md-12">
+        <div class="row">
+            @foreach (var u in Model.ListUser)
+            {
+
+                    <p>@u.first_name</p>
+                    <p>@u.last_name</p>
+            }
+        </div>
+    </section>
+</div>
+

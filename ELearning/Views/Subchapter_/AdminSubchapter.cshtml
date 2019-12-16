@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ELearning.Models.Subchapter_>
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid pt-5 pb-5">
+        <section class="bg-light col-md-12 col-lg-12 col-12 pt-5 pb-5">
+            <h3 class="text-muted dashBoardTextSize">
+                Liste des sous-chapitres
+            </h3>
+            <hr class="hrColor" />
+            <table class="table table-responsive-md  text-muted table-striped table-info shadow">
+                <tr class="colorHeader">
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.url_video)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.url_file)
+                    </th>
+                    <th>
+                        Chapitre
+                    </th>
+                    <th>
+                        Appartient au cours
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <b>@Html.DisplayFor(modelItem => item.name)</b>
+                        </td>
+                        <td>
+                            <video class="shadow-lg  my-auto" style=" height:100px;" controls>
+                                @*<source class="" src="@Url.Content("~/content/Video/" + item.url_video)" type="video/mp4" />*@
+                                <source class=""  src="@Url.Content("http://vps64363.lws-hosting.com/Video/" + item.url_video)" type="video/mp4" />
+                               
+                            </video>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayFor(modelItem => item.url_file)</b>
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.description).ToString().Substring(0,100)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Chapter_.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Chapter_.Class_.name)
+                        </td>
+                     
+                        <td class="text-success">
+                            @Html.ActionLink("Editer", "Edit", new { id = item.id }) </td>
+                        <td class="text-danger">
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </section>
+
+    </div>
+    <div style="height:1000px;"></div>
+</div>
+

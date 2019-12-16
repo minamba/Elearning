@@ -1,0 +1,76 @@
+﻿@model ELearning.Models.Class_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid pt-5 pb-5">
+        <section class="bg-light col-md-12 col-lg-12 col-12 pt-5 pb-5 shadow">
+
+                    @using (Html.BeginForm("Edit", "Class_", FormMethod.Post, new
+            { enctype = "multipart/form-data" }))
+            {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h6 class="text-muted">Editer</h6>
+                            <hr class="hrColor" />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.id)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.theme_id, "theme_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("theme_id", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.theme_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.group_id, "group_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("group_id", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.group_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.url_img, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.ImageUpload, new { type = "file", id = "ImageUpload", name = "ImageUpload" })
+                                    @*<input type="file" id="ImageUpload" class="form-control" name="ImageUpload"  />*@
+                                    @Html.ValidationMessageFor(model => model.url_img, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Sauvegarder" class="btn btn-info" /> |
+                                    @Html.ActionLink("Retour à la liste des cours", "AdminCLass")
+                                </div>
+                            </div>
+                        </div>
+                    }
+    
+        </section>
+    </div>
+    <div style="height:1000px;"></div>
+</div>

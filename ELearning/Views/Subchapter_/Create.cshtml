@@ -1,0 +1,103 @@
+﻿@model ELearning.Models.Subchapter_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container-fluid pt-5 pb-5">
+        <section class="bg-light col-md-12 col-lg-12 col-12 pb-0 shadow">
+                    @using (Html.BeginForm("Create", "Subchapter_", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()                       
+                        <div class="form-horizontal">
+                            <h4 class="text-muted">Créer un sous chapitre</h4>
+                            <hr class="hrColor" />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <!--remplissage de la liste des chapitres-->
+                             <script language="javascript" type="text/javascript">
+                                function GetChapter(_classid) {
+                                    var procemessage = "<option value='0'> aucun cours selectionné...</option>";
+                                    $("#chapter_id").html(procemessage).show();
+                                    var url = "@Url.Action("GetChapterByClassId", "Subchapter_")" ;
+
+                                    $.ajax({
+                                        url: url,
+                                        data: { classid: _classid },
+                                        cache: false,
+                                        type: "POST",
+                                        success: function (data) {
+                                            var markup = "<option value='0'>Selectionner un chapitre</option>";
+                                            for (var x = 0; x < data.length; x++) {
+                                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                                            }
+                                            $("#chapter_id").html(markup).show();
+                                        },
+                                        error: function (reponse) {
+                                            alert("error : " + reponse);
+                                        }
+                                    });
+
+                                }
+                              </script>
+                            <!--remplissage de la liste des cours-->
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ClassName, "Cours", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.ListClass, new SelectList(Model.ListClass, "id", "name"),"Selectionner un cours", new { id = "ddlc", style = "width:200px;", onchange = "javascript:GetChapter(this.value);" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Chapter_.name, "Chapitre", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <select id="chapter_id" name="chapter_id" style="width: 200px"></select>
+                                </div>
+                            </div>
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.VideoUpload, "Vidéo", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.VideoUpload, new { type = "file", id = "VideoUpload", name = "VideoUpload" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.url_file, "Fichier", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.url_file, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.url_file, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Créer" class="btn btn-success" />
+                                        @Html.ActionLink("| Retour à la liste des sous-chapitres", "AdminSubchapter")
+                                    </div>
+                                </div>
+                            </div>
+
+                    }
+
+        </section>
+    </div>
+    <div style="height:1000px;"></div>
+</div>

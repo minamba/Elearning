@@ -1,0 +1,56 @@
+﻿@model ELearning.Models.User_
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+@if (Model.MessageActivGlobal != null)
+{
+    var m = new MvcHtmlString(Model.MessageActivGlobal);
+    <script>
+            window.onload = function () {
+                alert("@m");
+                 @*window.location.href = "@Url.Action("AdminUser")";*@
+            };
+    </script>
+}
+
+
+<div class="wrapper">
+    @Html.Partial("_PartialSideBar")
+    <div class="container pt-5 pb-5">
+        <section class=" container-fluid bg-light col-md-12 col-lg-12 col-12 pt-5 pb-5 shadow">
+            <p class="text-muted text-lg">Activation/Desactivation global des comptes utilisateurs <b class="text-danger text">(Attention ! Ceci est une action importante)</b></p>
+            <hr class="hrColor" />
+                @using (Html.BeginForm("GeneralActivation", "User_", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                    <div class="form-horizontal">
+
+                        <div class=" row form-check col-lg-10 col-lg-offset-3 pb-2">
+                            <label class=" col-lg-5 form-check-label" for="exampleCheck1">Activer le compte de tous les utilisateurs</label>
+                            @*<input type="checkbox" class="col-lg-5 form-check-input" id="checkactiv" name="checkactiv">*@
+                            @Html.EditorFor(x => x.CheckActive)
+                            <br />
+                        </div>
+              
+                        <div class="row form-check col-lg-10 col-lg-offset-3 pb-5">
+                            <label class="col-lg-5 form-check-label" for="exampleCheck1">Désactiver le compte de tous les utilisateurs</label>
+                            @*<input type="checkbox" class="form-check-input col-lg-5" id="checkdesactiv" name="checkdesactiv">*@
+                            @Html.EditorFor(x => x.CheckDesactive)
+                        </div>
+                        <br />
+
+                    </div>
+                    <br/>
+                    <div class=" col-lg- 12 col-lg-offset-2 form-group pt-5">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Action" class="btn btn-danger" /> |
+                            @Html.ActionLink("Retour à la liste des utilisateurs", "AdminUser")
+                        </div>
+                    </div>
+                }
+        </section>
+    </div>
+    <div style="height:1000px;"></div>
+</div>

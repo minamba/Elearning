@@ -1,0 +1,127 @@
+﻿@model  ELearning.Models.ClassViewModelsWithChapter
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<!-------------------------------------------------------------HEADER---------------------------------------------------------------------->
+<div class="jumbotron-fluid col-12 col-md-12 col-lg-12 mx-auto backgroundChapter">
+    <header class="my-auto">
+        <!-----------------------------------------TEXT DU HEADER------------------------------------------------>
+        <h1 class="animated bounceInDown text-white text-center bigtitlePosition" style="font-size:8vw;"><b class="text-info text-capitalize">@ViewBag.firstLetterClassName</b>@ViewBag.class_name</h1>
+        <span class="animated bounce centered"></span>
+    </header>
+    <divEffect>
+    </divEffect>
+</div>
+<!-------------------------------------------------------------FIN HEADER---------------------------------------------------------------------->
+
+
+
+
+    <section class="container-fluid grad7 col-12 col-md-12 col-lg-12 col-sm-12">
+        <!----------------------------------TITRE ANIMATION----------------------------------------------->
+        <divh2 class="mx-auto text-center divh2Size pt-5 pb-0" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
+            <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
+                Description
+            </h2>
+        </divh2>
+        <div class=" text-white pt-3 pb-3">
+            <p class="text-center" data-aos="zoom-in">@Model.ClassDescription</p>
+        </div>
+    </section>
+    <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
+
+   
+
+
+    <!----------------------------------TITRE ANIMATION--------------------------------------------------->
+    <section class="container-fluid grad8 col-12 col-md-12 col-lg-12 col-sm-12 pb-0 pb-3">
+        <divh2 class=" mx-auto text-center divh2Size" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
+            <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
+                Contenu du cours
+            </h2>
+        </divh2>
+    </section>
+    <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
+
+        <div class="container-fluid" style="background-color:#F2F3F5;">
+            @*<div class="pb-5 bg-info">
+                <h3 class="text-muted text-danger">@ViewBag.Message</h3>
+            </div>*@
+            <divaz class="container col-md-12 col-md-offset-1 col-12 col-lg-10 col-lg-offset-1">                                   
+                @if (Model.ListChapter_.Count-1 > 2)
+                {
+                    for (int i = 0; i < Model.ListChapter_.Count-1; i++)
+                        {
+                            int n = @i + 1;
+                            <article class="info-block col-md-12  col-12 col-lg-12 bg-white shadow-lg border" data-aos="fade-up">
+                                <h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>
+                                <b class="text-muted font-weight-light" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter_[i].name</b>
+                                <div class="pl-5 collapse spoiler-example" id="@Model.tag[i]">
+                                    @for (int j = 0; j < @Model.ListSubChapter_.Count; j++)
+                                    {
+                                        if (@Model.ListSubChapter_[j].chapter_id == @Model.ListChapter_[i].id)
+                                        {
+                                            <div class="container-fluid">
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 text-muted bg-white font-italic">
+                                                    <a class="col-6 col-sm-4 col-md-6 col-lg-6" onclick="location.href='@Url.Action("VerifySeen", "Chapter_", new { subchapterID = @Model.ListSubChapter_[j].id, chapterID = @Model.ListChapter_[i].id })'">
+                                                        @Model.ListSubChapter_[j].name
+                                                    </a>
+                                                    @*<span class="col-3 col-sm-auto">01:14</span>*@
+                                                    @foreach (var s in Model.ListSeen)
+                                                    {
+                                                        if (s.subchapter_id == Model.ListSubChapter_[j].id && s.seen == true)
+                                                        {
+                                                            @*<b class=" text-center text-success float-right col-6 col-sm-8 col-md-1 col-md-offset-3 col-lg-2 col-lg-offset-3 ">vu</b>*@
+                                                            <img class="float-right imgsize" src="~/Content/Img/seen.png" />
+                                                        }
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <hr class=" hrClassColor w-100" />
+                                        }
+                                    }                       
+                                </div>                  
+                            </article>
+                            <div class="col-md-6" style="height:30px"></div>
+                     }
+                }
+            </divaz>
+        </div>
+
+
+    <!--SCRIPT POUR LE SCROLL-->
+    <script>
+
+        $(document).ready(function () {
+            // Check if element is scrolled into view
+            function isScrolledIntoView(elem) {
+                var docViewTop = $(window).scrollTop();
+                var docViewBottom = docViewTop + $(window).height();
+
+                var elemTop = $(elem).offset().top;
+                var elemBottom = elemTop + $(elem).height();
+
+                return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+            }
+            // If element is scrolled into view, fade it in
+            $(window).scroll(function () {
+                $('.scroll-animations .animated').each(function () {
+                    if (isScrolledIntoView(this) === true) {
+                        $(this).addClass('fadeInLeft');
+                    }
+                });
+            });
+
+        });
+    </script>
+
+    <!--script effet du fade sur les image(arrivage des images petit a petit)-->
+    <script src="~/Scripts/aos.js"></script>
+    <script>
+        AOS.init({
+            easing: 'ease-in-out-sine'
+        });
+    </script>

@@ -1,0 +1,276 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700");
+
+/*---Media Queries --*/
+
+@media (max-width: 3080px) {
+
+    .content {
+        width: 99vw;
+        max-width: 800px;
+    }
+}
+
+/***********************************992*************************/
+
+@media (max-width: 992px) {
+}
+/*******************************768******************************/
+@media (max-width: 768px) {
+
+    .content {
+        width: 99vw;
+        max-width: 600px;
+    }
+}
+/*******************************767*******************************************/
+@media (max-width: 767px) {
+}
+/*****************************576**********************************************/
+@media (max-width: 576px) {
+
+    .content {
+        margin: 40px auto;
+        width: 80vw;
+        max-width: 340px;
+        padding: 20px;
+        border-radius: 20px;
+        border-top: 20px solid black;
+    }
+
+
+    divmap {
+        display: none;
+    }
+}
+/***********************************************************************FIN DES MEDIAS QUERYYYYYYYYYYYYYY !!!!!!!!!!***************************************************************************************/
+
+.content {
+    margin: 40px auto;
+    background: ghostwhite;
+    padding: 20px;
+    border-radius: 20px;
+    border-top: 20px solid #55C4FF;
+    /*box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);*/
+}
+
+html {
+    font-size: 10px;
+    overflow-x: hidden;
+}
+
+body {
+    background-image: url(http://vps64363.lws-hosting.com/Img/home.png);
+    background-size: cover;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+h2 {
+    font-size: 3.5rem;
+    font-family: "raleway";
+}
+
+
+
+form {
+    position: relative;
+}
+
+    form input, form textarea {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 5px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border: none;
+        background: rgba(2, 136, 209, 0.1);
+        border-bottom: 3px solid #55C4FF;
+        font-family: "raleway";
+        color: #0288d1;
+        font-size: 1.4rem;
+    }
+
+        form input::-webkit-input-placeholder, form textarea::-webkit-input-placeholder {
+            color: #0288d1;
+        }
+
+        form input:-ms-input-placeholder, form textarea:-ms-input-placeholder {
+            color: #0288d1;
+        }
+
+        form input::-ms-input-placeholder, form textarea::-ms-input-placeholder {
+            color: #0288d1;
+        }
+
+        form input::placeholder, form textarea::placeholder {
+            color: #0288d1;
+        }
+
+        form input:focus, form textarea:focus {
+            outline: 5px solid #55C4FF;
+            border: none;
+        }
+
+    form textarea {
+        height: 200px;
+    }
+
+#thanks {
+    display: flex;
+    background: #C8E6C9;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #689F38;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+    -webkit-transform: scaley(0);
+    transform: scaley(0);
+}
+
+.svg-container {
+    width: 70px;
+    position: absolute;
+    right: 2rem;
+    top: 1.3rem;
+}
+
+    .svg-container svg .rightwing {
+        fill: #55C4FF;
+    }
+
+    .svg-container svg .leftwing {
+        fill: #55C4FF;
+    }
+
+    .svg-container svg .center {
+        fill: #005A8A;
+    }
+
+    .svg-container svg .bottom {
+        fill: #012B41;
+    }
+
+.btn-wrapper {
+    position: relative;
+    display: flex;
+    margin-top: 15px;
+    width: 200px;
+    transition: all .1s ease-out;
+}
+
+    .btn-wrapper:hover {
+        -webkit-transform: translateY(-2px);
+        transform: translateY(-2px);
+    }
+
+        .btn-wrapper:hover .svg-container {
+            -webkit-animation: jiggle .25s;
+            animation: jiggle .25s;
+            -webkit-transform: center center;
+            transform: center center;
+        }
+
+    .btn-wrapper #send {
+        border-radius: 2px;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        font-family: "raleway";
+        font-weight: 200;
+        font-size: 24px;
+        color: white;
+        background: #5BC0DE;
+        padding: 2rem 10rem 2rem 2rem;
+    }
+
+        .btn-wrapper #send:active {
+            -webkit-transform: translateY(1px);
+            transform: translateY(1px);
+        }
+
+@-webkit-keyframes jiggle {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+    }
+
+    25% {
+        -webkit-transform: rotate(-7deg);
+        transform: rotate(-7deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(7deg);
+        transform: rotate(7deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+    }
+}
+
+@keyframes jiggle {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+    }
+
+    25% {
+        -webkit-transform: rotate(-7deg);
+        transform: rotate(-7deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(7deg);
+        transform: rotate(7deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+    }
+}
+
+
+/***************************************************NAVBAR HOME*********************************************************************************/
+.btn-outline-dark {
+    border-color: #FFF;
+    color: #FFF;
+}
+
+    .btn-outline-dark:hover {
+        border-color: #343a40;
+    }
+
+.navbarBgColor {
+    background-color: #5BC0DE;
+}
+
+.navbar-nav > li > a {
+    color: white;
+}
+
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url(http://vps64363.lws-hosting.com/Img/togglemenu.png);
+}
