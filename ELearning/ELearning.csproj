@@ -224,6 +224,7 @@
     <Compile Include="Controllers\Subchapter_Controller.cs" />
     <Compile Include="Controllers\Theme_Controller.cs" />
     <Compile Include="Controllers\User_Controller.cs" />
+    <Compile Include="Controllers\VideoTable_Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -507,6 +508,7 @@
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Comment_\" />
     <Folder Include="Views\Reply_\" />
+    <Folder Include="Views\VideoTable_\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
