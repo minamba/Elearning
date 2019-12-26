@@ -1,0 +1,11 @@
+﻿@model  ELearning.Models.SubchapterWithCommentsAndReply
+
+<div class="embed-responsive embed-responsive-16by9  mx-auto my-auto" @Model.DisplayVideo(@Model.CurrentSubchapter) data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
+    <div class="video-frame shadow-lg" oncontextmenu="return false">
+        <video class="shadow-lg  my-auto w-100" style=" height:auto;" controls controlsList="nodownload">
+            @*<source class="" src="@Url.Content("~/content/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />*@
+            <source class="" src="@Url.Content("http://vps64363.lws-hosting.com/Video/" + @Model.CurrentSubchapter.url_video+"#t=15")" type="video/mp4" />
+
+        </video>
+    </div>
+</div>

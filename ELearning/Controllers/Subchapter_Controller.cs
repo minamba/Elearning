@@ -22,22 +22,29 @@ namespace ELearning.Controllers
 
         // GET: Subchapter_
         [Authorize]
-        public ActionResult Index(int sub_chapter_id)
+        public ActionResult Index(int sub_chapter_id, int class_id)
         {
             /**************************************GET CURRENT PAGE********************************/
             ViewBag.currentPage = null;
             /**************************************GET CURRENT PAGE********************************/
             /***************Affichage de l'administration*******************/
             var uid = User.Identity.GetUserId();
-            var  usr = (from u in db.User_
-                        where u.user_asp_net_id == uid
-                        select u).First();
+            var usr = (from u in db.User_
+                       where u.user_asp_net_id == uid
+                       select u).First();
 
             ViewBag.Role = usr.type;
             /****************************************************************/
 
 
             var vm = new SubchapterWithCommentsAndReply();
+
+            var chapterList = (from cl in db.Chapter_
+                               where cl.class_id == class_id
+                               select cl).ToList();
+
+            var subchapterList = (from sl in db.Subchapter_
+                                  select sl).ToList();
 
             var subchapter_ = (from sch in db.Subchapter_
                                where sch.id == sub_chapter_id
@@ -54,8 +61,8 @@ namespace ELearning.Controllers
 
             var userIdIdentity = User.Identity.GetUserId();
 
-           var user = (from u in db.User_
-                          where u.user_asp_net_id == userIdIdentity
+            var user = (from u in db.User_
+                        where u.user_asp_net_id == userIdIdentity
                         select u).First();
 
             var cheikh = (from u in db.User_
@@ -70,20 +77,20 @@ namespace ELearning.Controllers
 
             var subchapterID2 = subchapter_.id;
             List<Comment_> comment = (from c in db.Comment_
-                           where c.sub_chapter_id == subchapterID2
-                           select c).ToList();
+                                      where c.sub_chapter_id == subchapterID2
+                                      select c).ToList();
 
             var reply = (from r in db.Reply_
                          select r).ToList();
 
 
             var alluser = (from u in db.User_
-                        select u).ToList();
+                           select u).ToList();
 
             //je crée une liste pour récuperer toutes les dates time et extraire les informations qui m'interesse
             List<string> d = new List<string>();
-            
-            foreach(var date in comment)
+
+            foreach (var date in comment)
             {
                 DateTime dateValue = (DateTime)date.date_message;
                 var day = dateValue.Day;
@@ -95,10 +102,10 @@ namespace ELearning.Controllers
 
                 if (day < 10)
                 {
-                    day = 0+day;
+                    day = 0 + day;
                 }
 
-                var concatdate = day + "/" + month + "/" + year + " à " +hour + ":" + minute;
+                var concatdate = day + "/" + month + "/" + year + " à " + hour + ":" + minute;
                 d.Add(concatdate);
             }
             vm.ListDate = d;
@@ -130,13 +137,39 @@ namespace ELearning.Controllers
 
             ViewBag.subchapterTitle = subchapter_.name;
 
+
+            var listTag = new List<string>();
+            for (int i = 0; i < subchapterList.Count; i++)
+            {
+                listTag.Add("tag" + subchapterList[i].id);
+            }
+            vm.tag = listTag;
+
+
             vm.CurrentSubchapter = subchapter_;
             vm.ListComment = comment;
             vm.ListReply = reply;
             vm.CurrrentUsr = user;
             vm.ListUser = alluser;
+            vm.ListChapter = chapterList;
+            vm.ListSubchapter = subchapterList;
             return View(vm);
         }
+
+        [Authorize]
+        public ActionResult GetSubchapterVideo(int sub_chapter_id)
+        {
+            var vm = new SubchapterWithCommentsAndReply();
+
+            var subchapter_ = (from sc in db.Subchapter_
+                               where sc.id == sub_chapter_id
+                               select sc).First();
+
+
+            vm.CurrentSubchapter = subchapter_;
+            return PartialView("_PartialVideo", vm);
+        }
+
 
 
         // GET: Subchapter_/Details/5
@@ -183,7 +216,7 @@ namespace ELearning.Controllers
 
             List<SelectListItem> lclass = new List<SelectListItem>();
 
-            foreach(var c in class_)
+            foreach (var c in class_)
             {
                 lclass.Add(new SelectListItem() { Text = c.name, Value = c.name });
             }
@@ -265,7 +298,7 @@ namespace ELearning.Controllers
         {
             List<Class_> objclass = new List<Class_>();
             var lclass = (from cl in db.Class_
-                            select cl).ToList();
+                          select cl).ToList();
 
             foreach (var c in lclass)
             {
@@ -281,11 +314,11 @@ namespace ELearning.Controllers
         {
             List<Chapter_> objchapter = new List<Chapter_>();
             var lchapter = (from c in db.Chapter_
-                           select c).ToList();
-            
-            foreach(var c in lchapter)
+                            select c).ToList();
+
+            foreach (var c in lchapter)
             {
-                objchapter.Add(new Chapter_ { id = c.id, class_id =c.class_id, name = c.name });
+                objchapter.Add(new Chapter_ { id = c.id, class_id = c.class_id, name = c.name });
             }
 
             return objchapter;
@@ -343,7 +376,7 @@ namespace ELearning.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,content,description,chapter_id,url_video,url_file")] Subchapter_ subchapter_, Subchapter_ model,HttpPostedFileBase VideoUpload, int chapter_id)
+        public ActionResult Edit([Bind(Include = "id,name,content,description,chapter_id,url_video,url_file")] Subchapter_ subchapter_, Subchapter_ model, HttpPostedFileBase VideoUpload, int chapter_id)
         {
             if (ModelState.IsValid)
             {
@@ -391,12 +424,12 @@ namespace ELearning.Controllers
 
 
 
-                    //subchapter_.VideoUpload = su.VideoUpload;
+                //subchapter_.VideoUpload = su.VideoUpload;
 
-                    //db.SaveChanges();
-                
+                //db.SaveChanges();
 
-                
+
+
 
 
                 return RedirectToAction("AdminSubchapter");
@@ -515,7 +548,7 @@ namespace ELearning.Controllers
         }
 
 
-        public void SendMailResponse(string mailWhoWriteTheComment,int idFromWhoRespond, string message)
+        public void SendMailResponse(string mailWhoWriteTheComment, int idFromWhoRespond, string message)
         {
             var usr = (from u in db.User_
                        where u.id == idFromWhoRespond
@@ -527,9 +560,10 @@ namespace ELearning.Controllers
             try
             {
                 //mettre l'adresse du destinataire
-                sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr",mailWhoWriteTheComment, "Réponse à votre message", "As salamou 3alaykoum " +usr.first_name+ "a répondu à votre message ("+message+")");
+                sm.SenEmail("webmaster@elearning-malik-ibn-anas.fr", mailWhoWriteTheComment, "Réponse à votre message", "As salamou 3alaykoum " + usr.first_name + "a répondu à votre message (" + message + ")");
             }
-            catch{
+            catch
+            {
 
             }
         }

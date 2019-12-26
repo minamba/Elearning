@@ -5,13 +5,12 @@
     int ind = 0;
     List<string> index = new List<string>();
 
-    for (int i=0; i<=1000; i++)
+    for (int i = 0; i <= 1000; i++)
     {
         index.Add("indexe" + i);
     }
 
     string date;
-    var displayvideo= "";
     var displayppt = "";
 }
 
@@ -42,6 +41,16 @@
             $.ajax(ajaxConfig);
             return false;
         }
+
+        //fonction ajax qui me permet de recharger la partial vu qui contient la vidéo
+        $(function () {
+            $(".loadVideo").click(function (e) { //obligé d'utiliser une classe pour que tous les elements soit pris en compte. si j'utilise un id="blabla" dans une boucle, il va prendre que le premier element
+                e.preventDefault();
+                var url = $(this).data("url");
+                console.log("url information" + url);
+                $("#showVideo").load(url);
+            });
+        });
     </script>
 </head>
 
@@ -56,23 +65,20 @@
     </divEffect>
 </div>
 <!-------------------------------------------------------------FIN HEADER---------------------------------------------------------------------->
+<!----------------------------------TITRE ANIMATION----------------------------------------------->
+<section class="container-fluid grad9 col-12 col-md-12 col-lg-12 col-sm-12 pb-0 pt-5">
+    <divh2 class=" mx-auto text-center divh2Size" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
+        <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
+            Description
+        </h2>
+    </divh2>
 
-        <!----------------------------------TITRE ANIMATION----------------------------------------------->
-        <section class="container-fluid grad9 col-12 col-md-12 col-lg-12 col-sm-12 pb-0 pt-5">
-            <divh2 class=" mx-auto text-center divh2Size" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
-                <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
-                    Description
-                </h2>
-            </divh2>
-            
-            <div class=" text-white pt-3 pb-3">      
-                <p class="text-dark text-center" data-aos="zoom-in">@Model.CurrentSubchapter.description</p>
-            </div>
-        </section>
-        <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
-
-
-    <!----------------------------------TITRE ANIMATION----------------------------------------------->
+    <div class=" text-white pt-3 pb-3">
+        <p class="text-dark text-center" data-aos="zoom-in">@Model.CurrentSubchapter.description</p>
+    </div>
+</section>
+<!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
+<!----------------------------------TITRE ANIMATION----------------------------------------------->
 <section class="container-fluid grad10 ">
     <divh2 class=" mx-auto text-center divh2Size" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
         <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
@@ -81,123 +87,140 @@
     </divh2>
 </section>
 <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
+<!------------------------------------------------------------PARTIE POWER POINT VIDEO--------------------------------------------------------------------->
+<section class="container-fluid bg-dark">
 
-    <!------------------------------------------------------------PARTIE POWER POINT VIDEO--------------------------------------------------------------------->  
-        <section class="container-fluid bg-dark">
-            <div class="container bg-dark col-md-12 col-md-offset-2  col-12 col-lg-10 col-lg-offset-1">
-                    <!---Affichage du power point si le chapitre en possède une-->
-                    @if (@Model.CurrentSubchapter.url_file != null || @Model.CurrentSubchapter.url_file != "")
+    <!--PARTIE POUR AFFICHER LA LISTE DES CHAPITRES ET SOUS CHAPTITRE A GAUCHE DES VIDEOS-->
+    <div class="container col-lg-4 col-md-4" style="height:75%" id="loadfromList">
+        @for (int i = 0; i < Model.ListChapter.Count; i++)
+        {
+            int n = @i + 1;
+            <article class="info-block col-md-12  col-12 col-lg-12 bg-white shadow-lg border" data-aos="fade-up">
+                <h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>
+                <b class="text-muted font-weight-light" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter[i].name</b>
+                <div class="pl-5 collapse spoiler-example" id="@Model.tag[i]">
+                    @for (int j = 0; j < @Model.ListSubchapter.Count; j++)
                     {
-                        displayppt = "style = display:block;";
-                    }
-                    @if (@Model.CurrentSubchapter.url_file == null || @Model.CurrentSubchapter.url_file == "")
-                    {
-                        displayppt = "style = display:none;";
-                    }
-
-                     <!---Affichae de la védeo si le chapitre en possède une-->
-                    @if (@Model.CurrentSubchapter.url_video != null || @Model.CurrentSubchapter.url_video != "")
-                    {
-                        displayvideo = "style = display:block;";
-                    }
-                    @if (@Model.CurrentSubchapter.url_video == null || @Model.CurrentSubchapter.url_video == "")
-                    {
-                        displayvideo = "style=display:none;";
-                    }
-
-                    <!--Ajout du power point-->
-                    <div data-aos="fade-left"  data-aos-offset="300" data-aos-easing="ease-in-sine">
-                        @if (@Model.CurrentSubchapter.url_file != null || @Model.CurrentSubchapter.url_file != "")
+                        if (@Model.ListSubchapter[j].chapter_id == @Model.ListChapter[i].id)
                         {
-                            <div class="pb-5" @displayppt>
-                                @*<iframe src="@Model.CurrentSubchapter.url_file" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>*@
-                                <iframe src="https://onedrive.live.com/embed?cid=8EB203CB7682B594&amp;resid=8EB203CB7682B594%211321&amp;authkey=AD1FVazcCiF98A4&amp;em=2&amp;wdAr=1.7777777777777777" width="100%" height="100%" frameborder="0">Ceci est un document <a target="_blank" href="https://office.com">Microsoft Office</a> incorporé, optimisé par <a target="_blank" href="https://office.com/webapps">Office Online</a>.</iframe>
+                            <div class="container-fluid">
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 text-muted bg-white font-italic">
+                                    <!-- je vais charger que la video de la page via une fonction qui me retourne une vue partiel-->
+                                    <a class="col-6 col-sm-4 col-md-6 col-lg-6 loadVideo" data-url='@Url.Action("GetSubchapterVideo", new { sub_chapter_id = Model.ListSubchapter[j].id })'>
+                                        @Model.ListSubchapter[j].name
+                                    </a>
+                                </div>
                             </div>
+                                <hr class=" hrClassColor w-100" />
                         }
-                    </div>
+                    }
+                </div>
+            </article>
+                <div class="col-md-6" style="height:30px"></div>
+        }
+    </div>
+    <!--FIN PARTIE DAFFICHAGE DE LA LISTE DES CHAPTIRE ET SOUS CHAPITRE-->
 
-                    <!--Ajout de la vidéo-->
-                    <div class="embed-responsive embed-responsive-16by9  mx-auto " @displayvideo data-aos="fade-left"  data-aos-offset="300" data-aos-easing="ease-in-sine">
-                        <div class="video-frame shadow-lg" oncontextmenu="return false">
-                            <video class="shadow-lg  my-auto w-100" style=" height:auto;" controls controlsList="nodownload">
-                                @*<source class="" src="@Url.Content("~/content/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />*@
-                                <source class="" src="@Url.Content("http://vps64363.lws-hosting.com/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />
-                                
-                            </video>
-                        </div>   
-                    </div>
-
-
-        
-            </div>
-        </section>
+    <div class="container bg-dark col-md-8 col-12 col-lg-8 pb-5" id="showVideo">
+        @Html.Partial("_PartialVideo")
+    </div>
+</section>
 
 <!------------------------------------------------------------FIN PARTIE VIDEO--------------------------------------------------------------------->
-            <div class="container-fluid col-lg-12">
-                <div class="row align-items-center">
-                    <!------------------------------LA PARTIE COMMENTAIRE---------------------------------------------->
-                    @*@using (Html.BeginForm("SaveComment", "Comment_", FormMethod.Post))
-                    {*@
-                    <!----------------------------------TITRE ANIMATION----------------------------------------------->
-                    <section class="container-fluid grad11 pt-5 pb-5">
-                        <divh2 class="mx-auto text-center divh2Size" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
-                            <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
-                                Commentaires
-                            </h2>
-                        </divh2>
-                    </section>
-                    <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
-                    <form class="container col-md-10 col-lg-10 col-12 pb-5" id="addComment" method="post" enctype="multipart/form-data" onsubmit="return AjaxPost(this)">
-                                    <textarea class="form-control bg-white shadow-lg" aria-label="With textarea" data-toggle="collapse" data-target="#com" placeholder="Ajouter un commentaire..." name="msg" id="msg" rows="5"></textarea>
-                                    <div id="com" class="collapse align-items-center">
-                                        <button type="submit" id="btncomment" class="btn btn-block btn-outline-secondary btn-info">Ajouter un commentaire</button>
-                                        <button type="reset" id="btncomment" class="btn btn-block btn-outline-secondary btn-danger" data-toggle="collapse" data-target="#com" onclick="user_onclear()">Annuler</button>
-                                        <input type="hidden" value="@ViewBag.userID" name="uid" id="uid" />
-                                        <input type="hidden" value="@ViewBag.subchapterID" name="subchapter_id" id="subchapter_id" />
-                                        <hr class=" hrColor2 w-100" />
-                                    </div>                             
-                    </form>
-                  
-                    @*}*@
-                                    <!-- SOUS PARTIE CONCERNANT LE COMMENTAIRE UTILISATEUR AINSI QUE LES REPONSES-->
-                    <div class="container col-lg-10 col-lg-offset col-md-12 col-md-offset-1">
-                   
-                        <div class="row">
-                                <section class="comment-list">
-                                    @for (int i=0; i<Model.ListComment.Count; i++)
-                                    {
-                                        <!--Comment-->
-                                        <article class="row">
-                                            <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs">
-                                                <figure class="thumbnail">
-                                                    @if (Model.ListComment[i].User_.sexe == "Homme" && Model.ListComment[i].User_.type == 1)
-                                                    {
-                                                        <img class="img-responsive shadow" src="~/Content/Img/muslim.png" />
-                                                    }
-                                                    @if (Model.ListComment[i].User_.sexe == "Femme" && Model.ListComment[i].User_.type == 2)
-                                                    {
-                                                        <img class="img-responsive shadow" src="~/Content/Img/muslima.png" />
-                                                    }
-                                                    @if (Model.ListComment[i].User_.type == 3)
-                                                    {
-                                                    <img class="img-responsive shadow" src="~/Content/Img/cheikh.png" />
-                                                    }
+<div class="container-fluid col-lg-12">
+    <div class="row align-items-center">
+        <!------------------------------LA PARTIE COMMENTAIRE---------------------------------------------->
+        @*@using (Html.BeginForm("SaveComment", "Comment_", FormMethod.Post))
+            {*@
+        <!----------------------------------TITRE ANIMATION----------------------------------------------->
+        <section class="container-fluid grad11 pt-5 pb-5">
+            <divh2 class="mx-auto text-center divh2Size" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
+                <h2 class=" animated col-md-12 col-lg-12 col-sm-12 rounded-pill bgScrollPage text-white text-capitalize">
+                    Commentaires
+                </h2>
+            </divh2>
+        </section>
+        <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
+        <form class="container col-md-10 col-lg-10 col-12 pb-5" id="addComment" method="post" enctype="multipart/form-data" onsubmit="return AjaxPost(this)">
+            <textarea class="form-control bg-white shadow-lg" aria-label="With textarea" data-toggle="collapse" data-target="#com" placeholder="Ajouter un commentaire..." name="msg" id="msg" rows="5"></textarea>
+            <div id="com" class="collapse align-items-center">
+                <button type="submit" id="btncomment" class="btn btn-block btn-outline-secondary btn-info">Ajouter un commentaire</button>
+                <button type="reset" id="btncomment" class="btn btn-block btn-outline-secondary btn-danger" data-toggle="collapse" data-target="#com" onclick="user_onclear()">Annuler</button>
+                <input type="hidden" value="@ViewBag.userID" name="uid" id="uid" />
+                <input type="hidden" value="@ViewBag.subchapterID" name="subchapter_id" id="subchapter_id" />
+                <hr class=" hrColor2 w-100" />
+            </div>
+        </form>
 
-                                                    <figcaption class="text-center">@Model.ListComment[i].User_.first_name</figcaption>
-                                                </figure>
-                                            </div>
-                                            <div class="col-lg-8 commentSize col-md-9">
-                                                <div class="panel panel-default arrow left">
-                                                    @using (Html.BeginForm("SaveReply", "Reply_", FormMethod.Post))
-                                                    {
+        @*}*@
+        <!-- SOUS PARTIE CONCERNANT LE COMMENTAIRE UTILISATEUR AINSI QUE LES REPONSES-->
+        <div class="container col-lg-10 col-lg-offset col-md-12 col-md-offset-1">
+
+            <div class="row">
+                <section class="comment-list">
+                    @for (int i = 0; i < Model.ListComment.Count; i++)
+                    {
+                                        <!--Comment-->
+                        <article class="row">
+                            <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs">
+                                <figure class="thumbnail">
+                                    @if (Model.ListComment[i].User_.sexe == "Homme" && Model.ListComment[i].User_.type == 1)
+                                    {
+                                        <img class="img-responsive shadow" src="~/Content/Img/muslim.png" />
+                                    }
+                                    @if (Model.ListComment[i].User_.sexe == "Femme" && Model.ListComment[i].User_.type == 2)
+                                    {
+                                        <img class="img-responsive shadow" src="~/Content/Img/muslima.png" />
+                                    }
+                                    @if (Model.ListComment[i].User_.type == 3)
+                                    {
+                                        <img class="img-responsive shadow" src="~/Content/Img/cheikh.png" />
+                                    }
+
+                                    <figcaption class="text-center">@Model.ListComment[i].User_.first_name</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-8 commentSize col-md-9">
+                                <div class="panel panel-default arrow left">
+                                    @using (Html.BeginForm("SaveReply", "Reply_", FormMethod.Post))
+                                    {
                                                           <!--CONTREOLE SI CEST CHEIKH QUI REPOND JAFFICHE LE COMMENTAIRE EN VERT SINON IL EST EN NORMAL-->
-                                                        if (Model.ListComment[i].User_.type == 3)
+                                        if (Model.ListComment[i].User_.type == 3)
+                                        {
+                                            <div class="panel-body panCommentcolor">
+                                                <header class="text-left">
+                                                    @*<div class="comment-user"><i class="fa fa-user"></i> Sujet</div>*@
+                                                    @{
+                                                        date = String.Format("{0:d}", @Model.ListComment[i].date_message);
+                                                    }
+                                                    <time class="comment-date" datetime="@Model.ListComment[i].date_message"><i class="fa fa-clock-o"></i><b class="text-muted">@date</b></time>
+                                                </header>
+                                                <div class="comment-post p-5">
+                                                    <p>
+                                                        @Model.ListComment[i].message
+                                                    </p>
+                                                </div>
+                                                <!-- reply comment -->
+                                                <span class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagComment[i]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> répondre</a>  </span>
+                                                <span class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagComment2[i]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> afficher les réponses</a></span>
+
+                                                <div id="@Model.TagComment[i]" class="collapse">
+                                                    <textarea class=" form-control bg-transparent border-0" aria-label="With textarea" placeholder="Ajouter une réponse" name="msgr" id="msgr" rows="5"></textarea>
+                                                    <button type="submit" class="btn btn-block btn-outline-secondary btn-info" onclick="location.href='@Url.Action("SendMailResponse", "Subchapter_",new { mailWhoWriteTheComment = @Model.ListComment[i].User_.mail, idFromWhoRespond = @ViewBag.userID, message = Model.ListComment[i].message})'">Répondre</button>
+                                                    <button type="reset" id="@Model.TagComment[i]" data-toggle="collapse" data-target="#@Model.TagComment[i]" class="btn btn-block btn-outline-secondary btn-danger" onclick="user_onclear()">Annuler</button>
+                                                    <input type="hidden" value="@ViewBag.userID" name="uid" id="uid" />
+                                                    <input type="hidden" value="@Model.ListComment[i].id" name="cid" id="cid" />
+                                                    <input type="hidden" value="@Model.ListComment[i].sub_chapter_id" name="subchapter_id" id="subchapter_id" />
+                                                </div>
+                                            </div>
+
+                                                        }
+                                                        else
                                                         {
-                                                            <div class="panel-body panCommentcolor">
+                                                            <div class="panel-body">
                                                                 <header class="text-left">
-                                                                    @*<div class="comment-user"><i class="fa fa-user"></i> Sujet</div>*@
                                                                     @{
-                                                                       date = String.Format("{0:d}", @Model.ListComment[i].date_message);
+                                                                        date = String.Format("{0:d}", @Model.ListComment[i].date_message);
                                                                     }
                                                                     <time class="comment-date" datetime="@Model.ListComment[i].date_message"><i class="fa fa-clock-o"></i><b class="text-muted">@date</b></time>
                                                                 </header>
@@ -219,100 +242,71 @@
                                                                     <input type="hidden" value="@Model.ListComment[i].sub_chapter_id" name="subchapter_id" id="subchapter_id" />
                                                                 </div>
                                                             </div>
-
-                                                        }
-                                                        else
-                                                        {                                                                                                                       
-                                                                    <div class="panel-body">
-                                                                        <header class="text-left">
-                                                                            @{
-                                                                                date = String.Format("{0:d}", @Model.ListComment[i].date_message);
                                                                             }
-                                                                            <time class="comment-date" datetime="@Model.ListComment[i].date_message"><i class="fa fa-clock-o"></i><b class="text-muted">@date</b></time>
-                                                                        </header>
-                                                                        <div class="comment-post p-5">
-                                                                            <p>
-                                                                                @Model.ListComment[i].message
-                                                                            </p>
-                                                                        </div>
-                                                                        <!-- reply comment -->
-                                                                        <span class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagComment[i]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> répondre</a>  </span>
-                                                                        <span class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagComment2[i]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> afficher les réponses</a></span>
+                                                                        }
+                                </div>
 
-                                                                        <div id="@Model.TagComment[i]" class="collapse">
-                                                                            <textarea class=" form-control bg-transparent border-0" aria-label="With textarea" placeholder="Ajouter une réponse" name="msgr" id="msgr" rows="5"></textarea>
-                                                                            <button type="submit" class="btn btn-block btn-outline-secondary btn-info" onclick="location.href='@Url.Action("SendMailResponse", "Subchapter_",new { mailWhoWriteTheComment = @Model.ListComment[i].User_.mail, idFromWhoRespond = @ViewBag.userID, message = Model.ListComment[i].message})'">Répondre</button>
-                                                                            <button type="reset" id="@Model.TagComment[i]" data-toggle="collapse" data-target="#@Model.TagComment[i]" class="btn btn-block btn-outline-secondary btn-danger" onclick="user_onclear()">Annuler</button>
-                                                                            <input type="hidden" value="@ViewBag.userID" name="uid" id="uid" />
-                                                                            <input type="hidden" value="@Model.ListComment[i].id" name="cid" id="cid" />
-                                                                            <input type="hidden" value="@Model.ListComment[i].sub_chapter_id" name="subchapter_id" id="subchapter_id" />
-                                                                        </div>
-                                                                    </div>
-                                                        }
-                                                    }
-                                                                </div>
+                                @for (int r = 0; r < Model.ListReply.Count; r++)
+                                {
+                                    if (@Model.ListComment[i].id == @Model.ListReply[r].comment_id)
+                                    {
 
-                                                @for (int r = 0; r<Model.ListReply.Count;r++)
-                                                {
-                                                    if (@Model.ListComment[i].id == @Model.ListReply[r].comment_id)
-                                                    {
-                                                       
                                                 <!-- Sous Reply -->
-                                                        <div id="@Model.TagComment2[i]" class="collapse align-items-center">
-                                                                <article class="row">
-                                                                    <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
-                                                                        <figure class="thumbnail">
-                                                                            @if (Html.Action("RecupSexeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "Homme" && Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() =="1")
-                                                                            {
-                                                                                <img class="img-responsive shadow" src="~/Content/Img/muslim.png" />
-                                                                            }
-                                                                            @if(Html.Action("RecupSexeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "Femme" && Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "1")
-                                                                            {
-                                                                                <img class="img-responsive shadow" src="~/Content/Img/muslima.png" />
-                                                                            }
-                                                                           @if (Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "3")
-                                                                            {
-                                                                            <img class="img-responsive shadow" src="~/Content/Img/cheikh.png" />
-                                                                            }
+                                        <div id="@Model.TagComment2[i]" class="collapse align-items-center">
+                                            <article class="row">
+                                                <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
+                                                    <figure class="thumbnail">
+                                                        @if (Html.Action("RecupSexeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "Homme" && Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "1")
+                                                        {
+                                                            <img class="img-responsive shadow" src="~/Content/Img/muslim.png" />
+                                                        }
+                                                        @if (Html.Action("RecupSexeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "Femme" && Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "1")
+                                                        {
+                                                            <img class="img-responsive shadow" src="~/Content/Img/muslima.png" />
+                                                        }
+                                                        @if (Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "3")
+                                                        {
+                                                            <img class="img-responsive shadow" src="~/Content/Img/cheikh.png" />
+                                                        }
 
-                                                                            <figcaption class="text-center">@Model.GetUserName(@Model.ListReply[r].user_id)</figcaption>
-                                                                        </figure>
+                                                        <figcaption class="text-center">@Model.GetUserName(@Model.ListReply[r].user_id)</figcaption>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-md-9 col-sm-9">
+                                                    @using (Html.BeginForm("SaveReply2", "Reply_", FormMethod.Post))
+                                                    {
+                                                        <div class="panel panel-default arrow left">
+                                                            <div class="panel-heading right">Réponse</div>
+
+                                                            <!--CONTREOLE SI CEST CHEIKH QUI REPOND JAFFICHE LE SOUS COMMENTAIRE EN VERT SINON IL EST EN NORMAL-->
+                                                            @if (Model.ListReply[r].user_id == @ViewBag.cheikh)
+                                                            {
+                                                                <div class="panel-body panCommentcolor">
+                                                                    <header class="text-left">
+                                                                        @{
+                                                                            date = String.Format("{0:d}", @Model.ListReply[r].date_reply);
+                                                                        }
+                                                                        <time class="comment-date" datetime="@Model.ListReply[r].date_reply"><i class="fa fa-clock-o"></i><b class="text-muted">@date</b></time>
+                                                                    </header>
+                                                                    <div class="comment-post p-5">
+                                                                        <p>
+                                                                            @Model.ListReply[r].message
+                                                                        </p>
                                                                     </div>
-                                                                    <div class="col-md-9 col-sm-9">
-                                                                        @using (Html.BeginForm("SaveReply2", "Reply_", FormMethod.Post))
-                                                                        {
-                                                                            <div class="panel panel-default arrow left">
-                                                                                <div class="panel-heading right">Réponse</div>
+                                                                    <p class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagReply2[r]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> répondre</a></p>
+                                                                    <div id="@Model.TagReply2[r]" class="collapse">
+                                                                        <textarea class=" form-control bg-transparent border-0" aria-label="With textarea" placeholder="Ajouter une réponse" name="msgr2" id="msgr2" rows="5"></textarea>
+                                                                        <button type="submit" class="btn btn-block btn-outline-secondary btn-info" onclick="location.href='@Url.Action("SendMailResponse", "Subchapter_",new { mailWhoWriteTheComment = @Model.ListComment[i].User_.mail, idFromWhoRespond = @ViewBag.userID, message = @Model.ListReply[r].message})'">Répondre</button>
+                                                                        <button type="reset" class="btn btn-block btn-outline-secondary btn-danger" data-toggle="collapse" data-target="#@Model.TagReply2[r]" onclick="user_onclear()">Annuler</button>
+                                                                        <input type="hidden" value="@ViewBag.userID" name="uid" id="uid" />
+                                                                        <input type="hidden" value="@Model.ListComment[i].id" name="cid" id="cid" />
+                                                                        <input type="hidden" value="@Model.ListComment[i].sub_chapter_id" name="subchapter_id" id="subchapter_id" />
+                                                                    </div>
 
-                                                                                <!--CONTREOLE SI CEST CHEIKH QUI REPOND JAFFICHE LE SOUS COMMENTAIRE EN VERT SINON IL EST EN NORMAL-->
-                                                                                @if (Model.ListReply[r].user_id == @ViewBag.cheikh)
-                                                                                {
-                                                                                    <div class="panel-body panCommentcolor">
-                                                                                        <header class="text-left">
-                                                                                                    @{
-                                                                                                        date = String.Format("{0:d}", @Model.ListReply[r].date_reply);
-                                                                                                    }
-                                                                                                  <time class="comment-date" datetime="@Model.ListReply[r].date_reply"><i class="fa fa-clock-o"></i><b class="text-muted">@date</b></time>
-                                                                                        </header>
-                                                                                        <div class="comment-post p-5">
-                                                                                            <p>
-                                                                                                @Model.ListReply[r].message
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <p class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagReply2[r]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> répondre</a></p>
-                                                                                        <div id="@Model.TagReply2[r]" class="collapse">
-                                                                                            <textarea class=" form-control bg-transparent border-0" aria-label="With textarea" placeholder="Ajouter une réponse" name="msgr2" id="msgr2" rows="5"></textarea>
-                                                                                            <button type="submit" class="btn btn-block btn-outline-secondary btn-info" onclick="location.href='@Url.Action("SendMailResponse", "Subchapter_",new { mailWhoWriteTheComment = @Model.ListComment[i].User_.mail, idFromWhoRespond = @ViewBag.userID, message = @Model.ListReply[r].message})'">Répondre</button>
-                                                                                            <button type="reset" class="btn btn-block btn-outline-secondary btn-danger" data-toggle="collapse" data-target="#@Model.TagReply2[r]" onclick="user_onclear()">Annuler</button>
-                                                                                            <input type="hidden" value="@ViewBag.userID" name="uid" id="uid" />
-                                                                                            <input type="hidden" value="@Model.ListComment[i].id" name="cid" id="cid" />
-                                                                                            <input type="hidden" value="@Model.ListComment[i].sub_chapter_id" name="subchapter_id" id="subchapter_id" />
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                }
-                                                                                else
-                                                                                {
+                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
                                                                                 <div class="panel-body">
                                                                                     <header class="text-left">
                                                                                         @{
@@ -336,26 +330,26 @@
                                                                                     </div>
 
                                                                                 </div>
-                                                                                }
-                                                                            </div>
-                                                                        }
-                                                                     </div>
-                                                                  </article>
-                                                            </div>
-                                                        ind = ind +1;
-                                                    }
-
-
-                                                }
+                                                                                            }
                                                         </div>
-                                        </article>
-                                    }                                                                                                                         
-                                </section>
+                                                                                            }
+                                                </div>
+                                            </article>
+                                        </div>
+                                                                                                    ind = ind + 1;
+                                                                                                }
+
+
+                                                                                            }
                             </div>
-                        </div>
-                    </div>
-                    <!------------------------------ FIN DE LA PARTIE COMMENTAIRE-------------------------------------->
-                </div>
+                        </article>
+                                                                                            }
+                </section>
+            </div>
+        </div>
+    </div>
+    <!------------------------------ FIN DE LA PARTIE COMMENTAIRE-------------------------------------->
+</div>
 
 <!--SCRIPT POUR LE SCROLL-->
 <script>
