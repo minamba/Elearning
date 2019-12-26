@@ -11,18 +11,13 @@ namespace ELearning.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Video_
     {
         public int id { get; set; }
-        [Display(Name = "Nom")]
-        public string name { get; set; }
-        public Nullable<int> file_size { get; set; }
-        [Display(Name = "Chemin du fichier")]
-        public string file_path { get; set; }
-        public int subchapter_id { get; set; }
-
-        public virtual Subchapter_ Subchapter_ { get; set; }
+        public string url_video { get; set; }
+        public Nullable<double> time_start { get; set; }
+        public Nullable<int> user_id { get; set; }
+        public Nullable<int> chapter_id { get; set; }
     }
 }

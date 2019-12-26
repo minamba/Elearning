@@ -11,8 +11,7 @@ namespace ELearning.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Class_
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,24 +20,15 @@ namespace ELearning.Models
             this.Chapter_ = new HashSet<Chapter_>();
             this.Comment_ = new HashSet<Comment_>();
         }
-
+    
         public int id { get; set; }
-        [Required]
-        [Display(Name = "Nom")]
         public string name { get; set; }
-        [Required]
-        [Display(Name = "Description")]
         public string description { get; set; }
-        [Required]
-        [Display(Name = "Thème")]
         public Nullable<int> theme_id { get; set; }
-        [Required]
-        [Display(Name = "Access au groupe")]
         public Nullable<int> group_id { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public string url_img { get; set; }
-        public System.Web.HttpPostedFileBase ImageUpload { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chapter_> Chapter_ { get; set; }
         public virtual Group_ Group_ { get; set; }

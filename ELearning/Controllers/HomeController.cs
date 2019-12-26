@@ -11,7 +11,7 @@ namespace ELearning.Controllers
 {
     public class HomeController : Controller
     {
-        elearningEntities db = new elearningEntities();
+        private elearningEntities db = new elearningEntities();
         [Authorize]
         public ActionResult Index()
         {
@@ -32,11 +32,11 @@ namespace ELearning.Controllers
 
 
             var vm = new HomeWithClassAndSubchapterViewModel();
-            var uid="";
+            var uid = "";
             try
             {
-                uid = User.Identity.GetUserId();        
-          
+                uid = User.Identity.GetUserId();
+
                 var user = (from u in db.User_
                             where u.user_asp_net_id == uid
                             select u).First();
@@ -53,9 +53,9 @@ namespace ELearning.Controllers
 
 
 
-                var groupUser = (from g in db.Group_
-                                 where g.id == user.group_id
-                                 select g).First();
+                    var groupUser = (from g in db.Group_
+                                     where g.id == user.group_id
+                                     select g).First();
 
 
                     //si l'utilisateur est un admin ou si c'est cheikh, je filtre pas l'affichage des cours, theme en fonction de l'user
@@ -89,10 +89,15 @@ namespace ELearning.Controllers
                                              && sb.url_file != ""
                                              select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
                         /*pour les videos*/
+                        //var glsubchapter2_ = (from sb in db.Subchapter_
+                        //                      where sb.url_video != null
+                        //                      && sb.url_video != ""
+                        //                      select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
+
                         var glsubchapter2_ = (from sb in db.Subchapter_
                                               where sb.url_video != null
                                               && sb.url_video != ""
-                                              select sb).OrderByDescending(sb => sb.date_creation).Take(3).ToList();
+                                              select sb).ToList();
 
                         List<Chapter_> listChapterAfterFilter = new List<Chapter_>();
 
@@ -118,7 +123,8 @@ namespace ELearning.Controllers
                             ViewBag.classidzero = glclass[0].id;
                             ViewBag.classdescriptionzero = glclass[0].description;
                         }
-                        catch {
+                        catch
+                        {
                             return View(vm);
                         }
                     }
@@ -145,7 +151,7 @@ namespace ELearning.Controllers
                                 }
                             }
                         }
-                       
+
 
 
                         /*pour les ppt*/
@@ -182,14 +188,15 @@ namespace ELearning.Controllers
                             ViewBag.classidzero = glclass[0].id;
                             ViewBag.classdescriptionzero = glclass[0].description;
                         }
-                        catch {
+                        catch
+                        {
                             return View(vm);
                         }
                     }
 
 
 
-                return View(vm);
+                    return View(vm);
                 }
                 return null;
             }
@@ -225,7 +232,7 @@ namespace ELearning.Controllers
             return View(vm);
         }
 
-        public ActionResult EnvoieMail(string email,string title,string message)
+        public ActionResult EnvoieMail(string email, string title, string message)
         {
             var mail = new SendMail();
             var uid = User.Identity.GetUserId();
@@ -245,10 +252,10 @@ namespace ELearning.Controllers
             catch
             {
                 vm.msg = "Un problème est survenu lors de l'envoie de l'e-mail, veuillez réessayer plus tard...";
-                return RedirectToAction("Contact", "Home", new { mess = vm.msg}); ;
+                return RedirectToAction("Contact", "Home", new { mess = vm.msg }); ;
             }
 
-           
+
         }
 
         public ActionResult Admin()

@@ -174,13 +174,15 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" />
-          <Property Name="file_size" Type="int" />
-          <Property Name="file_path" Type="nvarchar(max)" />
-          <Property Name="subchapter_id" Type="int" Nullable="false" />
+          <Property Name="url_video" Type="nvarchar(max)" />
+          <Property Name="time_start" Type="float" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="chapter_id" Type="int" />
         </EntityType>
         <Association Name="FK_Chapter__Class_">
-          <End Role="Class_" Type="Self.Class_" Multiplicity="0..1" />
+          <End Role="Class_" Type="Self.Class_" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Chapter_" Type="Self.Chapter_" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Class_">
@@ -204,7 +206,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Class__Theme_">
-          <End Role="Theme_" Type="Self.Theme_" Multiplicity="0..1" />
+          <End Role="Theme_" Type="Self.Theme_" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Class_" Type="Self.Class_" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Theme_">
@@ -228,7 +232,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment__Subchapter_">
-          <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="0..1" />
+          <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Comment_" Type="Self.Comment_" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Subchapter_">
@@ -308,7 +314,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reply__Comment_">
-          <End Role="Comment_" Type="Self.Comment_" Multiplicity="0..1" />
+          <End Role="Comment_" Type="Self.Comment_" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Reply_" Type="Self.Reply_" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Comment_">
@@ -320,7 +328,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Subchapter__Chapter_">
-          <End Role="Chapter_" Type="Self.Chapter_" Multiplicity="0..1" />
+          <End Role="Chapter_" Type="Self.Chapter_" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Chapter_">
@@ -340,18 +350,6 @@
             </Principal>
             <Dependent Role="User_">
               <PropertyRef Name="group_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Video__Subchapter_">
-          <End Role="Subchapter_" Type="Self.Subchapter_" Multiplicity="1" />
-          <End Role="Video_" Type="Self.Video_" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subchapter_">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Video_">
-              <PropertyRef Name="subchapter_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -424,10 +422,6 @@
           <AssociationSet Name="FK_User__Group_" Association="Self.FK_User__Group_">
             <End Role="Group_" EntitySet="Group_" />
             <End Role="User_" EntitySet="User_" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Video__Subchapter_" Association="Self.FK_Video__Subchapter_">
-            <End Role="Subchapter_" EntitySet="Subchapter_" />
-            <End Role="Video_" EntitySet="Video_" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -637,7 +631,6 @@
             <End Role="Comment_" EntitySet="Comment_" />
           </AssociationSet>
           <EntitySet Name="Seen_" EntityType="elearningModel.Seen_" />
-          <EntitySet Name="Video_" EntityType="elearningModel.Video_" />
           <EntitySet Name="Subchapter_" EntityType="elearningModel.Subchapter_" />
           <AssociationSet Name="FK_Subchapter__Chapter_" Association="elearningModel.FK_Subchapter__Chapter_">
             <End Role="Chapter_" EntitySet="Chapter_" />
@@ -647,10 +640,7 @@
             <End Role="Subchapter_" EntitySet="Subchapter_" />
             <End Role="Comment_" EntitySet="Comment_" />
           </AssociationSet>
-          <AssociationSet Name="FK_Video__Subchapter_" Association="elearningModel.FK_Video__Subchapter_">
-            <End Role="Subchapter_" EntitySet="Subchapter_" />
-            <End Role="Video_" EntitySet="Video_" />
-          </AssociationSet>
+          <EntitySet Name="Video_" EntityType="elearningModel.Video_" />
           </EntityContainer>
         <EntityType Name="Comment_">
           <Key>
@@ -785,17 +775,6 @@
           <Property Name="seen" Type="Boolean" />
           <Property Name="chapter_id" Type="Int32" />
         </EntityType>
-        <EntityType Name="Video_">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="file_size" Type="Int32" />
-          <Property Name="file_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="subchapter_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Subchapter_" Relationship="elearningModel.FK_Video__Subchapter_" FromRole="Video_" ToRole="Subchapter_" />
-        </EntityType>
         <EntityType Name="Subchapter_">
           <Key>
             <PropertyRef Name="id" />
@@ -808,7 +787,6 @@
           <Property Name="url_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Chapter_" Relationship="elearningModel.FK_Subchapter__Chapter_" FromRole="Subchapter_" ToRole="Chapter_" />
           <NavigationProperty Name="Comment_" Relationship="elearningModel.FK_Comment__Subchapter_" FromRole="Subchapter_" ToRole="Comment_" />
-          <NavigationProperty Name="Video_" Relationship="elearningModel.FK_Video__Subchapter_" FromRole="Subchapter_" ToRole="Video_" />
           <Property Name="date_creation" Type="DateTime" Precision="3" />
           <Property Name="url_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -836,18 +814,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Video__Subchapter_">
-          <End Type="elearningModel.Subchapter_" Role="Subchapter_" Multiplicity="1" />
-          <End Type="elearningModel.Video_" Role="Video_" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subchapter_">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Video_">
-              <PropertyRef Name="subchapter_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="Video_">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="url_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="time_start" Type="Double" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="chapter_id" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1016,17 +992,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Video_">
-            <EntityTypeMapping TypeName="elearningModel.Video_">
-              <MappingFragment StoreEntitySet="Video_">
-                <ScalarProperty Name="subchapter_id" ColumnName="subchapter_id" />
-                <ScalarProperty Name="file_path" ColumnName="file_path" />
-                <ScalarProperty Name="file_size" ColumnName="file_size" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Subchapter_">
             <EntityTypeMapping TypeName="elearningModel.Subchapter_">
               <MappingFragment StoreEntitySet="Subchapter_">
@@ -1037,6 +1002,17 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Video_">
+            <EntityTypeMapping TypeName="elearningModel.Video_">
+              <MappingFragment StoreEntitySet="Video_">
+                <ScalarProperty Name="chapter_id" ColumnName="chapter_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="time_start" ColumnName="time_start" />
+                <ScalarProperty Name="url_video" ColumnName="url_video" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

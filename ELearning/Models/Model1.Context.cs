@@ -39,7 +39,7 @@ namespace ELearning.Models
         public virtual DbSet<Class_> Class_ { get; set; }
         public virtual DbSet<Theme_> Theme_ { get; set; }
         public virtual DbSet<Seen_> Seen_ { get; set; }
-        public virtual DbSet<Video_> Video_ { get; set; }
         public virtual DbSet<Subchapter_> Subchapter_ { get; set; }
+        public virtual DbSet<Video_> Video_ { get; set; }
     }
 }
