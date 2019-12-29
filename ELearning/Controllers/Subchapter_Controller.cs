@@ -36,7 +36,6 @@ namespace ELearning.Controllers
             ViewBag.Role = usr.type;
             /****************************************************************/
 
-
             var vm = new SubchapterWithCommentsAndReply();
 
             var chapterList = (from cl in db.Chapter_
@@ -70,7 +69,7 @@ namespace ELearning.Controllers
                           select u).First();
 
             ViewBag.cheikh = cheikh.id;
-
+            ViewBag.uid = user.id;
             ViewBag.compteur = 0;
             ViewBag.userID = user.id; /*user.GetUserName(subchapter_.) */
             ViewBag.subchapterID = subchapter_.id;
@@ -145,6 +144,24 @@ namespace ELearning.Controllers
             }
             vm.tag = listTag;
 
+            try
+            {
+                var video = (from v in db.Video_
+                             where v.url_video == subchapter_.url_video
+                             select v).First();
+                vm.video = video;
+            }
+            catch
+            {
+                Video_ v = new Video_();
+                v.time_start = 0;
+                v.user_id = usr.id;
+                v.url_video = subchapter_.url_video;
+                db.Video_.Add(v);
+                db.SaveChanges();
+
+                vm.video = v;
+            }
 
             vm.CurrentSubchapter = subchapter_;
             vm.ListComment = comment;
@@ -157,16 +174,78 @@ namespace ELearning.Controllers
         }
 
         [Authorize]
+        public string PushCurrentVideoTime(int currentTime, string url_video, int duration)
+        {
+            var uid = User.Identity.GetUserId();
+            var usr = (from u in db.User_
+                       where u.user_asp_net_id == uid
+                       select u).First();
+
+            try
+            {
+                var video = (from v in db.Video_
+                             where v.url_video == url_video
+                             && v.user_id == usr.id
+                             select v).First();
+
+                if (video.duration == null)
+                    video.duration = duration;
+
+                video.time_start = currentTime;
+                db.SaveChanges();
+
+
+                return "sauvegarde reussi";
+            }
+            catch(Exception e)
+            {
+                return e.Message;
+            }
+
+          
+        }
+
+        [Authorize]
         public ActionResult GetSubchapterVideo(int sub_chapter_id)
         {
             var vm = new SubchapterWithCommentsAndReply();
+
+            var uid = User.Identity.GetUserId();
+            var usr = (from u in db.User_
+                       where u.user_asp_net_id == uid
+                       select u).First();
 
             var subchapter_ = (from sc in db.Subchapter_
                                where sc.id == sub_chapter_id
                                select sc).First();
 
 
+            try
+            {
+                var video = (from v in db.Video_
+                             where v.url_video == subchapter_.url_video
+                             && v.user_id == usr.id
+                             select v).First();
+                vm.video = video;
+            }
+            catch
+            {
+                Video_ v = new Video_();
+                v.time_start = 0;
+                v.user_id = usr.id;
+                v.url_video = subchapter_.url_video;
+                db.Video_.Add(v);
+                db.SaveChanges();
+
+                vm.video = v;
+            }
+
+
+           
             vm.CurrentSubchapter = subchapter_;
+
+
+
             return PartialView("_PartialVideo", vm);
         }
 

@@ -11,7 +11,8 @@ namespace ELearning.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Chapter_
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,11 +20,15 @@ namespace ELearning.Models
         {
             this.Subchapter_ = new HashSet<Subchapter_>();
         }
-    
+
         public int id { get; set; }
+        [Required]
+        [Display(Name = "Nom")]
         public string name { get; set; }
+        [Required]
+        [Display(Name = " Appartient au cours")]
         public Nullable<int> class_id { get; set; }
-    
+
         public virtual Class_ Class_ { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subchapter_> Subchapter_ { get; set; }

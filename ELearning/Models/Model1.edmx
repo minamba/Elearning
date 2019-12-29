@@ -178,6 +178,8 @@
           <Property Name="time_start" Type="float" />
           <Property Name="user_id" Type="int" />
           <Property Name="chapter_id" Type="int" />
+          <Property Name="duration" Type="int" />
+          <Property Name="time_end" Type="int" />
         </EntityType>
         <Association Name="FK_Chapter__Class_">
           <End Role="Class_" Type="Self.Class_" Multiplicity="0..1">
@@ -823,6 +825,8 @@
           <Property Name="time_start" Type="Double" />
           <Property Name="user_id" Type="Int32" />
           <Property Name="chapter_id" Type="Int32" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="time_end" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1009,6 +1013,8 @@
           <EntitySetMapping Name="Video_">
             <EntityTypeMapping TypeName="elearningModel.Video_">
               <MappingFragment StoreEntitySet="Video_">
+                <ScalarProperty Name="time_end" ColumnName="time_end" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="chapter_id" ColumnName="chapter_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="time_start" ColumnName="time_start" />

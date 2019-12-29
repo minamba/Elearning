@@ -11,5 +11,6 @@ namespace ELearning.Models
         public List<Subchapter_> ListSubChapter { get; set; }
         public List<Subchapter_> ListSubChapter2 { get; set; }
         public List<Chapter_> ListChapter {get; set;}
+       
     }
 }

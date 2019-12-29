@@ -112,9 +112,7 @@ namespace ELearning.Controllers
                             }
                         }
 
-
-
-
+           
                         vm.ListClass = glclass;
                         vm.ListSubChapter = glsubchapter_;
                         vm.ListSubChapter2 = glsubchapter2_;
@@ -193,8 +191,6 @@ namespace ELearning.Controllers
                             return View(vm);
                         }
                     }
-
-
 
                     return View(vm);
                 }

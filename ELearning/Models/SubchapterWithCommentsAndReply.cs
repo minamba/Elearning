@@ -22,6 +22,7 @@ namespace ELearning.Models
         public List<string> tag { get; set; }
         public List<Chapter_> ListChapter { get; set; }
         public List<Subchapter_> ListSubchapter { get; set; }
+        public Video_ video { get; set; }
 
         elearningEntities db = new elearningEntities();
 

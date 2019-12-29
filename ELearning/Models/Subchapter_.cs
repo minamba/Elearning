@@ -7,7 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
 namespace ELearning.Models
 {
     using System;
@@ -21,7 +20,7 @@ namespace ELearning.Models
         public Subchapter_()
         {
             this.Comment_ = new HashSet<Comment_>();
-            this.Video_ = new HashSet<Video_>();
+            //this.Video_ = new HashSet<Video_>();
         }
 
         public int id { get; set; }
@@ -47,8 +46,7 @@ namespace ELearning.Models
         public List<Chapter_> ListChapter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment_> Comment_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Video_> Video_ { get; set; }
+
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         //public virtual ICollection<Class_> Class_ { get; set; }
     }

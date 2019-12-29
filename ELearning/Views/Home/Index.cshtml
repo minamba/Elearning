@@ -7,6 +7,9 @@
     string date2;
     int subChapterId = 0;
 }
+
+
+
 <div class="wrapper">
     <div class="jumbotron-fluid col-12 col-md-12 col-lg-12 mx-auto backgroundHome ">
         <header class="my-auto">
@@ -40,7 +43,8 @@
                                         if (@Model.ListSubChapter2[j].Chapter_.class_id == Model.ListClass[i].id)
                                         {
                                             System.Diagnostics.Debug.WriteLine("cours qui contient des sous chap");
-                                            subChapterId = Model.ListSubChapter2[j].id;
+                                            subChapterId = Model.ListSubChapter2[0].id;
+                                            
                                         }
                                         else
                                         {

@@ -19,5 +19,7 @@ namespace ELearning.Models
         public Nullable<double> time_start { get; set; }
         public Nullable<int> user_id { get; set; }
         public Nullable<int> chapter_id { get; set; }
+        public Nullable<int> duration { get; set; }
+        public Nullable<int> time_end { get; set; }
     }
 }
