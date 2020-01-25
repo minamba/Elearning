@@ -20,6 +20,7 @@ namespace ELearning
         {
             // Indiquez votre service de messagerie ici pour envoyer un e-mail.
             return Task.FromResult(0);
+            //await configSendGridasync(message);
         }
     }
 

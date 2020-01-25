@@ -12,6 +12,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ELearning.Utilities;
 using PagedList;
+using System.Security.Cryptography;
+
 
 namespace ELearning.Controllers
 {
@@ -20,6 +22,7 @@ namespace ELearning.Controllers
         private ApplicationUserManager _userManager;
         private elearningEntities db = new elearningEntities();
         private static bool status;
+        private static string umail;
         // GET: User_
         [Authorize]
         public ActionResult Index()
@@ -257,6 +260,7 @@ namespace ELearning.Controllers
                 return HttpNotFound();
             }
 
+            umail = user_.mail;
             status = (bool)user_.user_validate;
 
 
@@ -270,7 +274,7 @@ namespace ELearning.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,last_name,first_name,mail,type,group_id,sexe,user_validate")] User_ user_, User_ model)
+        public ActionResult Edit([Bind(Include = "id,last_name,first_name,mail,type,group_id,sexe,user_validate, password")] User_ user_, User_ model)
         {
    
 
@@ -290,26 +294,29 @@ namespace ELearning.Controllers
                 }
                 user_.sexe = model.SelectedSexe;
 
+                string m = umail;
+
                 db.Entry(user_).State = EntityState.Modified;
                 db.SaveChanges();
 
-
                 var uid = (from u in db.AspNetUsers
-                           where u.Email == user_.mail
+                           where u.Email == umail
                            select u).First();
 
                 var us = (from usr in db.User_
                           where usr.user_asp_net_id == user_.user_asp_net_id
                           select usr).First();
-
                 if (status == false && model.user_validate == true)
                 {
                     var sm = new SendMail();
                     sm.SenEmail("webmaster.malik.ibn.anas@gmail.com",us.mail,"Activation de votre Compte", "As salamou 3alaykoum wa rahmatulLah " + us.first_name + ", votre compte à été activé par un administrateur, vous pouvez des à present vous connecter sur la plateforme.");
                 }
 
-
-
+                if (user_.password != "")
+                    uid.PasswordHash = HashPassword(user_.password);
+                
+                uid.Email = user_.mail;
+                uid.UserName = user_.mail;
                 user_.user_asp_net_id = uid.Id;
                 db.SaveChanges();
 
@@ -541,6 +548,26 @@ namespace ELearning.Controllers
             db.SaveChanges();
 
             return RedirectToAction("GeneralActivation", new { mess = ViewBag.activate });
+        }
+
+
+        public static string HashPassword(string password)
+        {
+            byte[] salt;
+            byte[] buffer2;
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
+            {
+                salt = bytes.Salt;
+                buffer2 = bytes.GetBytes(0x20);
+            }
+            byte[] dst = new byte[0x31];
+            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
+            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
+            return Convert.ToBase64String(dst);
         }
 
     }

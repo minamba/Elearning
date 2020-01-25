@@ -44,6 +44,8 @@ namespace ELearning.Models
         public bool CheckActive { get; set; }
         public bool CheckDesactive { get; set; }
         public string MessageActivGlobal { get; set; }
+        [Display(Name = "Mot de passe")]
+        public string password { get; set; }
 
         public virtual Group_ Group_ { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
