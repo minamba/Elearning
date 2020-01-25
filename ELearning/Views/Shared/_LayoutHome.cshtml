@@ -63,11 +63,14 @@ if (@ViewBag.gactivity == "active")
         <!--different screen for mobile-->
         <link rel="stylesheet" media="only screen and (width: 411px) and (height: 731px)" href="~/Content/pixel2.css">
         <script src="@Url.Content("~/Scripts/jquery.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/progressbar.min.js")"></script>
         @RenderSection("Scripts", false/*required*/)
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"> <!--pour les mobiles-->
         <meta content='maximum-scale=1.0, initial-scale=1.0, width=device-width' name='viewport'>
+        
+      
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
@@ -79,6 +82,8 @@ if (@ViewBag.gactivity == "active")
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+      
         <script>
             AOS.init();
         </script>

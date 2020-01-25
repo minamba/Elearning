@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,6 +24,12 @@ namespace ELearning.Models
         public List<Chapter_> ListChapter { get; set; }
         public List<Subchapter_> ListSubchapter { get; set; }
         public Video_ video { get; set; }
+        public Dictionary<string,TimeSpan>TimeOfVideo { get; set; }
+        public List<Seen_> ListSeen { get; set; }
+        public int UserPurcentage { get; set; }
+        public int TotalVideoSection { get; set; }
+        public int VideoSeenUser { get; set; }
+        public string UID { get; set; }
 
         elearningEntities db = new elearningEntities();
 
@@ -50,6 +57,28 @@ namespace ELearning.Models
 
             return displayVideo;
         }
+
+        public int CountSubChapterOfChapter(int chapter_id)
+        {
+            var countSubChapter = (from s in db.Subchapter_
+                                   where s.chapter_id == chapter_id
+                                   select s).Count();
+
+            return countSubChapter;
+        }
+
+
+        public int CountVideoViewByUser(int chapter_id, string uid)
+        {
+            var countUserVideoView = (from cuv in db.Seen_
+                                      where cuv.user_asp_net_id == uid
+                                      && cuv.chapter_id == chapter_id
+                                      && cuv.seen == true
+                                      select cuv).Count();
+
+            return countUserVideoView;
+        }
+
     }
 
 

@@ -83,6 +83,14 @@
                             </div>
 
                             <div class="form-group">
+                                @Html.LabelFor(model => model.url_video_base_path, "Chemin des vidéos", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.url_video_base_path, new { @Value = "H:\\elearning_ppt\\assises_coranique\\", @class = "form-control"  })
+                                    @Html.ValidationMessageFor(model => model.url_video_base_path, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.VideoUpload, "Vidéo", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.VideoUpload, new { type = "file", id = "VideoUpload", name = "VideoUpload" })

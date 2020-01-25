@@ -4,6 +4,8 @@
 @{ 
     string video = Model.CurrentSubchapter.url_video;
     var subchapter = Model.CurrentSubchapter;
+    var chapter_id = Model.CurrentSubchapter.chapter_id;
+    var subchapter_id = Model.CurrentSubchapter.id;
 }
 
 <div class="embed-responsive embed-responsive-16by9  mx-auto my-a=uto" @Model.DisplayVideo(@subchapter) data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
@@ -37,3 +39,26 @@
     }
 </script>
 <!---->
+
+<!--VIDEO ENDED-->
+<script type='text/javascript'>
+    document.getElementById('currentVideo').addEventListener('ended', myHandler, false);
+    var vidEnd = document.getElementById("currentVideo");
+    var url_vid = "@video";
+    var subchap_id = "@subchapter_id";
+    var chap_id = "@chapter_id";
+    function myHandler(e) {
+        // What you want to do after the event
+        console.log("fin de la video");
+        $.ajax({
+            type: "POST",
+            url: "/Subchapter_/PushCurrentVideoFinished",
+            contentType: "application/json; charset=utf-8",
+            data: '{"currentTime":"' + Math.round(vidEnd.currentTime) + '","url_video":"' + url_vid + '","duration":"' + Math.round(vidEnd.duration) + '","subchapter_id":"' + subchap_id + '","chapter_id":"' + chap_id + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+                console.log(result);
+            }
+        });
+    }
+</script>

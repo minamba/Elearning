@@ -1,8 +1,12 @@
 ﻿@model  ELearning.Models.SubchapterWithCommentsAndReply
 
 @{
+    //int totalTimeVideo = 0;
+    string[] time = null;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
     int ind = 0;
+    int ind2 = 1;
+    int OutValue = 0;
     List<string> index = new List<string>();
 
     for (int i = 0; i <= 1000; i++)
@@ -92,27 +96,47 @@
 
     <!--PARTIE POUR AFFICHER LA LISTE DES CHAPITRES ET SOUS CHAPTITRE A GAUCHE DES VIDEOS-->
     <div class="container col-lg-4 col-md-4" style="height:75%" id="loadfromList">
+        <!--Ajout d'un progress bar en cercle-->
+        <div class="text-light bg-secondary text-center pt-3 pb-3" id="container">
+            <p>Votre progression</p>
+            @Html.Partial("_ProgressBarPartial")       
+        </div>
+       
+        <!--fi de progress bar-->
         @for (int i = 0; i < Model.ListChapter.Count; i++)
         {
             int n = @i + 1;
             <article class="info-block col-md-12  col-12 col-lg-12 bg-white shadow-lg border" data-aos="fade-up">
-                <h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>
-                <b class="text-muted font-weight-light" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter[i].name</b>
+                @*<h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>*@                           
+                <b class="font-weight-light text-info" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter[i].name</b>
+                <p class="text-justify text-left">@Model.CountVideoViewByUser(@Model.ListChapter[i].id,Model.UID)/@Model.CountSubChapterOfChapter(Model.ListChapter[i].id) | 45 minhutes</p>     
                 <div class="pl-5 collapse spoiler-example" id="@Model.tag[i]">
                     @for (int j = 0; j < @Model.ListSubchapter.Count; j++)
                     {
                         if (@Model.ListSubchapter[j].chapter_id == @Model.ListChapter[i].id)
                         {
+                            ind2 = ind2 + 1;
                             <div class="container-fluid">
                                 <div class="col-md-12 col-sm-12 col-lg-12 col-12 text-muted bg-white font-italic">
                                     <!-- je vais charger que la video de la page via une fonction qui me retourne une vue partiel-->
-                                    <a class="col-6 col-sm-4 col-md-6 col-lg-6 loadVideo" data-url='@Url.Action("GetSubchapterVideo", new { sub_chapter_id = Model.ListSubchapter[j].id })'>
-                                        @Model.ListSubchapter[j].name
+                                    @foreach (var s in Model.ListSeen)
+                                    {
+                                        if (s.subchapter_id == @Model.ListSubchapter[j].id && s.seen == true)
+                                        {
+                                            <img class="float-right imgsize" src="~/Content/Img/seen.png" />
+                                        }
+                                    }
+                                    <a class="col-6 col-sm-4 col-md-6 col-lg-6 loadVideo" data-url='@Url.Action("GetSubchapterVideo", new { sub_chapter_id = Model.ListSubchapter[j].id })' onclick="@Url.Action("VerifySeen", "Subchapter_", new { subchapterID = @Model.ListSubchapter[j].id, chapterID = @Model.ListSubchapter[j].chapter_id })">
+                                        @Model.ListSubchapter[j].name                                                      
                                     </a>
+                                    <p style="color:Highlight">@Model.ListSubchapter[j].time_video minutes</p>
+                                    @*@totalTimeVideo = @totalTimeVideo + @Model.ListSubchapter[j].time_video minutes*@                           
+                     
                                 </div>
                             </div>
                                 <hr class=" hrClassColor w-100" />
                         }
+                      
                     }
                 </div>
             </article>

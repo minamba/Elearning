@@ -29,10 +29,10 @@
         <AssociationConnector Association="elearningModel.FK_Class__Theme_" />
         <AssociationConnector Association="elearningModel.FK_Comment__Class_1" />
         <EntityTypeShape EntityType="elearningModel.Seen_" Width="1.5" PointX="9.625" PointY="3.75" />
+        <EntityTypeShape EntityType="elearningModel.Video_" Width="1.5" PointX="3.375" PointY="10.75" />
         <EntityTypeShape EntityType="elearningModel.Subchapter_" Width="1.5" PointX="7.5" PointY="0.75" />
         <AssociationConnector Association="elearningModel.FK_Subchapter__Chapter_" />
         <AssociationConnector Association="elearningModel.FK_Comment__Subchapter_" />
-        <EntityTypeShape EntityType="elearningModel.Video_" Width="1.5" PointX="3.375" PointY="10.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

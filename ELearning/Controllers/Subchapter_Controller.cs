@@ -10,6 +10,8 @@ using ELearning.Models;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using ELearning.Utilities;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Web.Hosting;
 
 namespace ELearning.Controllers
 {
@@ -18,6 +20,8 @@ namespace ELearning.Controllers
         private elearningEntities db = new elearningEntities();
         private static string uv;
         private static string uf;
+        private static TimeSpan time;
+        private static int time_vid;
         private static DateTime datesub;
 
         // GET: Subchapter_
@@ -48,6 +52,26 @@ namespace ELearning.Controllers
             var subchapter_ = (from sch in db.Subchapter_
                                where sch.id == sub_chapter_id
                                select sch).First();
+
+            //compte le nombre de sous chapitre
+            var numberVideo = (from nv in db.Subchapter_
+                               from ch in db.Chapter_
+                               from cl in db.Class_
+                               where cl.id == class_id
+                               && ch.class_id == cl.id
+                               && nv.chapter_id == ch.id
+                               select nv).Count();
+
+            var listSeen = (from s in db.Seen_
+                            where s.user_asp_net_id == uid
+                            select s).ToList();
+
+            var numberVideoSeenByUser = (from nsu in db.Seen_
+                                         where nsu.user_asp_net_id == uid
+                                         && nsu.seen == true
+                                         && nsu.chapter_id == subchapter_.chapter_id
+                                         select nsu).Count();
+
 
 
             /*****travail de chaine sur le nom du cour pour l'afficher dans le header ********/
@@ -144,6 +168,7 @@ namespace ELearning.Controllers
             }
             vm.tag = listTag;
 
+
             try
             {
                 var video = (from v in db.Video_
@@ -163,6 +188,16 @@ namespace ELearning.Controllers
                 vm.video = v;
             }
 
+
+            //Calcul du pourcentage par rapport à la progression
+            decimal totalPurcent = numberVideo;
+            decimal userPurcent = numberVideoSeenByUser;
+            decimal currentPurcent;
+            if (totalPurcent < userPurcent)
+                currentPurcent = 100;
+            else
+                currentPurcent = (userPurcent/totalPurcent)*100;
+
             vm.CurrentSubchapter = subchapter_;
             vm.ListComment = comment;
             vm.ListReply = reply;
@@ -170,8 +205,22 @@ namespace ELearning.Controllers
             vm.ListUser = alluser;
             vm.ListChapter = chapterList;
             vm.ListSubchapter = subchapterList;
+            vm.ListSeen = listSeen;
+            vm.UserPurcentage = (int)currentPurcent;
+            vm.TotalVideoSection = numberVideo;
+            vm.VideoSeenUser = numberVideoSeenByUser;
+            vm.UID = uid;
+
+
             return View(vm);
         }
+
+        //methode qui permet de convertir des nanoseconde en milliseconde
+        public static double Convert100NanosecondsToMilliseconds(double nanoseconds)
+        {
+            return nanoseconds * 0.0001;
+        }
+
 
         [Authorize]
         public string PushCurrentVideoTime(int currentTime, string url_video, int duration)
@@ -200,9 +249,57 @@ namespace ELearning.Controllers
             catch(Exception e)
             {
                 return e.Message;
-            }
+            }          
+        }
 
-          
+        [Authorize]
+        public string PushCurrentVideoFinished(int currentTime, string url_video, int duration, int subchapter_id, int chapter_id)
+        {
+            var uid = User.Identity.GetUserId();
+            var usr = (from u in db.User_
+                       where u.user_asp_net_id == uid
+                       select u).First();
+
+            try
+            {
+                var video = (from v in db.Video_
+                             where v.url_video == url_video
+                             && v.user_id == usr.id
+                             select v).First();
+
+                if (video.duration == null)
+                    video.duration = duration;
+
+                video.time_start = currentTime;
+
+                if(currentTime == video.duration)
+                {
+                    try
+                    {
+                        var validateVideo = (from vv in db.Seen_
+                                             where vv.user_asp_net_id == uid
+                                             && vv.subchapter_id == subchapter_id
+                                             && vv.chapter_id == chapter_id
+                                             select vv).First();
+
+                        if(validateVideo.seen == false)
+                            validateVideo.seen = true;
+
+                        db.SaveChanges();
+                        return "sauvegarde reussi";
+                    }
+                    catch
+                    {
+                        return "savegarde échoué";
+                    }
+                }
+
+                return "succès";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
 
         [Authorize]
@@ -322,10 +419,13 @@ namespace ELearning.Controllers
 
                 if (VideoUpload != null)
                 {
+                    string fullPath = Path.GetFullPath(VideoUpload.ToString());
                     string fileName = Path.GetFileNameWithoutExtension(VideoUpload.FileName);
                     string extension = Path.GetExtension(VideoUpload.FileName);
                     fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
-                    subchapter_.url_video = fileName;
+                    subchapter_.url_video = fileName;           
+
+                    
                     //VideoUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Video/"), fileName));
                     //----------------------------FTP VPS UPLOAD-----------------------------------------//
                     var uploadurl = @"ftp://vps64363.lws-hosting.com//web//Video/";
@@ -441,6 +541,8 @@ namespace ELearning.Controllers
                            select c).ToList();
 
             ViewBag.urlvideo = subchapter_.url_video;
+            if(subchapter_.time_video != null)
+            time_vid = (int)subchapter_.time_video;
             uv = subchapter_.url_video;
             uf = subchapter_.url_file;
             datesub = (DateTime)subchapter_.date_creation;
@@ -455,7 +557,7 @@ namespace ELearning.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,content,description,chapter_id,url_video,url_file")] Subchapter_ subchapter_, Subchapter_ model, HttpPostedFileBase VideoUpload, int chapter_id)
+        public ActionResult Edit([Bind(Include = "id,name,content,description,chapter_id,url_video,url_file")] Subchapter_ subchapter_, Subchapter_ model, HttpPostedFileBase VideoUpload, int chapter_id )
         {
             if (ModelState.IsValid)
             {
@@ -463,34 +565,65 @@ namespace ELearning.Controllers
                 if (VideoUpload != null)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(VideoUpload.FileName);
-                    string extension = Path.GetExtension(VideoUpload.FileName);
+                    string extension = Path.GetExtension(VideoUpload.FileName);                 
                     fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
                     subchapter_.url_video = fileName;
-                    //VideoUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Video/"), fileName));
-                    //----------------------------FTP VPS UPLOAD-----------------------------------------//
-                    var uploadurl = @"ftp://vps64363.lws-hosting.com//web//Video/";
-                    var uploadfilename = fileName;
-                    var username = "defaultminamba";
-                    var password = "elearning2019@";
-                    Stream streamObj = VideoUpload.InputStream;
-                    byte[] buffer = new byte[VideoUpload.ContentLength];
-                    streamObj.Read(buffer, 0, buffer.Length);
-                    streamObj.Close();
-                    streamObj = null;
-                    string ftpurl = String.Format("{0}/{1}", uploadurl, uploadfilename);
-                    var requestObj = FtpWebRequest.Create(ftpurl) as FtpWebRequest;
-                    requestObj.Method = WebRequestMethods.Ftp.UploadFile;
-                    requestObj.Credentials = new NetworkCredential(username, password);
-                    Stream requestStream = requestObj.GetRequestStream();
-                    requestStream.Write(buffer, 0, buffer.Length);
-                    requestStream.Flush();
-                    requestStream.Close();
-                    requestObj = null;
-                    //------------------------------ftp VPS upload----------------------------------------------//
-                    subchapter_.date_creation = DateTime.Now;
+                    string fullFilePath = model.url_video_base_path + VideoUpload.FileName;
+
+                    try
+                    {
+                        ShellFile so = ShellFile.FromFilePath(fullFilePath);
+                        double nanoseconds;
+                        double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out nanoseconds);
+
+                        if (nanoseconds > 0)
+                        {
+                            double seconds = Convert100NanosecondsToMilliseconds(nanoseconds) / 1000;
+                            int ttl_seconds = Convert.ToInt32(seconds);
+                            time = TimeSpan.FromSeconds(ttl_seconds);
+
+                        }
+
+
+                        //VideoUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Video/"), fileName));
+                        //----------------------------FTP VPS UPLOAD-----------------------------------------//
+                        var uploadurl = @"ftp://vps64363.lws-hosting.com//web//Video/";
+                        var uploadfilename = fileName;
+                        var username = "defaultminamba";
+                        var password = "elearning2019@";
+                        Stream streamObj = VideoUpload.InputStream;
+                        byte[] buffer = new byte[VideoUpload.ContentLength];
+                        streamObj.Read(buffer, 0, buffer.Length);
+                        streamObj.Close();
+                        streamObj = null;
+                        string ftpurl = String.Format("{0}/{1}", uploadurl, uploadfilename);
+                        var requestObj = FtpWebRequest.Create(ftpurl) as FtpWebRequest;
+                        requestObj.Method = WebRequestMethods.Ftp.UploadFile;
+                        requestObj.Credentials = new NetworkCredential(username, password);
+                        Stream requestStream = requestObj.GetRequestStream();
+                        requestStream.Write(buffer, 0, buffer.Length);
+                        requestStream.Flush();
+                        requestStream.Close();
+                        requestObj = null;
+
+                        //------------------------------ftp VPS upload----------------------------------------------//
+                        subchapter_.date_creation = DateTime.Now;
+                        subchapter_.time_video = time.Minutes;
+                        if (VideoUpload.FileName != null)
+                            subchapter_.url_video = fileName;
+                        else
+                            subchapter_.url_video = uv;
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        Console.WriteLine("editing error !");
+                    }
+
                 }
                 else
                 {
+                    subchapter_.time_video = time_vid;
                     subchapter_.url_video = uv;
                     subchapter_.date_creation = datesub;
                 }
@@ -644,6 +777,74 @@ namespace ELearning.Controllers
             catch
             {
 
+            }
+        }
+
+
+        public ActionResult VerifySeen(int subchapterID, int chapterID)
+        {
+            var uid = User.Identity.GetUserId();
+
+            var class_ = (from cl in db.Chapter_
+                          where cl.id == chapterID
+                          select cl).First();
+
+            ViewBag.class_id = class_.id;
+
+            var description = (from d in db.Class_
+                               where d.id == class_.class_id
+                               select d.description).First();
+
+            ViewBag.description = description;
+            try
+            {
+                var seen = (from s in db.Seen_
+                            where s.user_asp_net_id == uid
+                            && s.chapter_id == chapterID
+                            select s).ToList();
+
+                for (int i = 0; i < seen.Count; i++)
+                {
+                    if (seen[i].subchapter_id == subchapterID)
+                    {
+                        try
+                        {
+                            var user_seen = seen[i - 1].seen;
+
+                            if (user_seen != null)
+                            {
+                                if (user_seen == false)
+                                {
+                                    var result = "Vous devez regarder la vidéo précedente avant de pouvoir regarder celle - ci";
+                                    return Json(result, JsonRequestBehavior.AllowGet);
+                                    //ViewBag.Message = "Vous devez regarder la vidéo précedente avant de pouvoir regarder celle - ci";
+                                    return RedirectToAction("Index", "Chapter_", new { class_id = class_.id, class_description = description });
+                               
+                                }
+                                else
+                                {
+                                    //seen[i].seen = true;
+                                    //db.SaveChanges();
+                                    
+                                    return RedirectToAction("Index", "Subchapter_", new { sub_chapter_id = (int)seen[i].subchapter_id });
+
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            //seen[i].seen = true;
+                            //db.SaveChanges();
+
+                            return RedirectToAction("Index", "Subchapter_", new { sub_chapter_id = (int)seen[i].subchapter_id });
+                        }
+                    }
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
             }
         }
 
