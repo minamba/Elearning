@@ -186,9 +186,9 @@ namespace ELearning.Controllers
 
 
             var listTag = new List<string>();
-            for(int x=0; x<subchapterList.Count; x++)
+            for(int x=0; x<chapterList.Count; x++)
             {
-                listTag.Add("tag" + subchapterList[x].chapter_id);
+                listTag.Add("tag" + chapterList[x].id + x);
             }
             vm.tag = listTag;
 

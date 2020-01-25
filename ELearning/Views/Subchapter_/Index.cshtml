@@ -108,10 +108,12 @@
                 int n = @i + 1;
                 <article class="info-block col-md-12  col-12 col-lg-12 bg-white shadow-lg border" data-aos="fade-up">
                     @*<h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>*@
+ 
                     <b class="font-weight-light text-info" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter[i].name</b>
-
                     <p class="text-justify text-left">@Model.CountVideoViewByUser(@Model.ListChapter[i].id, Model.UID)/@Model.CountSubChapterOfChapter(Model.ListChapter[i].id) | @Model.TotalTimeChapter(Model.ListChapter[i].id)</p>
+                    
                     <div class="pl-5 collapse spoiler-example" id="@Model.tag[i]">
+                   
                         @for (int j = 0; j < @Model.ListSubchapter.Count; j++)
                         {
                             if (@Model.ListSubchapter[j].chapter_id == @Model.ListChapter[i].id)
@@ -140,16 +142,16 @@
 
                         }
                     </div>
+                  
                 </article>
                 <div class="col-md-6" style="height:30px"></div>
             }
         </div>
         <!--FIN PARTIE DAFFICHAGE DE LA LISTE DES CHAPTIRE ET SOUS CHAPITRE-->
 
-        <div class="container bg-dark col-md-8 col-12 col-lg-8 pb-5" id="showVideo">
+        <divpv class="container bg-dark col-md-8 col-12 col-lg-8 pb-5 sticky" id="showVideo">
             @Html.Partial("_PartialVideo")
-
-        </div>
+        </divpv>
     </div>
 
 </section>
