@@ -123,10 +123,9 @@ namespace ELearning.Controllers
             ViewBag.subchapterID = subchapter_.id;
 
             var subchapterID2 = subchapter_.id;
-            List<Comment_> comment = (from c in db.Comment_
-                                      where c.sub_chapter_id == subchapterID2
-                                      select c).ToList();
 
+            List<Comment_> comment = ListCommentsss(subchapterID2);
+            
             var reply = (from r in db.Reply_
                          select r).ToList();
 
@@ -238,6 +237,74 @@ namespace ELearning.Controllers
 
             return View(vm);
         }
+
+
+        //methode qui me renvoie la liste des commentaires en fonction du subchapter_id
+        public List<Comment_> ListCommentsss(int sub_chapter_id)
+        {
+            var lstComment = (from lc in db.Comment_
+                              where lc.sub_chapter_id == sub_chapter_id
+                              select lc).ToList();
+
+            return lstComment;
+        }
+
+        [Authorize]
+        public ActionResult GetComments(int sub_chapter_id)
+        {
+            var vm = new SubchapterWithCommentsAndReply();
+
+            try
+            {
+                var lstComment = (from lc in db.Comment_
+                                  where lc.sub_chapter_id == sub_chapter_id
+                                  select lc).ToList();
+
+                var reply = (from r in db.Reply_
+                             select r).ToList();
+
+                //je crée une list de string qui va me permettre d'avoir des id unique pour le spoiler
+                var l = new List<string>();
+                var l_ = new List<string>();
+                foreach (var lst in lstComment)
+                {
+                    l.Add("tag" + lst.id);
+                    l_.Add("tag2" + lst.id);
+                }
+
+
+                var l2 = new List<string>();
+                foreach (var lst in reply)
+                {
+                    l2.Add("tagreply" + lst.id);
+                }
+                vm.TagReply = l2;
+
+                var l3 = new List<string>();
+                foreach (var lst in reply)
+                {
+                    l3.Add("tagreplyagain" + lst.id);
+                }
+                vm.TagReply2 = l3;
+
+
+                vm.TagComment = l;
+                vm.TagComment2 = l_;
+
+                vm.ListComment = lstComment;
+                vm.ListReply = reply;
+            }
+            catch
+            {
+                return null;
+            }
+
+
+
+           
+            return PartialView("_CommentPartial", vm);
+        }
+
 
         //methode qui permet de convertir des nanoseconde en milliseconde
         public static double Convert100NanosecondsToMilliseconds(double nanoseconds)

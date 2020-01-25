@@ -10,6 +10,7 @@ namespace ELearning.Models
     {
         public List<Comment_> ListComment { get; set; }
         public Subchapter_ CurrentSubchapter { get; set; }
+        //public Class_ CurrentClass { get; set; }
         public List<Reply_> ListReply { get; set; }
         public List<User_> ListUser { get; set; }
         public List<string> TagComment{ get; set; }
@@ -108,6 +109,15 @@ namespace ELearning.Models
         }
 
 
+                //methode qui me renvoie la liste des commentaires en fonction du subchapter_id
+        public List<Comment_> ListComments(int sub_chapter_id)
+        {
+            var lstComment = (from lc in db.Comment_
+                              where lc.sub_chapter_id == sub_chapter_id
+                              select lc).ToList();
+
+            return lstComment;
+        }
     }
 
 

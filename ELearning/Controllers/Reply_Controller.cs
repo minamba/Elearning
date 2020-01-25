@@ -138,15 +138,22 @@ namespace ELearning.Controllers
             newReply.comment_id = cid;
             newReply.user_id = uid;
             newReply.message = msgr;
-            
+
+            int? cl_id;
+            Subchapter_ subchapter = null;
+
 
             using (db)
             {
+                subchapter = (from s in db.Subchapter_
+                                  where s.id == subchapter_id
+                                  select s).First();
+                cl_id = subchapter.Chapter_.class_id;
                 db.Reply_.Add(newReply);
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Subchapter_", new { sub_chapter_id = subchapter_id });
+            return RedirectToAction("Index", "Subchapter_", new { sub_chapter_id = subchapter_id, class_id= cl_id });
         }
 
         [HttpPost]
@@ -158,14 +165,20 @@ namespace ELearning.Controllers
             newReply.user_id = uid;
             newReply.message = msgr2;
 
+            int? cl_id;
+            Subchapter_ subchapter = null;
 
             using (db)
             {
+                  subchapter = (from s in db.Subchapter_
+                              where s.id == subchapter_id
+                              select s).First();
+                cl_id = subchapter.Chapter_.class_id;
                 db.Reply_.Add(newReply);
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Subchapter_", new { sub_chapter_id = subchapter_id });
+            return RedirectToAction("Index", "Subchapter_", new { sub_chapter_id = subchapter_id, class_id = cl_id });
         }
     }
 }
