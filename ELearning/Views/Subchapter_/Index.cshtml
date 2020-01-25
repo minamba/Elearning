@@ -57,9 +57,8 @@
         });
     </script>
 </head>
-
 <!-------------------------------------------------------------HEADER---------------------------------------------------------------------->
-<div class="jumbotron-fluid col-12 col-md-12 col-lg-12 mx-auto backgroundSubchapter">
+@*<div class="jumbotron-fluid col-12 col-md-12 col-lg-12 mx-auto backgroundSubchapter">
     <header class="my-auto">
         <!-----------------------------------------TEXT DU HEADER------------------------------------------------>
         <h1 class="animated bounceInDown text-white text-center bigtitlePosition" style="font-size:8vw;"><b class="text-info">@ViewBag.firstLetterSubChapName</b>@ViewBag.theme_name</h1>
@@ -89,65 +88,70 @@
             @ViewBag.subchapterTitle
         </h2>
     </divh2>
-</section>
+</section>*@
 <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
 <!------------------------------------------------------------PARTIE POWER POINT VIDEO--------------------------------------------------------------------->
-<section class="container-fluid bg-dark">
+<section class="container-fluid bg-dark pt-5">
 
     <!--PARTIE POUR AFFICHER LA LISTE DES CHAPITRES ET SOUS CHAPTITRE A GAUCHE DES VIDEOS-->
-    <div class="container col-lg-4 col-md-4" style="height:75%" id="loadfromList">
-        <!--Ajout d'un progress bar en cercle-->
-        <div class="text-light bg-secondary text-center pt-3 pb-3" id="container">
-            <p>Votre progression</p>
-            @Html.Partial("_ProgressBarPartial")       
-        </div>
-       
-        <!--fi de progress bar-->
-        @for (int i = 0; i < Model.ListChapter.Count; i++)
-        {
-            int n = @i + 1;
-            <article class="info-block col-md-12  col-12 col-lg-12 bg-white shadow-lg border" data-aos="fade-up">
-                @*<h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>*@                           
-                <b class="font-weight-light text-info" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter[i].name</b>
-                <p class="text-justify text-left">@Model.CountVideoViewByUser(@Model.ListChapter[i].id,Model.UID)/@Model.CountSubChapterOfChapter(Model.ListChapter[i].id) | 45 minhutes</p>     
-                <div class="pl-5 collapse spoiler-example" id="@Model.tag[i]">
-                    @for (int j = 0; j < @Model.ListSubchapter.Count; j++)
-                    {
-                        if (@Model.ListSubchapter[j].chapter_id == @Model.ListChapter[i].id)
-                        {
-                            ind2 = ind2 + 1;
-                            <div class="container-fluid">
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 text-muted bg-white font-italic">
-                                    <!-- je vais charger que la video de la page via une fonction qui me retourne une vue partiel-->
-                                    @foreach (var s in Model.ListSeen)
-                                    {
-                                        if (s.subchapter_id == @Model.ListSubchapter[j].id && s.seen == true)
-                                        {
-                                            <img class="float-right imgsize" src="~/Content/Img/seen.png" />
-                                        }
-                                    }
-                                    <a class="col-6 col-sm-4 col-md-6 col-lg-6 loadVideo" data-url='@Url.Action("GetSubchapterVideo", new { sub_chapter_id = Model.ListSubchapter[j].id })' onclick="@Url.Action("VerifySeen", "Subchapter_", new { subchapterID = @Model.ListSubchapter[j].id, chapterID = @Model.ListSubchapter[j].chapter_id })">
-                                        @Model.ListSubchapter[j].name                                                      
-                                    </a>
-                                    <p style="color:Highlight">@Model.ListSubchapter[j].time_video minutes</p>
-                                    @*@totalTimeVideo = @totalTimeVideo + @Model.ListSubchapter[j].time_video minutes*@                           
-                     
-                                </div>
-                            </div>
-                                <hr class=" hrClassColor w-100" />
-                        }
-                      
-                    }
-                </div>
-            </article>
-                <div class="col-md-6" style="height:30px"></div>
-        }
-    </div>
-    <!--FIN PARTIE DAFFICHAGE DE LA LISTE DES CHAPTIRE ET SOUS CHAPITRE-->
+    <div>
+        <div class="container col-lg-4 col-md-4" id="loadfromList">
+            <!--Ajout d'un progress bar en cercle-->
+            <div class="text-light bg-secondary text-center pt-3 pb-3" id="container">
+                <p>Votre progression</p>
+                @Html.Partial("_ProgressBarPartial")
+            </div>
 
-    <div class="container bg-dark col-md-8 col-12 col-lg-8 pb-5" id="showVideo">
-        @Html.Partial("_PartialVideo")
+            <!--fi de progress bar-->
+            @for (int i = 0; i < Model.ListChapter.Count; i++)
+            {
+                int n = @i + 1;
+                <article class="info-block col-md-12  col-12 col-lg-12 bg-white shadow-lg border" data-aos="fade-up">
+                    @*<h5 class="text-muted pb-3" data-toggle="collapse" data-target="#@Model.tag[i]"><b class="text-info">Section :</b> <b class="text-danger">@n</b></h5>*@
+                    <b class="font-weight-light text-info" style="font-size:large" data-toggle="collapse" data-target="#@Model.tag[i]">@Model.ListChapter[i].name</b>
+
+                    <p class="text-justify text-left">@Model.CountVideoViewByUser(@Model.ListChapter[i].id, Model.UID)/@Model.CountSubChapterOfChapter(Model.ListChapter[i].id) | @Model.TotalTimeChapter(Model.ListChapter[i].id)</p>
+                    <div class="pl-5 collapse spoiler-example" id="@Model.tag[i]">
+                        @for (int j = 0; j < @Model.ListSubchapter.Count; j++)
+                        {
+                            if (@Model.ListSubchapter[j].chapter_id == @Model.ListChapter[i].id)
+                            {
+                                ind2 = ind2 + 1;
+                                <div class="container-fluid">
+                                    <div class="col-md-12 col-sm-12 col-lg-12 col-12 text-muted bg-white font-italic">
+                                        <!-- je vais charger que la video de la page via une fonction qui me retourne une vue partiel-->
+                                        @foreach (var s in Model.ListSeen)
+                                        {
+                                            if (s.subchapter_id == @Model.ListSubchapter[j].id && s.seen == true)
+                                            {
+                                                <img class="float-right imgsize" src="~/Content/Img/seen.png" />
+                                            }
+                                        }
+                                        <a class="col-6 col-sm-4 col-md-6 col-lg-6 loadVideo" data-url='@Url.Action("GetSubchapterVideo", new { sub_chapter_id = Model.ListSubchapter[j].id })' onclick="@Url.Action("VerifySeen", "Subchapter_", new { subchapterID = @Model.ListSubchapter[j].id, chapterID = @Model.ListSubchapter[j].chapter_id })">
+                                            @Model.ListSubchapter[j].name
+                                        </a>
+                                        <p style="color:Highlight">@Model.ListSubchapter[j].time_video minutes</p>
+                                        @*@totalTimeVideo = @totalTimeVideo + @Model.ListSubchapter[j].time_video minutes*@
+
+                                    </div>
+                                </div>
+                                <hr class=" hrClassColor w-100" />
+                            }
+
+                        }
+                    </div>
+                </article>
+                <div class="col-md-6" style="height:30px"></div>
+            }
+        </div>
+        <!--FIN PARTIE DAFFICHAGE DE LA LISTE DES CHAPTIRE ET SOUS CHAPITRE-->
+
+        <div class="container bg-dark col-md-8 col-12 col-lg-8 pb-5" id="showVideo">
+            @Html.Partial("_PartialVideo")
+
+        </div>
     </div>
+
 </section>
 
 <!------------------------------------------------------------FIN PARTIE VIDEO--------------------------------------------------------------------->

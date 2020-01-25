@@ -349,8 +349,6 @@
     <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\pixel2.css" />
-    <Content Include="Scripts\progressbar.js" />
-    <Content Include="Scripts\progressbar.min.js" />
     <Content Include="Content\SideBarStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Site1.css" />
@@ -514,7 +512,6 @@
     <Content Include="Views\Group_\AdminGroup.cshtml" />
     <Content Include="Views\Shared\_PartialVideo.cshtml" />
     <Content Include="Views\Shared\_ProgressBarPartial.cshtml" />
-    <Content Include="Scripts\progressbar.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

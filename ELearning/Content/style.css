@@ -9,6 +9,19 @@ body{
     background-color: #f7f7f7;
 }
 
+#sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    background: #f83d23;
+    width: 60px;
+    height: 60px;
+    top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 6px #000;
+    color: #fff;
+}
 
 /* Navigation */
 
@@ -581,3 +594,5 @@ padding-top: 2rem;
     text-decoration: none;
     color: black;
 }
+
+

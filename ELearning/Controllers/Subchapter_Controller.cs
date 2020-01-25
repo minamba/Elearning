@@ -72,7 +72,31 @@ namespace ELearning.Controllers
                                          && nsu.chapter_id == subchapter_.chapter_id
                                          select nsu).Count();
 
+            //selection de tous les sous chapitre en fonction du chapitre en parametre (j'utilise ça pour initialiser les videos du chap courant pour l'utilisateur courant)
 
+            //List<Subchapter_> lsbch = new List<Subchapter_>();
+            //foreach(var ch in chapterList)
+            //{
+            //    try
+            //    {
+            //        var subchapter = (from sbc in db.Subchapter_
+            //                                       where sbc.chapter_id == ch.id
+            //                                       select sbc).First();
+            //        lsbch.Add(subchapter);
+            //    }
+            //    catch
+            //    {
+            //        continue;
+            //    }
+            
+            //}
+
+            //foreach(var subch in lsbch)
+            //{
+            //    CreateVideoUser(subch.url_video, usr.id, (int)subch.chapter_id);
+            //}
+
+          
 
             /*****travail de chaine sur le nom du cour pour l'afficher dans le header ********/
             int nb = subchapter_.name.Length;
@@ -162,9 +186,9 @@ namespace ELearning.Controllers
 
 
             var listTag = new List<string>();
-            for (int i = 0; i < subchapterList.Count; i++)
+            for(int x=0; x<subchapterList.Count; x++)
             {
-                listTag.Add("tag" + subchapterList[i].id);
+                listTag.Add("tag" + subchapterList[x].chapter_id);
             }
             vm.tag = listTag;
 
@@ -219,6 +243,29 @@ namespace ELearning.Controllers
         public static double Convert100NanosecondsToMilliseconds(double nanoseconds)
         {
             return nanoseconds * 0.0001;
+        }
+
+
+        public void CreateVideoUser(string url_video,int uid, int chapter_id)
+        {
+
+            try
+            {
+                var uvideo = (from uv in db.Video_
+                              where uv.url_video == url_video
+                              && uv.user_id == uid
+                              select uv).First();
+            }
+            catch
+            {
+                var video = new Video_();
+                video.user_id = uid;
+                video.chapter_id = chapter_id;
+                video.url_video = url_video;
+                db.Video_.Add(video);
+                db.SaveChanges();
+            }
+
         }
 
 
@@ -323,6 +370,7 @@ namespace ELearning.Controllers
                              where v.url_video == subchapter_.url_video
                              && v.user_id == usr.id
                              select v).First();
+
                 vm.video = video;
             }
             catch
@@ -331,6 +379,7 @@ namespace ELearning.Controllers
                 v.time_start = 0;
                 v.user_id = usr.id;
                 v.url_video = subchapter_.url_video;
+                v.chapter_id = subchapter_.chapter_id;
                 db.Video_.Add(v);
                 db.SaveChanges();
 

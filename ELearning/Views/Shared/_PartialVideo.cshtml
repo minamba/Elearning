@@ -8,14 +8,15 @@
     var subchapter_id = Model.CurrentSubchapter.id;
 }
 
-<div class="embed-responsive embed-responsive-16by9  mx-auto my-a=uto" @Model.DisplayVideo(@subchapter) data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
-    <div class="video-frame shadow-lg" oncontextmenu="return false">
-        <video class="shadow-lg  my-auto w-100" id="currentVideo" style=" height:auto;" controls controlsList="nodownload">
+<div class="embed-responsive embed-responsive-16by9 "  @Model.DisplayVideo(@subchapter) >
+    <div class="video-frame"  oncontextmenu="return false">
+        <video class="w-100" id="currentVideo"  controls controlsList="nodownload">
             @*<source class="" src="@Url.Content("~/content/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />*@
-            <source class="" src="@Url.Content("http://vps64363.lws-hosting.com/Video/" + @Model.CurrentSubchapter.url_video +"#t="+@Model.video.time_start)" type="video/mp4" />
+            <source src="@Url.Content("http://vps64363.lws-hosting.com/Video/" + @Model.CurrentSubchapter.url_video +"#t="+@Model.video.time_start)" type="video/mp4" />
         </video>
     </div>
 </div>
+
 
 
 <!--SCIRPT TO GET VIDEO TIMESPAMP-->
@@ -62,3 +63,4 @@
         });
     }
 </script>
+

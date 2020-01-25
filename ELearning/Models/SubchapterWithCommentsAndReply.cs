@@ -79,6 +79,35 @@ namespace ELearning.Models
             return countUserVideoView;
         }
 
+
+        public string TotalTimeChapter(int chapter_id)
+        {
+            var totalTime = (from tt in db.Subchapter_
+                             where tt.chapter_id == chapter_id
+                             select tt.time_video).Sum();
+
+            //double secondes = Convert.ToDouble(totalTime);
+            //int minutes = (int)totalTime/60;
+            double secondes = Convert.ToDouble(totalTime * 60);
+            if(totalTime > 60)
+            {         
+                    TimeSpan t = TimeSpan.FromSeconds(secondes);
+                    string answer = string.Format("{0:D2}h:{1:D2}min",
+                    t.Hours,
+                    t.Minutes);
+
+                    return answer;              
+            }
+            else
+            {
+                return totalTime.ToString() +" "+ "min";
+            }
+           
+
+            return "";
+        }
+
+
     }
 
 
