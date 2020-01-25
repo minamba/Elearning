@@ -528,7 +528,7 @@ namespace ELearning.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,name,content,description,chapter_id,url_file")] Subchapter_ subchapter_, HttpPostedFileBase VideoUpload)
+        public ActionResult Create([Bind(Include = "id,name,content,description,chapter_id,url_file,url_video_base_path")] Subchapter_ subchapter_, HttpPostedFileBase VideoUpload)
         {
             if (ModelState.IsValid)
             {
@@ -539,9 +539,29 @@ namespace ELearning.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(VideoUpload.FileName);
                     string extension = Path.GetExtension(VideoUpload.FileName);
                     fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
-                    subchapter_.url_video = fileName;           
+                    subchapter_.url_video = fileName;
+                    string fullFilePath = subchapter_.url_video_base_path + VideoUpload.FileName;
 
-                    
+                    try
+                    {
+                        ShellFile so = ShellFile.FromFilePath(fullFilePath);
+                        double nanoseconds;
+                        double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out nanoseconds);
+
+                        if (nanoseconds > 0)
+                        {
+                            double seconds = Convert100NanosecondsToMilliseconds(nanoseconds) / 1000;
+                            int ttl_seconds = Convert.ToInt32(seconds);
+                            time = TimeSpan.FromSeconds(ttl_seconds);
+
+                        }
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+
+
                     //VideoUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/Video/"), fileName));
                     //----------------------------FTP VPS UPLOAD-----------------------------------------//
                     var uploadurl = @"ftp://vps64363.lws-hosting.com//web//Video/";
@@ -567,6 +587,7 @@ namespace ELearning.Controllers
 
 
                 subchapter_.date_creation = DateTime.Now;
+                subchapter_.time_video = time.Minutes;
                 db.Subchapter_.Add(subchapter_);
                 db.SaveChanges();
                 return RedirectToAction("AdminSubchapter");
