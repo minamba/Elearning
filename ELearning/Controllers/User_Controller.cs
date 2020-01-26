@@ -23,6 +23,7 @@ namespace ELearning.Controllers
         private elearningEntities db = new elearningEntities();
         private static bool status;
         private static string umail;
+        private static string upassword;
         // GET: User_
         [Authorize]
         public ActionResult Index()
@@ -260,6 +261,11 @@ namespace ELearning.Controllers
                 return HttpNotFound();
             }
 
+            var upwd = (from up in db.AspNetUsers
+                       where up.Id == user_.user_asp_net_id
+                       select up).First();
+
+            upassword = upwd.PasswordHash;
             umail = user_.mail;
             status = (bool)user_.user_validate;
 
@@ -312,8 +318,14 @@ namespace ELearning.Controllers
                     sm.SenEmail("webmaster.malik.ibn.anas@gmail.com",us.mail,"Activation de votre Compte", "As salamou 3alaykoum wa rahmatulLah " + us.first_name + ", votre compte à été activé par un administrateur, vous pouvez des à present vous connecter sur la plateforme.");
                 }
 
-                if (user_.password != "")
+                if (user_.password == null)
+                {
+                    user_.password = upassword;
+                }
+                else
+                {
                     uid.PasswordHash = HashPassword(user_.password);
+                }
                 
                 uid.Email = user_.mail;
                 uid.UserName = user_.mail;
