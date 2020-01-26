@@ -37,7 +37,7 @@
                                                           <!--CONTREOLE SI CEST CHEIKH QUI REPOND JAFFICHE LE COMMENTAIRE EN VERT SINON IL EST EN NORMAL-->
                             if (Model.ListComment[i].User_.type == 3)
                             {
-                                <div class="panel-body panCommentcolor">
+                                <div class="panel-body panCommentcolor shadow-lg">
                                     <header class="text-left">
                                         @*<div class="comment-user"><i class="fa fa-user"></i> Sujet</div>*@
                                         @{
@@ -106,7 +106,7 @@
 
                                                 <!-- Sous Reply -->
                             <div id="@Model.TagComment2[i]" class="collapse align-items-center">
-                                <article class="row">
+                                <article class="row ">
                                     <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
                                         <figure class="thumbnail">
                                             @if (Html.Action("RecupSexeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "Homme" && Html.Action("RecupTypeUserFromId", new { id = @Model.ListReply[r].user_id }).ToString() == "1")
@@ -147,7 +147,7 @@
                                                             </p>
                                                         </div>
                                                         <p class="text-right"><a href="#" data-toggle="collapse" data-target="#@Model.TagReply2[r]" class="btn btn-default btn-sm" aria-expanded="false"><i class="fa fa-reply"></i> répondre</a></p>
-                                                        <div id="@Model.TagReply2[r]" class="collapse">
+                                                        <div id="@Model.TagReply2[r]" class="collapse shadow-lg">
                                                             <textarea class=" form-control bg-transparent border-0" aria-label="With textarea" placeholder="Ajouter une réponse" name="msgr2" id="msgr2" rows="5"></textarea>
                                                             <button type="submit" class="btn btn-block btn-outline-secondary btn-info" onclick="location.href='@Url.Action("SendMailResponse", "Subchapter_",new { mailWhoWriteTheComment = @Model.ListComment[i].User_.mail, idFromWhoRespond = @ViewBag.userID, message = @Model.ListReply[r].message})'">Répondre</button>
                                                             <button type="reset" class="btn btn-block btn-outline-secondary btn-danger" data-toggle="collapse" data-target="#@Model.TagReply2[r]" onclick="user_onclear()">Annuler</button>

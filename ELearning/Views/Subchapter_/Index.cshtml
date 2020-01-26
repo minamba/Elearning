@@ -100,14 +100,18 @@
 </section>*@
 <!----------------------------------FIN TITRE ANIMATION----------------------------------------------->
 <!------------------------------------------------------------PARTIE POWER POINT VIDEO--------------------------------------------------------------------->
-<section class="container-fluid bg-dark pt-5">
+<div class="container-fluid text-white text-left " style="font-size:3vw; background-color:#343A40">
+    <span class="text-info" style="font-size:3vw;">O</span>usraty <span style="font-size:2vw;font-family:Calibri">|</span> <span class="text-wrap" style="font-size:2.3vw; font-family:Arial" >@Model.CurrentSubchapter.Chapter_.Class_.name</span>
+</div>
+<section class="container-fluid pt-5" style="background-color:ghostwhite">
 
     <!--PARTIE POUR AFFICHER LA LISTE DES CHAPITRES ET SOUS CHAPTITRE A GAUCHE DES VIDEOS-->
     <div>
-        <div class="container col-lg-4 col-md-4" id="loadfromList">
+
+        <div class="container col-lg-4 col-md-4 text-capitalize" id="loadfromList">
             <!--Ajout d'un progress bar en cercle-->
-            <div class="text-light bg-secondary text-center pt-3 pb-3" id="container">
-                <p>Votre progression</p>
+            <div class="bg-info text-white text-center pb-0">Votre progression</div>
+            <div class="text-light shadow-lg text-center pb-3" id="container">
                 @Html.Partial("_ProgressBarPartial")
             </div>
 
@@ -158,7 +162,7 @@
         </div>
         <!--FIN PARTIE DAFFICHAGE DE LA LISTE DES CHAPTIRE ET SOUS CHAPITRE-->
 
-        <divpv class="container bg-dark col-md-8 col-12 col-lg-8 pb-5 sticky" id="showVideo">
+        <divpv class="container  col-md-8 col-12 col-lg-8 pb-5 sticky" id="showVideo">
             @Html.Partial("_PartialVideo")
         </divpv>
     </div>
@@ -166,7 +170,7 @@
 </section>
 
 <!------------------------------------------------------------FIN PARTIE VIDEO--------------------------------------------------------------------->
-<div class="container-fluid col-lg-12">
+<div class="container-fluid col-lg-12" style="background-color:#FFFFFF">
     <div class="row align-items-center">
         <!------------------------------LA PARTIE COMMENTAIRE---------------------------------------------->
         @*@using (Html.BeginForm("SaveComment", "Comment_", FormMethod.Post))
@@ -193,7 +197,7 @@
 
         @*}*@
         <!-- SOUS PARTIE CONCERNANT LE COMMENTAIRE UTILISATEUR AINSI QUE LES REPONSES-->
-        <div class="container col-lg-10 col-lg-offset col-md-12 col-md-offset-1" id="showComments">
+        <div class="container col-lg-10 col-lg-offset col-md-12 col-md-offset-1"  style="background-color:#FFFFFF" id="showComments">
             @Html.Partial("_CommentPartial")
         </div>
     </div>
