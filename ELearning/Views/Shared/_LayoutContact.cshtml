@@ -45,7 +45,7 @@
                     </li>
 
                     <li class="nav-item float-right">
-                        @if (ViewBag.Role == 1)
+                        @if (ViewBag.Role == 1 || ViewBag.Role == 3)
                         {
                             <a class="nav-link" href="@Url.Action("AdminUser", "User_")">Administration</a>
                         }
