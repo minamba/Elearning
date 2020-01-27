@@ -6,15 +6,20 @@
 <script>
     //fonction qui me permet d'afficher ou de cacher le mot de passe
     $(function () {
-
-        $("#showPass").change(function () {
-            var checked = $(this).is(":checked");
-            if (checked) {
+        var b = false;
+        $("#showPass").click(function () {
+            //var bpass = b;
+            console.log();
+            var checked = $(this).click;
+            if (!b) {
+                console.log('jai cliqué');
                 $("#password").attr("type", "text");
                 $("#eyeColor").attr("style", "color:#18A2B8");
+                b = true;
             } else {
                 $("#password").attr("type", "password");
                 $("#eyeColor").attr("style", "color:white");
+                b = false;
                 //eye = "color:white";
             }
         });
@@ -53,29 +58,29 @@
                     <hr class="hrColor" />
                     @Html.ValidationSummary("", new { @class = "text-danger" })
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 col-lg-12 control-label" })
-                        <div class="col-md-12 col-lg-12">
+                        @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                        <div class="input-group">
                             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-12 col-lg-12">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                        <div class="input-group">
                             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-12 col-lg-12">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        <div class="input-group">
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.SelectedSexe, "Sexe", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-12 col-lg-12">
+                        @Html.LabelFor(model => model.SelectedSexe, "Sexe", htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
                             @Html.DropDownListFor(model => model.SelectedSexe, new SelectList(Model.ListSexe, "Value", "Text"), "Selectionner votre sexe", htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.SelectedSexe, "", new { @class = "text-danger" })
                         </div>
@@ -84,8 +89,8 @@
 
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.SelectedGroupe, "Classe", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-12 col-lg-12">
+                        @Html.LabelFor(model => model.SelectedGroupe, "Classe", htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
                             @Html.DropDownListFor(model => model.SelectedGroupe, new SelectList(Model.ListGroupes, "Value", "Text"), "Selectionner votre classe", htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.SelectedGroupe, "", new { @class = "text-danger" })
                         </div>
@@ -93,24 +98,26 @@
 
 
 
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-8 col-lg-12 control-label" })
-                    <div class="col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "password" })
-                            @*@Html.CheckBox("show", new { id = "showPass" })
-                            <i class="far fa-eye float-lg-right col-lg-1" id="eyeColor"></i>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control ", id = "password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="far fa-eye float-lg-right" id="showPass"></i></div>
+                            </div>
                         </div>
                     </div>
 
-
-                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-8 col-lg-12 control-label" })
-                    <div class="col-md-12 col-lg-12">
-                        <div class="form-group">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                        <div class="input-group">
                             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-12 col-lg-12 pb-5">
+                        <div class="input-group">
                             <input type="submit" class="btn btn-info" value="S’inscrire" />
                             @Html.ActionLink(" | Connexion", "Login")
                         </div>

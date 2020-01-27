@@ -5,21 +5,28 @@
 @{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
     string eye="";
+   
 }
 
 
 <script>
+   
     //fonction qui me permet d'afficher ou de cacher le mot de passe
     $(function () {
-
-        $("#showPass").change(function () {
-            var checked = $(this).is(":checked");
-            if (checked) {
+        var b = false;
+        $("#showPass").click(function () {
+            //var bpass = b;
+            console.log();
+            var checked = $(this).click;       
+            if (!b) {
+                console.log('jai cliqué');
                 $("#password").attr("type", "text");
                 $("#eyeColor").attr("style", "color:#18A2B8");
+                b = true;
             } else {
                 $("#password").attr("type", "password");
                 $("#eyeColor").attr("style", "color:white");
+                b = false;
                 //eye = "color:white";
             }
         });
@@ -62,28 +69,26 @@
                     <hr class="hrColor" />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-12 control-label" })
-                        <div class="col-md-12">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control col-lg-12 col-md-12 col-12" })
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
-                    <div class="col-md-12">
-                       
-                        <div class="form-group form-inline">
-                       
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control col-lg-12 col-md-12 col-12", id = "password" } )
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control ", id = "password" })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            @*<span class="fa fa-eye form-control" onchange="test()" style="background-color:#E8E4E6; border-bottom-left-radius:unset; border-top-left-radius:unset;"></span>*@
-                            @*@Html.CheckBox("show", new { @class = "col-lg-1 col-md-1 col-1", id = "showPass" })
-                            <i class="far fa-eye float-lg-right" id="eyeColor"></i>*@
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="far fa-eye float-lg-right" id="showPass"></i></div>
+                            </div>
                         </div>
-                      
+
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                        <div class="input-group">
                             <input type="submit" value="Connexion" class="btn btn-info" />
                         </div>
                     </div>
