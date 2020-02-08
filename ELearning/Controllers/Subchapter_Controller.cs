@@ -416,6 +416,61 @@ namespace ELearning.Controllers
             }
         }
 
+
+        [Authorize]
+        public ActionResult RechargedProgress(int currentTime,  int duration, int subchapter_id)
+        {
+            var uid = User.Identity.GetUserId();
+            var vm = new SubchapterWithCommentsAndReply();
+
+            var subchapter_ = (from sch in db.Subchapter_
+                               where sch.id == subchapter_id
+                               select sch).First();
+
+            if (currentTime == duration)
+            {
+                try
+                {
+                    //compte le nombre de sous chapitre
+                    var numberVideo = (from nv in db.Subchapter_
+                                       from ch in db.Chapter_
+                                       from cl in db.Class_
+                                       where cl.id == subchapter_.Chapter_.class_id
+                                       && ch.class_id == cl.id
+                                       && nv.chapter_id == ch.id
+                                       select nv).Count();
+
+
+                    var numberVideoSeenByUser = (from nsu in db.Seen_
+                                                 where nsu.user_asp_net_id == uid
+                                                 && nsu.seen == true
+                                                 && nsu.chapter_id == subchapter_.chapter_id
+                                                 select nsu).Count();
+
+
+                    //Calcul du pourcentage par rapport à la progression
+                    decimal totalPurcent = numberVideo;
+                    decimal userPurcent = numberVideoSeenByUser;
+                    decimal currentPurcent;
+                    if (totalPurcent < userPurcent)
+                        currentPurcent = 100;
+                    else
+                        currentPurcent = (userPurcent / totalPurcent) * 100;
+
+
+                    vm.UserPurcentage = (int)currentPurcent;
+                    //ViewBag.UPurcentage = (int)currentPurcent;
+                    return PartialView("_ProgressBarPartial", vm);
+                }
+                catch
+                {
+                    return PartialView("_ProgressBarPartial", vm);
+                }
+            }
+            return PartialView("_ProgressBarPartial", vm);
+            //return null;
+        }
+
         [Authorize]
         public ActionResult GetSubchapterVideo(int sub_chapter_id)
         {

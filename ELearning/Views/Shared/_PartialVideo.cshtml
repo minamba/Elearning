@@ -8,9 +8,9 @@
     var subchapter_id = Model.CurrentSubchapter.id;
 }
 
-<div class="embed-responsive embed-responsive-16by9 sticky  "  @Model.DisplayVideo(@subchapter) >
-    <div class="video-frame"  oncontextmenu="return false">
-        <video class="shadow-lg" id="currentVideo" controls controlsList="nodownload">
+<div class="embed-responsive embed-responsive-16by9 mx-auto my-auto"  @Model.DisplayVideo(@subchapter) >
+    <div class="video-frame"  oncontextmenu="return false" id="zozo">
+        <video class="shadow-lg my-auto w-100 " id="currentVideo" controls controlsList="nodownload">
             @*<source class="" src="@Url.Content("~/content/Video/" + @Model.CurrentSubchapter.url_video)" type="video/mp4" />*@
             <source src="@Url.Content("http://vps64363.lws-hosting.com/Video/" + @Model.CurrentSubchapter.url_video +"#t="+@Model.video.time_start)" type="video/mp4" />
         </video>
@@ -44,6 +44,7 @@
 <!--VIDEO ENDED-->
 <script type='text/javascript'>
     document.getElementById('currentVideo').addEventListener('ended', myHandler, false);
+    document.getElementById('currentVideo').addEventListener('ended', myHandler2, false);
     var vidEnd = document.getElementById("currentVideo");
     var url_vid = "@video";
     var subchap_id = "@subchapter_id";
@@ -58,10 +59,33 @@
             data: '{"currentTime":"' + Math.round(vidEnd.currentTime) + '","url_video":"' + url_vid + '","duration":"' + Math.round(vidEnd.duration) + '","subchapter_id":"' + subchap_id + '","chapter_id":"' + chap_id + '"}',
             dataType: "json",
             success: function (result, status, xhr) {
+                console.log("merde");
                 console.log(result);
             }
         });
     }
+    function myHandler2(e) {
+        setInterval(function () {
+            console.log("fin de la video 2");
+            $.ajax({
+                type: "POST",
+                url: "/Subchapter_/RechargedProgress",
+                contentType: "application/json; charset=utf-8",
+                data: '{"currentTime":"' + Math.round(vidEnd.currentTime) + '","duration":"' + Math.round(vidEnd.duration) + '","subchapter_id":"' + subchap_id + '"}',
+                dataType: "json",
+                success: function (result, status, xhr) {
+                }
+            });
+        }, 3000);
+
+        //$(".loadProgressBar").click(function (e) { //obligé d'utiliser une classe pour que tous les elements soit pris en compte. si j'utilise un id="blabla" dans une boucle, il va prendre que le premier element
+        //    e.preventDefault();
+        //    var url = $(this).data("url3");
+        //    console.log("url information" + url);
+        //    $("#showComments").load(url);
+        //});
+    }
+
 </script>
 
 
@@ -150,4 +174,5 @@
     progress.addEventListener('mousedow', () => mousedow = true);
     progress.addEventListener('mouseup', () => mousedow = false);
 </script>
+
 

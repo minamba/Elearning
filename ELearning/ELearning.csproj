@@ -226,6 +226,7 @@
     <Compile Include="Controllers\Chapter_Controller.cs" />
     <Compile Include="Controllers\Class_Controller.cs" />
     <Compile Include="Controllers\Comment_Controller.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\Group_Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -512,6 +513,7 @@
     <Content Include="Views\Group_\AdminGroup.cshtml" />
     <Content Include="Views\Shared\_PartialVideo.cshtml" />
     <Content Include="Views\Shared\_ProgressBarPartial.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

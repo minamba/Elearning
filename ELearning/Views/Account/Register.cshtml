@@ -82,7 +82,7 @@
                         @Html.LabelFor(model => model.SelectedSexe, "Sexe", htmlAttributes: new { @class = "control-label" })
                         <div class="input-group">
                             @Html.DropDownListFor(model => model.SelectedSexe, new SelectList(Model.ListSexe, "Value", "Text"), "Selectionner votre sexe", htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.SelectedSexe, "", new { @class = "text-danger" })
+                            @*@Html.ValidationMessageFor(model => model.SelectedSexe, "", new { @class = "text-danger" })*@
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@
                         @Html.LabelFor(model => model.SelectedGroupe, "Classe", htmlAttributes: new { @class = "control-label" })
                         <div class="input-group">
                             @Html.DropDownListFor(model => model.SelectedGroupe, new SelectList(Model.ListGroupes, "Value", "Text"), "Selectionner votre classe", htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.SelectedGroupe, "", new { @class = "text-danger" })
+                            @*@Html.ValidationMessageFor(model => model.SelectedGroupe, "", new { @class = "text-danger" })*@
                         </div>
                     </div>
 
@@ -119,9 +119,12 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input type="submit" class="btn btn-info" value="S’inscrire" />
+                            &nbsp;
                             @Html.ActionLink(" | Connexion", "Login")
                         </div>
                     </div>
+
+                     <p class="pb-3"> </p>
                 }
 
                 @section Scripts {

@@ -28,6 +28,7 @@ namespace ELearning.Models
         public Dictionary<string,TimeSpan>TimeOfVideo { get; set; }
         public List<Seen_> ListSeen { get; set; }
         public int UserPurcentage { get; set; }
+        public int UserPurcentage2 { get; set; }
         public int TotalVideoSection { get; set; }
         public int VideoSeenUser { get; set; }
         public string UID { get; set; }

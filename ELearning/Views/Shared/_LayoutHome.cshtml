@@ -89,33 +89,38 @@ if (@ViewBag.gactivity == "active")
             AOS.init();
         </script>
     </head>
+
+<body>
+
+
+            <!---------
         <body>
             <!-----------------------------------------BARRE DE NAVIGATION------------------------------------------------>
-            <div class="sticky-top shadow-lg">
-                <nav class="navbar navbar-expand-md navbar-dark navbarBgColor">
+            @*<div class="sticky-top shadow-lg">
+                <nav class="navbar navbar-expand-md navbar-dark white">
 
                     @if (ViewBag.currentPage != null)
                     {
-                        <input class="btn text-dark btnsize shadow" type="button" value="Admin" id="sidebarCollapse" style="background-color:floralwhite;" />
+                        <input class="btn text-dark btnsize shadow" type="button" value="Admin" id="sidebarCollapse" style="background-color:black;" />
                     }
                     <button class="navbar-toggler align-self-start float-right mt-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContentLG" aria-controls="navbarSupportedContentLG" aria-expanded="false" aria-label="Toggle navigation" style="width:40px;">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse mobileMenu" id="navbarSupportedContentLG">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item ">
+                        <ul class="navbar-nav mr-auto" style="color:black;">
+                            <li class="nav-item " style="color:black">
                                 <a class="nav-link" href="@Url.Action("Index", "Home")">Acceuil</a>
                             </li>
-                            @*<li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Cours
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownLG">
                                     <a class="dropdown-item bg-light" href="@Url.Action("Index", "Theme_")">Thème</a>
                                 </div>
-                            </li>*@
-                            <li class="nav-item">
+                            </li>
+                            <li class="nav-item" >
                                 <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a>
                             </li>
 
@@ -130,8 +135,29 @@ if (@ViewBag.gactivity == "active")
                     </div>
                 </nav>
             
-                </div>
-            <!-----------------------------------------ENTETE------------------------------------------------------------>
+                </div>*@
+
+    <!-- Navigation -->
+    <header id="topnav" class="pb-5">
+        <div class="inner navbar-expand-md">       
+            <nav role='navigation'>
+                    <img src="http://vps64363.lws-hosting.com/Img/ousraty.png" style="width:8%; margin-left:350px;" />
+                    <ul class="float-right">
+                        <li><a style="width:5%; height:auto; margin-left:100px;" href="#" class="font-weight-bold">Forum</a></li>
+                        <li><a href="#" class="font-weight-bold">Blog</a></li>
+                        <li><a class="text-white bg-warning rounded-pill font-weight-bold" href="#">Formations</a></li>
+                        <li><a href="#">|</a></li>
+                        <li>
+                            <img src="http://vps64363.lws-hosting.com/Img/profil.png" style="width:5%;" />
+                            <a class="font-weight-bold">Mon compte</a>
+
+                        </li>
+                    </ul>
+            </nav>
+        </div>
+    </header>
+
+@*--------------------------------ENTETE------------------------------------------------------------>*@
             <div style="overflow-x: hidden;"> <!--cette div me permet de supprimer le horizontal scroll bar sur tel et de garder le menu stiky top-->
 
                 @RenderBody()
@@ -147,7 +173,7 @@ if (@ViewBag.gactivity == "active")
 
 </html>
 
-<script>
+@*<script>
     $(window).scroll(function () {
         if ($(document).scrollTop() > 100) {
             $('.navbar').addClass('color-change');
@@ -155,8 +181,28 @@ if (@ViewBag.gactivity == "active")
             $('.navbar').removeClass('color-change');
         }
     });
+</script>*@
+
+
+<script>
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            var scrollTop = $(window).scrollTop();
+            if (scrollTop > 49) {
+                $('body').addClass('header-fixed');
+            } else {
+                $('body').removeClass('header-fixed');
+            }
+            // change the style of the navbar when the user scrolls into the next zone.
+            // get the distance of the 2nd section from the top of the page - height of header.
+            var topOffset = $('#demosection2').offset().top;
+            var headerHeight = $('#topnav').height();
+            var transitionPoint = topOffset - headerHeight;
+            if (scrollTop > transitionPoint) {
+                $('#topnav').addClass('alt-header');
+            } else {
+                $('#topnav').removeClass('alt-header');
+            }
+        });
+    });
 </script>
-
-
-
-

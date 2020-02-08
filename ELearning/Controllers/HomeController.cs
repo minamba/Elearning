@@ -198,12 +198,18 @@ namespace ELearning.Controllers
             }
             catch
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Default", "Home");
             }
 
         }
 
-        public ActionResult About()
+        public ActionResult Default()
+        {
+            return View();
+        }
+
+
+            public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 

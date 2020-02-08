@@ -1,7 +1,16 @@
 ﻿@model  ELearning.Models.SubchapterWithCommentsAndReply       
 
 @{
-    var purcentage = Model.UserPurcentage;
+    var purcentage = 0;
+    //try
+    //{
+        purcentage = Model.UserPurcentage;
+    //}
+    //catch
+    //{
+    //    //purcentage = @ViewBag.UPurcentage;
+    //   //purcentage = 60;
+    //}
 }
 
      @*<div class="progresss blue" >
@@ -14,7 +23,12 @@
                 <div class="progress-value">@Model.UserPurcentage %</div>
             </div>*@
 
-<div id="content" style="background-color: #343A40"></div>
+@*<div id="content" class="align-content-lg-end" style="background-color: #343A40"></div>*@
+
+<div class="progress--circle progress--@Model.UserPurcentage" id="popo">
+    <div class="progress__number">@Model.UserPurcentage %</div>
+</div>
+
 
 <script>
     var purcentage = "@purcentage";
@@ -117,3 +131,6 @@
         }
     })();
 </script>
+
+
+

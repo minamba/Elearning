@@ -4,7 +4,7 @@
     //int totalTimeVideo = 0;
     string[] time = null;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
-   
+
     int ind2 = 1;
     List<string> index = new List<string>();
 
@@ -15,6 +15,10 @@
 
     string date;
     var displayppt = "";
+
+    var aTimer = new System.Timers.Timer();
+    aTimer.Interval = 5000;
+}
 }
 
 <head>
@@ -64,6 +68,24 @@
                 $("#showComments").load(url);
             });
         });
+
+        //fonction ajax qui me permet de recharger le pourcentage
+        //$(document).ready(function () {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "JavaScript.aspx/GetData",
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            $("#Content").text(response.d);
+        //        },
+        //        failure: function (response) {
+        //            alert(response.d);
+        //        }
+        //    });
+        //});
+ 
+        
     </script>
 </head>
 <!-------------------------------------------------------------HEADER---------------------------------------------------------------------->
@@ -104,17 +126,22 @@
     <span class="text-info" style="font-size:3vw;">O</span>usraty <span style="font-size:2vw;font-family:Calibri">|</span> <span class="text-wrap" style="font-size:2.3vw; font-family:Arial" >@Model.CurrentSubchapter.Chapter_.Class_.name</span>
 </div>
 <section class="container-fluid pt-5" style="background-color:ghostwhite">
-
     <!--PARTIE POUR AFFICHER LA LISTE DES CHAPITRES ET SOUS CHAPTITRE A GAUCHE DES VIDEOS-->
-    <div>
+    <div class="container-fluid">
+        <!--PARTIE POUR AFFICHER LA VIDEO-->
+        <div class="col-md-12 col-12  col-lg-8 pb-5" id="showVideo">
+            @Html.Partial("_PartialVideo")
+        </div>
 
-        <div class="container col-lg-4 col-md-4 text-capitalize" id="loadfromList">
+        <div class="col-lg-4 col-md-12 col-12 text-capitalize" id="loadfromList">
+
             <!--Ajout d'un progress bar en cercle-->
             <div class="bg-info text-white text-center pb-0">Votre progression</div>
-            <div class="text-light shadow-lg text-center pb-3" id="container">
-                @Html.Partial("_ProgressBarPartial")
+            <div class="text-light shadow-lg text-center pb-3 bg-dark" id="showProgressBar" @*data-url3='@Url.Action("GetSubchapterVideo", new { sub_chapter_id = Model.ListSubchapter[j].id })'*@ >
+               
+                @Html.Partial("_ProgressBarPartial")          
+                @*@Html.Partial("_ProgressBarPartial")*@
             </div>
-
             <!--fi de progress bar-->
             @for (int i = 0; i < Model.ListChapter.Count; i++)
             {
@@ -161,11 +188,8 @@
             }
         </div>
         <!--FIN PARTIE DAFFICHAGE DE LA LISTE DES CHAPTIRE ET SOUS CHAPITRE-->
-
-        <divpv class="container  col-md-8 col-12 col-lg-8 pb-5 sticky" id="showVideo">
-            @Html.Partial("_PartialVideo")
-        </divpv>
     </div>
+
 
 </section>
 
@@ -239,3 +263,9 @@
         easing: 'ease-in-out-sine'
     });
 </script>
+
+
+
+
+
+

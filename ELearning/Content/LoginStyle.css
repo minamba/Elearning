@@ -44,7 +44,9 @@ header {
 
 body {
     /*font-family: 'Roboto', sans-serif;*/
-    background-image: url(http://vps64363.lws-hosting.com/Img/login.png);
+    background-image: url(http://vps64363.lws-hosting.com/Img/Asset12@3x.png);
+    background-size: cover;
+    position: relative;
 }
 
     .form-area {

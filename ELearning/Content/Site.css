@@ -399,7 +399,9 @@
     /*******************************768******************************/
     @media (max-width: 768px) {
 
-
+        .videoManaged{
+            position : absolute;
+        }
 
         .forgotpwd {
             background-color: black;
@@ -939,6 +941,19 @@
     }
 
 
+.profil {
+    width: 8%;
+    height: auto;
+}
+
+.backgroundDefault {
+    background-image: url(http://vps64363.lws-hosting.com/Img/Asset12@3x.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+
 .backgroundHome {
     background-image: url(http://vps64363.lws-hosting.com/Img/home.PNG);
     background-repeat: no-repeat;
@@ -1053,15 +1068,15 @@
         position: sticky;
     }
 
-    .sticky {
-        position: fixed;
-        top: 0;
-        width: 100%;
-    }
+.sticky {
+    position: -webkit-sticky;
+    top: 0;
+    width: 100%;
+}
 
-        .sticky + .content {
+        /*.sticky + .content {
             padding-top: 102px;
-        }
+        }*/
 
     .title2 { /* position du titre "plus q'un institu, une famille..."*/
         padding-left: 900px;
@@ -1334,7 +1349,7 @@
     }
 
         .navbar.navbar-default .navbar-brand {
-            color: #666;
+            color: black;
             text-shadow: none;
             min-width: 150px;
         }
@@ -1354,12 +1369,12 @@
             }
 
         .navbar.navbar-default .navbar-nav > .active > a {
-            color: #fff;
+            color: black;
             background-color: #608224;
         }
 
             .navbar.navbar-default .navbar-nav > .active > a:hover {
-                color: #608224;
+                color: black;
                 background-color: #acc47f;
             }
 
@@ -1449,7 +1464,7 @@
         }
             /*adds background on hover*/
             nav.sidebar .navbar-nav > li:hover {
-                color: #608224;
+                color: black;
                 background-color: #608224;
             }
             /*removes border last element*/
@@ -1527,7 +1542,7 @@
     }
 
     nav.sidebar .navbar-nav .open .dropdown-menu > li > a:hover, nav.sidebar .navbar-nav .open .dropdown-menu > li > a:focus {
-        color: #CCC;
+        color: black;
         background-color: transparent;
     }
 
@@ -1717,9 +1732,31 @@
 
 
     /***************************************************NAVBAR HOME*********************************************************************************/
-    .btn-outline-dark {
+
+/*#navigation {
+    position: fixed;
+    z-index: 40;
+    width: 100%;
+    background-color: transparent;
+    text-align: center;
+    transition: all 0.4s ease-in-out; /* toutes les transition faite sur la barre de navigation va durer 0.4s*/
+    /*anime gs*/
+    /*opacity: 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.6);*/
+}
+
+
+
+
+
+    /*#navigation a:active {
+        font-size: 4rem;
+    }*/
+
+    
+    /*.btn-outline-dark {
         border-color: #FFF;
-        color: #FFF;
+        color: black;
     }
 
         .btn-outline-dark:hover {
@@ -1731,7 +1768,7 @@
     }
 
     .navbar-nav > li > a {
-        color: white;
+        color: black;
     }
 
 
@@ -1742,7 +1779,167 @@
 
 .navbar-dark .navbar-toggler-icon {
     background-image: url(http://vps64363.lws-hosting.com/Img/togglemenu.png);
+}*/
+
+
+/* apply a natural box layout model to all elements */
+/**, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}*/
+
+/*::selection {
+    background: #000;
+    color: #aaf;
+}*/
+
+/*.alternate ::selection {
+    background: #c00;
+    color: #000;
+}*/
+
+
+
+ul, li, a,img, .logo {
+    font-family: "Lato","Verdana",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
 }
+
+.inner {
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    padding-top: 20px;
+    background: white;
+    transition: 0.7s all;
+    z-index: 2;
+}
+
+    header.alt-header {
+        background: #fff;
+    }
+
+.alt-header a {
+    color: #000;
+}
+
+/*body.header-fixed header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding-top: 0;
+    width: 100%;
+    z-index: 2;
+}*/
+
+.izzi {
+    background-image: url(http://vps64363.lws-hosting.com/Img/profil.png);
+}
+
+li {
+    list-style: none;
+}
+
+nav {
+    overflow: hidden;
+}
+
+    nav ul {
+        float: right;
+    }
+
+    nav li {
+        display: inline;
+        float: left;
+    }
+
+    nav a {
+        display: inline-block;
+        color: black;
+        text-decoration: none;
+        padding: 25px;
+        transition: 0.3s all;
+    }
+
+        nav a:hover {
+            background: red;
+        }
+
+.logo {
+    float: left;
+    color: #fff;
+    background-image: url(http://vps64363.lws-hosting.com/Img/profil.png);
+    width:50%;
+    font-size: 20px;
+    line-height: 50px;
+    transition: 0.7s all;
+}
+
+.alt-header .logo {
+    color: #000;
+}
+
+body.header-fixed .logo {
+    font-size: 30px;
+}
+
+.alternate {
+    background: #000;
+    color: #fff;
+}
+
+section .inner {
+    padding-top: 200px;
+}
+
+
+/**********************************************************header span*******************************************************************************/
+
+header span.animated {
+    position: absolute;
+    margin: auto;
+    right: 0;
+    left: 0;
+    bottom: -660px;
+    height: 4px;
+    width: 4px;
+    border-radius: 2px;
+    background: #fff;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+}
+
+
+
+header span::before {
+    left: -10px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+header span::after {
+    right: -10px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
 
     /******************************************TEXT HEADER EFFECT (institut malik ibn anas)*****************************************************************/
 
@@ -2348,3 +2545,257 @@ input[type=range] {
         background: #ffc600;
         cursor: pointer;
     }
+
+    /***************************************************************Progressssssssssss circular*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:700,400,300);
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto;
+    background-color: #e7e7e7;
+    color: #555;
+    line-height: 1.4;
+}
+
+.container {
+    width: 70%;
+    padding: 2rem;
+    margin: 100px auto;
+    background-color: white;
+}
+
+    .container h1 {
+        text-align: center;
+    }
+
+.bars {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Progress Bars */
+
+.progress--circle {
+    position: relative;
+    display: inline-block;
+    margin: 1rem;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+    .progress--circle:before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: #343A40;
+    }
+
+    .progress--circle:after {
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #63B8FF;
+    }
+
+.progress__number {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    line-height: 1;
+    margin-top: -0.75rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: ghostwhite;
+}
+
+.progress--pie:before {
+    display: none;
+    /* Get rid of white circle for "pie chart style" meter */
+}
+
+.progress--pie .progress__number {
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.35) 1px 1px 1px;
+}
+
+/**
+* $step is set to 5 by default, meaning you can only use percentage classes in increments of five (e.g. 25, 30, 45, 50, and so on). This helps to reduce the size of the final CSS file. If you need a number that doesn't end in 0 or 5, you can change the text percentage while rounding the class up/down to the nearest 5.
+*/
+.progress--bar.progress--0:after {
+    width: 0%;
+}
+
+.progress--circle.progress--0:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(90deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--5:after {
+    width: 5%;
+}
+
+.progress--circle.progress--5:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(108deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--10:after {
+    width: 10%;
+}
+
+.progress--circle.progress--10:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(126deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--15:after {
+    width: 15%;
+}
+
+.progress--circle.progress--15:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(144deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--20:after {
+    width: 20%;
+}
+
+.progress--circle.progress--20:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(162deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--25:after {
+    width: 25%;
+}
+
+.progress--circle.progress--25:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(180deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--30:after {
+    width: 30%;
+}
+
+.progress--circle.progress--30:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(198deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--35:after {
+    width: 35%;
+}
+
+.progress--circle.progress--35:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(216deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--40:after {
+    width: 40%;
+}
+
+.progress--circle.progress--40:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(234deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--45:after {
+    width: 45%;
+}
+
+.progress--circle.progress--45:after {
+    background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(252deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--50:after {
+    width: 50%;
+}
+
+.progress--circle.progress--50:after {
+    background-image: linear-gradient(-90deg, #00C600 50%, transparent 50%, transparent), linear-gradient(270deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--55:after {
+    width: 55%;
+}
+
+.progress--circle.progress--55:after {
+    background-image: linear-gradient(-72deg, #00C600 50%, transparent 50%, transparent), linear-gradient(270deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--60:after {
+    width: 60%;
+}
+
+.progress--circle.progress--60:after {
+    background-image: linear-gradient(-54deg, #00C600 50%, transparent 50%, transparent), linear-gradient(270deg, #00C600 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--65:after {
+    width: 65%;
+}
+
+.progress--circle.progress--65:after {
+    background-image: linear-gradient(-36deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--70:after {
+    width: 70%;
+}
+
+.progress--circle.progress--70:after {
+    background-image: linear-gradient(-18deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--75:after {
+    width: 75%;
+}
+
+.progress--circle.progress--75:after {
+    background-image: linear-gradient(0deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--80:after {
+    width: 80%;
+}
+
+.progress--circle.progress--80:after {
+    background-image: linear-gradient(18deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--85:after {
+    width: 85%;
+}
+
+.progress--circle.progress--85:after {
+    background-image: linear-gradient(36deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--90:after {
+    width: 90%;
+}
+
+.progress--circle.progress--90:after {
+    background-image: linear-gradient(54deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--95:after {
+    width: 95%;
+}
+
+.progress--circle.progress--95:after {
+    background-image: linear-gradient(72deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--100:after {
+    width: 100%;
+}
+
+.progress--circle.progress--100:after {
+    background-image: linear-gradient(90deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
