@@ -3,7 +3,7 @@
 @model LoginViewModel
 
 @{
-    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
     string eye="";
    
 }
@@ -54,14 +54,15 @@
 </script>
 
 
-<header>
-        <h1 class=" col-lg-12 col-md-12 col-12 animated bounceInDown " style="font-size:8vw;">Ousraty</h1>
-</header>
+@*<header>
+        <h1 class=" col-lg-12 col-md-12 col-12 animated bounceInDown text-center " style="font-size:8vw;">Ousraty</h1>
+</header>*@
 
-
-<h2>@ViewBag.Title</h2>
-<div class="container-fluid col-lg-4 col-10 col-md-10 bg-dark" style="opacity:0.8" >
-            <div class="container-fluid text-white " id="loginForm"  data-aos="flip-left">
+<section>
+    <h2>@ViewBag.Title</h2>
+    <div class="container bg-danger">
+        <div class="container col-lg-12 col-10 col-md-10 bg-dark" style="opacity:0.8">
+            <div class="container-fluid text-white center " id="loginForm" data-aos="flip-left">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                     @Html.AntiForgeryToken()
@@ -71,7 +72,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.Email, new { @class = "control-label" })
                         <div class="input-group">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })                            
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         </div>
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
@@ -100,7 +101,9 @@
                     </p>
                 }
             </div>
-</div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

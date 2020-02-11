@@ -57,8 +57,8 @@ if (@ViewBag.gactivity == "active")
         @RenderSection("head", required: false)
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+        @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">*@
+        @*<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">*@
         <link rel="stylesheet" type="text/css" href="~/Content/bootstrap1.min.css">
         <!--different screen for mobile-->
         <link rel="stylesheet" media="only screen and (width: 411px) and (height: 731px)" href="~/Content/pixel2.css">
@@ -96,7 +96,7 @@ if (@ViewBag.gactivity == "active")
             <!---------
         <body>
             <!-----------------------------------------BARRE DE NAVIGATION------------------------------------------------>
-            @*<div class="sticky-top shadow-lg">
+            <div class="sticky-top shadow-lg bg-white">
                 <nav class="navbar navbar-expand-md navbar-dark white">
 
                     @if (ViewBag.currentPage != null)
@@ -104,24 +104,28 @@ if (@ViewBag.gactivity == "active")
                         <input class="btn text-dark btnsize shadow" type="button" value="Admin" id="sidebarCollapse" style="background-color:black;" />
                     }
                     <button class="navbar-toggler align-self-start float-right mt-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContentLG" aria-controls="navbarSupportedContentLG" aria-expanded="false" aria-label="Toggle navigation" style="width:40px;">
-                        <span class="navbar-toggler-icon"></span>
+                        @*<span class="navbar-toggler-icon"></span>*@
+                        <a><img class="navbar-brand" src="http://vps64363.lws-hosting.com/Img/sandwich.png" /></a>
                     </button>
 
                     <div class="collapse navbar-collapse mobileMenu" id="navbarSupportedContentLG">
-                        <ul class="navbar-nav mr-auto" style="color:black;">
+                        <a href="#" style="font-size:3.5vw; hover{background: none;}"><img class="navbar-brand" src="http://vps64363.lws-hosting.com/Img/ousraty.png"/></a>
+                        <ul class="navbar-nav mr-auto float-right" style="color:black;">
                             <li class="nav-item " style="color:black">
-                                <a class="nav-link" href="@Url.Action("Index", "Home")">Acceuil</a>
+                                <a class="nav-link" style="font-size:1.5vw;" href="#">Forum</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Cours
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownLG">
-                                    <a class="dropdown-item bg-light" href="@Url.Action("Index", "Theme_")">Thème</a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:1.5vw;" href="#">Blog</a>
                             </li>
                             <li class="nav-item" >
-                                <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a>
+                                <a class="nav-link bg-warning rounded-pill pl-5 pr-5 text-white" style="font-size:1.5vw;" href="@Url.Action("Index", "Home")">Formations</a>
+                            </li>
+                            <li class="nav-item borderAccount">
+                                <a></a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:1.5vw;" href="@Url.Action("Index", "Home")"><img class="account" src="http://vps64363.lws-hosting.com/Img/profil.png" />Mon compte</a>
                             </li>
 
                             <li class="nav-item act float-right">
@@ -135,10 +139,10 @@ if (@ViewBag.gactivity == "active")
                     </div>
                 </nav>
             
-                </div>*@
+                </div>
 
     <!-- Navigation -->
-    <header id="topnav" class="pb-5">
+    @*<header id="topnav" class="pb-5">
         <div class="inner navbar-expand-md">       
             <nav role='navigation'>
                     <img src="http://vps64363.lws-hosting.com/Img/ousraty.png" style="width:8%; margin-left:350px;" />
@@ -149,27 +153,24 @@ if (@ViewBag.gactivity == "active")
                         <li><a href="#">|</a></li>
                         <li>
                             <img src="http://vps64363.lws-hosting.com/Img/profil.png" style="width:5%;" />
-                            <a class="font-weight-bold">Mon compte</a>
+                            <a href="@Url.Action("Login", "Account")" class="font-weight-bold">Mon compte</a>
 
                         </li>
                     </ul>
             </nav>
         </div>
-    </header>
+    </header>*@
 
 @*--------------------------------ENTETE------------------------------------------------------------>*@
-            <div style="overflow-x: hidden;"> <!--cette div me permet de supprimer le horizontal scroll bar sur tel et de garder le menu stiky top-->
-
+            @*<div style="overflow-x: hidden;">*@ <!--cette div me permet de supprimer le horizontal scroll bar sur tel et de garder le menu stiky top-->
+ 
                 @RenderBody()
 
-
-                @Html.Partial("_FooterPartial");
                 @Scripts.Render("~/bundles/jquery")
                 @Scripts.Render("~/bundles/bootstrap")
-            </div>
-
+         
 </body>
-   
+    @Html.Partial("_FooterPartial")
 
 </html>
 

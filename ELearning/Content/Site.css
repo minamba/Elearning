@@ -3,6 +3,27 @@
 @media (max-width: 3080px) {
 
 
+    .navbar-brand {
+        height: 8rem;
+        width: 8em;
+    }
+
+
+    .account {
+        width: 4rem;
+        height: 4rem;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-right: 1rem;
+    }
+
+    .borderAccount {
+        border-right: ridge;
+        margin-left: 0rem;
+        margin-right: 0rem;
+    }
+
+
     .loginHome {
         background-color: black;
         opacity: 0.6;
@@ -42,10 +63,10 @@
         background-size:cover;
     }
 
-    .navbar-fixed-top {
+    /*.navbar-fixed-top {
         position: relative;
         top: auto;
-    }
+    }*/
 
     h6 {
         font-size-adjust: 1;
@@ -399,6 +420,7 @@
     /*******************************768******************************/
     @media (max-width: 768px) {
 
+
         .videoManaged{
             position : absolute;
         }
@@ -501,6 +523,29 @@
     }
     /*******************************767*******************************************/
     @media (max-width: 767px) {
+
+
+        .navbar-brand {
+            height: 4rem;
+            width: 4em;
+        }
+
+
+        .account {
+            width: 4rem;
+            height: 4rem;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin-right: 1rem;
+        }
+
+        .borderAccount {
+            border-right: ridge;
+            margin-left: 0rem;
+            margin-right: 0rem;
+        }
+
+
 
         .forgotpwd {
             background-color: black;
@@ -727,7 +772,7 @@
 
 
         body {
-            overflow-x: hidden; /***Empeche le scroll horizontal***/
+            /*overflow-x: hidden;*/ /***Empeche le scroll horizontal***/
         }
 
         p2 {
@@ -918,8 +963,31 @@
 
 /***********************************************************************FIN DES MEDIAS QUERYYYYYYYYYYYYYY !!!!!!!!!!***************************************************************************************/
 
+.centrer {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centrer2 {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.footerCentrer {
+    position:relative;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align:center;
+    margin-bottom:5rem;
+}
+
     body {
-        overflow-x: hidden;
+        /*overflow-x: hidden;*/
     }
 
 
@@ -941,15 +1009,17 @@
     }
 
 
-.profil {
-    width: 8%;
-    height: auto;
-}
+/*.profil {
+    width: 5rem;
+    height: 5rem;
+}*/
 
 .backgroundDefault {
-    background-image: url(http://vps64363.lws-hosting.com/Img/Asset12@3x.png);
+    background-image: url(http://vps64363.lws-hosting.com/Img/ousraty_home_page.png);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    padding-bottom : 100em;
     height: 100vh;
 }
 
@@ -1009,7 +1079,7 @@
     padding-bottom: 20px;*/
         /*background-image: url("https://wallpaperplay.com/walls/full/7/0/8/107673.jpg");*/
         /*background-color: #F8F9FA;*/
-        overflow-x: hidden; /***Empeche le scroll horizontal***/
+        /*overflow-x: hidden;*/ /***Empeche le scroll horizontal***/
     }
 
     .grad {
@@ -1068,11 +1138,11 @@
         position: sticky;
     }
 
-.sticky {
+/*.sticky {
     position: -webkit-sticky;
     top: 0;
     width: 100%;
-}
+}*/
 
         /*.sticky + .content {
             padding-top: 102px;
@@ -1102,16 +1172,6 @@
     textarea {
         /*max-width: 280px;*/
     }
-
-    /*.jumbotron {
-    background-image: url(/Content/Img/elearning.png);
-    background-size: cover;
-}*/
-
-
-
-
-
 
 
     @media {
@@ -1743,7 +1803,6 @@
     /*anime gs*/
     /*opacity: 0;
     border-bottom: 1px dashed rgba(0,0,0,0.6);*/
-}
 
 
 
@@ -1808,6 +1867,7 @@ ul, li, a,img, .logo {
     font-weight: 400;
     margin: 0;
     padding: 0;
+    padding-top : 1.5rem;
 }
 
 .inner {
@@ -1872,18 +1932,9 @@ nav {
     }
 
         nav a:hover {
-            background: red;
+            background: #A84E7C;
         }
 
-.logo {
-    float: left;
-    color: #fff;
-    background-image: url(http://vps64363.lws-hosting.com/Img/profil.png);
-    width:50%;
-    font-size: 20px;
-    line-height: 50px;
-    transition: 0.7s all;
-}
 
 .alt-header .logo {
     color: #000;
@@ -1903,8 +1954,9 @@ section .inner {
 }
 
 
-/**********************************************************header span*******************************************************************************/
 
+
+/**********************************************************header span*******************************************************************************/
 header span.animated {
     position: absolute;
     margin: auto;
