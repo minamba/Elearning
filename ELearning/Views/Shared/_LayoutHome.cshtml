@@ -103,35 +103,35 @@ if (@ViewBag.gactivity == "active")
                     {
                         <input class="btn text-dark btnsize shadow" type="button" value="Admin" id="sidebarCollapse" style="background-color:black;" />
                     }
-                    <button class="navbar-toggler align-self-start float-right mt-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContentLG" aria-controls="navbarSupportedContentLG" aria-expanded="false" aria-label="Toggle navigation" style="width:40px;">
-                        @*<span class="navbar-toggler-icon"></span>*@
-                        <a><img class="navbar-brand" src="http://vps64363.lws-hosting.com/Img/sandwich.png" /></a>
+                    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContentLG" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        @*<a><img class="navbar-brand" src="http://vps64363.lws-hosting.com/Img/sandwich.png" /></a>*@
                     </button>
 
                     <div class="collapse navbar-collapse mobileMenu" id="navbarSupportedContentLG">
-                        <a href="#" style="font-size:3.5vw; hover{background: none;}"><img class="navbar-brand" src="http://vps64363.lws-hosting.com/Img/ousraty.png"/></a>
+                        <a class="rounded-pill" href="#"><img class="navbar-brand" src="http://vps64363.lws-hosting.com/Img/ousraty.png"/></a>
                         <ul class="navbar-nav mr-auto float-right" style="color:black;">
                             <li class="nav-item " style="color:black">
-                                <a class="nav-link" style="font-size:1.5vw;" href="#">Forum</a>
+                                <a class="nav-link rounded-pill"  href="#">Forum</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="font-size:1.5vw;" href="#">Blog</a>
+                                <a class="nav-link rounded-pill" href="#">Blog</a>
                             </li>
                             <li class="nav-item" >
-                                <a class="nav-link bg-warning rounded-pill pl-5 pr-5 text-white" style="font-size:1.5vw;" href="@Url.Action("Index", "Home")">Formations</a>
+                                <a class=" rounded-pill formationlink" href="@Url.Action("Index", "Home")">Formations</a>
                             </li>
                             <li class="nav-item borderAccount">
-                                <a></a>
+                                @*<a></a>*@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" style="font-size:1.5vw;" href="@Url.Action("Index", "Home")"><img class="account" src="http://vps64363.lws-hosting.com/Img/profil.png" />Mon compte</a>
+                                <a class="nav-link rounded-pill" href="@Url.Action("Index", "Home")"><img class="account" src="http://vps64363.lws-hosting.com/Img/profil.png" />Mon compte</a>
                             </li>
 
                             <li class="nav-item act float-right">
                                 @if (ViewBag.Role == 1 || ViewBag.Role == 3)
                                 {
-                                    <a class="nav-link" style="font-size:1.5vw;" href="@Url.Action("AdminUser", "User_")">Administration</a>
+                                    <a class="nav-link" href="@Url.Action("AdminUser", "User_")">Administration</a>
                                 }
                             </li>
                         </ul>

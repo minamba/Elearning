@@ -963,6 +963,34 @@
 
 /***********************************************************************FIN DES MEDIAS QUERYYYYYYYYYYYYYY !!!!!!!!!!***************************************************************************************/
 
+.formationlink {
+    background-color: orange;
+    color: white;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    margin-left : 3rem;
+    margin-right : 3rem;
+}
+
+.formationlink:hover{
+    text-decoration : none;
+    color : white;
+}
+
+
+.navbar a{
+    font-size :1.5vw;
+}
+
+.navbar-toggler-icon {
+    background-color: #A84E7C;
+    height: 5rem;
+    width: 5rem;
+    border: dashed;
+} 
+
+
+
 .centrer {
     position: absolute;
     top: 70%;
